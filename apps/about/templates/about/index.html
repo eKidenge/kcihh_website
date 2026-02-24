@@ -39,7 +39,7 @@
         background-clip: text;
     }
     
-    /* Parallax effect - disabled on mobile for performance */
+    /* Parallax effect */
     .parallax {
         background-attachment: fixed;
         background-position: center;
@@ -50,26 +50,6 @@
     @media (max-width: 768px) {
         .parallax {
             background-attachment: scroll;
-        }
-    }
-    
-    /* Custom scrollbar - hidden on mobile */
-    @media (min-width: 768px) {
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #10b981, #047857);
-            border-radius: 5px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #059669;
         }
     }
     
@@ -109,7 +89,7 @@
         }
     }
     
-    /* Responsive spacing - REDUCED WHITE SPACE */
+    /* Responsive spacing */
     @media (max-width: 768px) {
         section {
             padding: 2.5rem 0 !important;
@@ -122,164 +102,9 @@
             padding-top: 3rem !important;
             padding-bottom: 3rem !important;
         }
-        .py-16 {
-            padding-top: 2rem !important;
-            padding-bottom: 2rem !important;
-        }
-        .gap-16 {
-            gap: 1.5rem !important;
-        }
-        .mb-16 {
-            margin-bottom: 1.5rem !important;
-        }
-        .mt-12 {
-            margin-top: 1.5rem !important;
-        }
-        .mb-8 {
-            margin-bottom: 1rem !important;
-        }
-        .p-8 {
-            padding: 1.25rem !important;
-        }
     }
     
-    /* Mobile menu adjustments */
-    @media (max-width: 640px) {
-        .flex-wrap.gap-4 {
-            flex-direction: column;
-            width: 100%;
-            align-items: center;
-        }
-        .flex-wrap.gap-4 a {
-            width: 100%;
-            text-align: center;
-            justify-content: center;
-            max-width: 300px;
-        }
-        .stats-pills {
-            flex-direction: column;
-            gap: 0.75rem;
-            align-items: center;
-            width: 100%;
-        }
-        .stats-pills > div {
-            width: 100%;
-            max-width: 280px;
-            text-align: center;
-            justify-content: center;
-        }
-        /* Center all text on mobile */
-        .text-center-mobile {
-            text-align: center !important;
-        }
-        .mx-auto-mobile {
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-        .hero-content {
-            align-items: center;
-            text-align: center;
-        }
-    }
-    
-    /* Center content on all screens */
-    .centered-content {
-        text-align: center;
-    }
-    
-    .centered-content .flex {
-        justify-content: center;
-    }
-    
-    .centered-content .grid {
-        justify-items: center;
-    }
-    
-    /* Touch-friendly hover states */
-    @media (hover: hover) {
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-    }
-    
-    /* Image optimization */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    /* Safe area for notched phones */
-    .safe-top {
-        padding-top: env(safe-area-inset-top);
-    }
-    
-    /* Responsive grid adjustments */
-    @media (max-width: 1024px) {
-        .lg\:grid-cols-4 {
-            grid-template-columns: repeat(2, 1fr) !important;
-        }
-    }
-    
-    @media (max-width: 640px) {
-        .md\:grid-cols-3,
-        .lg\:grid-cols-4 {
-            grid-template-columns: 1fr !important;
-        }
-    }
-    
-    /* Floating card responsive */
-    @media (max-width: 768px) {
-        .absolute.-bottom-8.-left-8 {
-            position: relative;
-            bottom: auto;
-            left: auto;
-            margin-top: 1.5rem;
-            max-width: 100%;
-            transform: none;
-        }
-    }
-    
-    /* Team grid responsive */
-    @media (max-width: 640px) {
-        .group.relative .h-80 {
-            height: 200px;
-        }
-    }
-    
-    /* Partner logos responsive */
-    @media (max-width: 640px) {
-        .grid-cols-2.md\:grid-cols-4.lg\:grid-cols-6 {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
-        }
-    }
-    
-    /* Touch-friendly buttons */
-    button, a {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    
-    /* Responsive container padding */
-    .container-padding {
-        padding-left: max(1rem, env(safe-area-inset-left));
-        padding-right: max(1rem, env(safe-area-inset-right));
-    }
-    
-    /* Image grid responsive */
-    @media (max-width: 768px) {
-        .grid.grid-cols-2.gap-4 {
-            gap: 0.5rem;
-        }
-        .h-48, .h-64 {
-            height: 120px !important;
-        }
-        .mt-8 {
-            margin-top: 0 !important;
-        }
-    }
-    
-    /* Value card stats styling - FIXED WHITE SPACE */
+    /* Value stats styling */
     .value-stats {
         margin-top: 1rem;
         padding-top: 1rem;
@@ -296,7 +121,7 @@
         }
     }
     
-    /* Centered hero content */
+    /* Hero centered content */
     .hero-centered {
         display: flex;
         flex-direction: column;
@@ -311,6 +136,32 @@
     .hero-centered .stats-pills {
         justify-content: center;
     }
+    
+    @media (max-width: 640px) {
+        .flex-wrap.gap-4 {
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+        }
+        .flex-wrap.gap-4 a {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            justify-content: center;
+        }
+        .stats-pills {
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: center;
+            width: 100%;
+        }
+        .stats-pills > div {
+            width: 100%;
+            max-width: 280px;
+            text-align: center;
+            justify-content: center;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -319,12 +170,11 @@
 <section class="relative min-h-[80vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0">
-        <img src="{% static 'images/about-hero.jpg' %}" 
+        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
              alt="Kenyan youth and elders collaborating on climate action" 
              class="w-full h-full object-cover parallax"
              loading="eager"
-             fetchpriority="high"
-             onerror="this.src='https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'">
+             fetchpriority="high">
         <div class="absolute inset-0 bg-gradient-to-r from-green-900/90 via-green-800/80 to-transparent"></div>
     </div>
     
@@ -402,7 +252,7 @@
     </div>
 </section>
 
-<!-- ===== OUR STORY SECTION - BALANCED SPACING ===== -->
+<!-- ===== OUR STORY SECTION ===== -->
 <section id="our-story" class="py-16 md:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
@@ -435,7 +285,7 @@
                     and empowers grassroots communities.
                 </p>
                 
-                <!-- Key Milestones - Stack on mobile -->
+                <!-- Key Milestones -->
                 <div class="space-y-4 md:space-y-6" x-show="shown" x-transition:enter="transition ease-out duration-700 delay-600">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 timeline-item">
                         <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center timeline-dot mx-auto sm:mx-0">
@@ -471,46 +321,42 @@
             
             <!-- Right Column - Visual Story -->
             <div class="relative px-4 md:px-0" x-data="{ shown: false }" x-intersect="shown = true">
-                <!-- Main Image Grid -->
+                <!-- Image Grid -->
                 <div class="grid grid-cols-2 gap-2 sm:gap-4">
                     <div class="space-y-2 sm:space-y-4">
                         <div class="rounded-lg sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl transform hover:scale-105 transition-transform duration-300"
                              x-show="shown" 
                              x-transition:enter="transition ease-out duration-700 delay-200">
-                            <img src="{% static 'images/about-1.jpg' %}" 
+                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                                  alt="Youth climate innovators" 
                                  class="w-full h-32 sm:h-48 object-cover"
-                                 loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                 loading="lazy">
                         </div>
                         <div class="rounded-lg sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl transform hover:scale-105 transition-transform duration-300"
                              x-show="shown" 
                              x-transition:enter="transition ease-out duration-700 delay-400">
-                            <img src="{% static 'images/about-2.jpg' %}" 
+                            <img src="https://images.unsplash.com/photo-1606046604972-77cc76aee944?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                                  alt="Community elders sharing knowledge" 
                                  class="w-full h-40 sm:h-64 object-cover"
-                                 loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1606046604972-77cc76aee944?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                 loading="lazy">
                         </div>
                     </div>
                     <div class="space-y-2 sm:space-y-4 mt-4 sm:mt-8">
                         <div class="rounded-lg sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl transform hover:scale-105 transition-transform duration-300"
                              x-show="shown" 
                              x-transition:enter="transition ease-out duration-700 delay-600">
-                            <img src="{% static 'images/about-3.jpg' %}" 
+                            <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                                  alt="Tree planting activity" 
                                  class="w-full h-40 sm:h-64 object-cover"
-                                 loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                 loading="lazy">
                         </div>
                         <div class="rounded-lg sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-xl transform hover:scale-105 transition-transform duration-300"
                              x-show="shown" 
                              x-transition:enter="transition ease-out duration-700 delay-800">
-                            <img src="{% static 'images/about-4.jpg' %}" 
+                            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                                  alt="Solar technology installation" 
                                  class="w-full h-32 sm:h-48 object-cover"
-                                 loading="lazy"
-                                 onerror="this.src='https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                 loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -538,11 +384,10 @@
 <section class="relative py-16 md:py-24 overflow-hidden">
     <!-- Background Image -->
     <div class="absolute inset-0">
-        <img src="{% static 'images/vision-bg.jpg' %}" 
+        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
              alt="Kenyan landscape" 
              class="w-full h-full object-cover parallax"
-             loading="lazy"
-             onerror="this.src='https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'">
+             loading="lazy">
         <div class="absolute inset-0 bg-gradient-to-br from-green-900/95 to-green-800/90"></div>
     </div>
     
@@ -563,7 +408,7 @@
                     A climate-resilient Kenya powered by youth innovation and indigenous knowledge systems.
                 </p>
                 
-                <!-- Visual Element - Centered on mobile -->
+                <!-- Visual Element -->
                 <div class="mt-6 md:mt-8 flex items-center justify-center md:justify-start space-x-2">
                     <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-400 rounded-full animate-pulse delay-75"></div>
@@ -587,7 +432,7 @@
                     To incubate scalable climate solutions, preserve ecological heritage, and empower communities to lead transformative climate action.
                 </p>
                 
-                <!-- Mission Pillars - Centered on mobile -->
+                <!-- Mission Pillars -->
                 <div class="mt-6 md:mt-8 grid grid-cols-3 gap-2">
                     <div class="text-center">
                         <div class="text-xl md:text-2xl font-bold text-white">500+</div>
@@ -607,7 +452,7 @@
     </div>
 </section>
 
-<!-- ===== CORE VALUES SECTION - FIXED WHITE SPACE AND CENTERING ===== -->
+<!-- ===== CORE VALUES SECTION ===== -->
 <section class="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header - Centered -->
@@ -634,7 +479,6 @@
                     Young people are not just participants—they lead our initiatives, drive innovation, and shape Kenya's climate future.
                 </p>
                 
-                <!-- Stats with proper spacing - FIXED WHITE SPACE -->
                 <div class="value-stats">
                     <span class="text-sm text-gray-500">Youth-led projects</span>
                     <span class="text-green-600 font-bold text-lg">100%</span>
@@ -765,22 +609,11 @@
             <div class="group relative mx-2 sm:mx-0 text-center" x-data="{ shown: false }" x-intersect="shown = true">
                 <div class="relative rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-4" 
                      :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
-                    <img src="{% static 'images/team-1.jpg' %}" 
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                          alt="Team Member" 
                          class="w-full h-64 sm:h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                         loading="lazy">
                     <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <!-- Social Links -->
-                    <div class="absolute bottom-2 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
-                        </a>
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                        </a>
-                    </div>
                 </div>
                 <h3 class="text-lg md:text-xl font-bold text-gray-900">James Mwangi</h3>
                 <p class="text-green-600 mb-1 md:mb-2 text-sm md:text-base">Executive Director</p>
@@ -791,21 +624,11 @@
             <div class="group relative mx-2 sm:mx-0 text-center" x-data="{ shown: false }" x-intersect="shown = true">
                 <div class="relative rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-4" 
                      :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
-                    <img src="{% static 'images/team-2.jpg' %}" 
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                          alt="Team Member" 
                          class="w-full h-64 sm:h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                         loading="lazy">
                     <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <div class="absolute bottom-2 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
-                        </a>
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                        </a>
-                    </div>
                 </div>
                 <h3 class="text-lg md:text-xl font-bold text-gray-900">Grace Akinyi</h3>
                 <p class="text-green-600 mb-1 md:mb-2 text-sm md:text-base">Indigenous Knowledge Lead</p>
@@ -816,21 +639,11 @@
             <div class="group relative mx-2 sm:mx-0 text-center" x-data="{ shown: false }" x-intersect="shown = true">
                 <div class="relative rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-4" 
                      :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
-                    <img src="{% static 'images/team-3.jpg' %}" 
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                          alt="Team Member" 
                          class="w-full h-64 sm:h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                         loading="lazy">
                     <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <div class="absolute bottom-2 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
-                        </a>
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                        </a>
-                    </div>
                 </div>
                 <h3 class="text-lg md:text-xl font-bold text-gray-900">David Omondi</h3>
                 <p class="text-green-600 mb-1 md:mb-2 text-sm md:text-base">Innovation Lab Director</p>
@@ -841,21 +654,11 @@
             <div class="group relative mx-2 sm:mx-0 text-center" x-data="{ shown: false }" x-intersect="shown = true">
                 <div class="relative rounded-xl md:rounded-2xl overflow-hidden mb-3 md:mb-4" 
                      :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'">
-                    <img src="{% static 'images/team-4.jpg' %}" 
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                          alt="Team Member" 
                          class="w-full h-64 sm:h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                         loading="lazy">
                     <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <div class="absolute bottom-2 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
-                        </a>
-                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors">
-                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                        </a>
-                    </div>
                 </div>
                 <h3 class="text-lg md:text-xl font-bold text-gray-900">Sarah Wanjiku</h3>
                 <p class="text-green-600 mb-1 md:mb-2 text-sm md:text-base">Community Action Lead</p>
@@ -887,9 +690,7 @@
             <!-- Advisor 1 -->
             <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 bg-white p-5 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow mx-2 md:mx-0">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="{% static 'images/advisor-1.jpg' %}" alt="Advisor" class="w-full h-full object-cover"
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Advisor" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <div class="text-center sm:text-left">
                     <h3 class="font-bold text-gray-900 text-base md:text-lg">Elder Samuel Kiprop</h3>
@@ -901,9 +702,7 @@
             <!-- Advisor 2 -->
             <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 bg-white p-5 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow mx-2 md:mx-0">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="{% static 'images/advisor-2.jpg' %}" alt="Advisor" class="w-full h-full object-cover"
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1494790108777-406d8bfd9d8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'">
+                    <img src="https://images.unsplash.com/photo-1494790108777-406d8bfd9d8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Advisor" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <div class="text-center sm:text-left">
                     <h3 class="font-bold text-gray-900 text-base md:text-lg">Dr. Elizabeth Muthoni</h3>
@@ -915,9 +714,7 @@
             <!-- Advisor 3 -->
             <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 bg-white p-5 md:p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow mx-2 md:mx-0">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="{% static 'images/advisor-3.jpg' %}" alt="Advisor" class="w-full h-full object-cover"
-                         loading="lazy"
-                         onerror="this.src='https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Advisor" class="w-full h-full object-cover" loading="lazy">
                 </div>
                 <div class="text-center sm:text-left">
                     <h3 class="font-bold text-gray-900 text-base md:text-lg">Peter Ndegwa</h3>
@@ -938,7 +735,6 @@
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 items-center px-2 md:px-0">
-            <!-- Partner logos -->
             <div class="grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 text-center">
                 <div class="bg-gray-100 rounded-lg p-3 md:p-4">
                     <span class="text-gray-600 font-bold text-sm md:text-base">UNDP</span>
@@ -988,11 +784,10 @@
 <section class="relative py-16 md:py-20 overflow-hidden">
     <!-- Background Image -->
     <div class="absolute inset-0">
-        <img src="{% static 'images/cta-bg.jpg' %}" 
+        <img src="https://images.unsplash.com/photo-1523803326055-52791c0e3cf6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
              alt="Kenyan youth" 
              class="w-full h-full object-cover"
-             loading="lazy"
-             onerror="this.src='https://images.unsplash.com/photo-1523803326055-52791c0e3cf6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'">
+             loading="lazy">
         <div class="absolute inset-0 bg-gradient-to-r from-green-900/95 to-green-800/90"></div>
     </div>
     
@@ -1045,9 +840,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
     </svg>
 </button>
-{% endblock %}
 
-{% block extra_scripts %}
 <script>
     // Back to top button
     document.addEventListener('DOMContentLoaded', function() {
@@ -1071,7 +864,7 @@
         });
     });
 
-    // Parallax effect - disabled on mobile for performance
+    // Parallax effect - disabled on mobile
     if (window.innerWidth > 768) {
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
