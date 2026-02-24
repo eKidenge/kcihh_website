@@ -1,36 +1,36 @@
 <!-- /home/cs/Desktop/PROJECTS/kcihh_website/templates/includes/navigation.html -->
 {% load static %}
 
-<!-- Top Bar with Contact Info -->
-<div class="bg-green-800 text-white text-sm py-2">
+<!-- Top Bar with Contact Info - Hidden on mobile -->
+<div class="bg-gradient-to-r from-green-800 to-green-700 text-white text-sm py-2 hidden md:block">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-6">
-                <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex items-center group">
+                    <svg class="w-4 h-4 mr-2 text-green-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                     </svg>
-                    <span>+254 (0) XXX XXX XXX</span>
+                    <span class="hover:text-green-200 transition-colors">+254 (0) 700 000 000</span>
                 </div>
-                <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex items-center group">
+                    <svg class="w-4 h-4 mr-2 text-green-300 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                     </svg>
-                    <span>info@kcihh.org</span>
+                    <span class="hover:text-green-200 transition-colors">info@kcihh.org</span>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="#" class="hover:text-green-200 transition-colors" aria-label="Twitter">
+                <a href="#" class="hover:text-green-200 transition-all duration-300 hover:scale-110" aria-label="Twitter">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
                     </svg>
                 </a>
-                <a href="#" class="hover:text-green-200 transition-colors" aria-label="LinkedIn">
+                <a href="#" class="hover:text-green-200 transition-all duration-300 hover:scale-110" aria-label="LinkedIn">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
                     </svg>
                 </a>
-                <a href="#" class="hover:text-green-200 transition-colors" aria-label="Facebook">
+                <a href="#" class="hover:text-green-200 transition-all duration-300 hover:scale-110" aria-label="Facebook">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
                     </svg>
@@ -40,109 +40,151 @@
     </div>
 </div>
 
-<!-- Main Navigation -->
-<nav class="bg-white shadow-lg sticky top-0 z-40 transition-all duration-300" 
+<!-- Main Navigation - Premium Design -->
+<nav class="bg-white shadow-lg sticky top-0 z-40 transition-all duration-300 border-b border-gray-100" 
      id="main-nav"
      x-data="{ 
         mobileMenuOpen: false,
-        activeDropdown: null
-     }">
+        activeDropdown: null,
+        scrolled: false
+     }"
+     @scroll.window="scrolled = window.pageYOffset > 50">
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
-            <!-- Logo - Far Left -->
+            <!-- Logo and Name - Far Left, Clearly Visible, BOLD -->
             <div class="flex-shrink-0">
-                <a href="/" class="flex items-center">
-                    <img src="{% static 'images/kcihh-logo.png' %}" 
-                         alt="KCIHH Logo" 
-                         class="h-14 w-auto object-contain"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%3Crect%20width%3D%2248%22%20height%3D%2248%22%20fill%3D%22%2310b981%22%20rx%3D%228%22%2F%3E%3Ctext%20x%3D%2224%22%20y%3D%2232%22%20font-size%3D%2218%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-family%3D%22Arial%2C%20sans-serif%22%3EKCIHH%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                <a href="/" class="flex items-center space-x-3 group">
+                    <!-- Logo with hover effect -->
+                    <div class="relative">
+                        <img src="{% static 'images/kcihh-logo.png' %}" 
+                             alt="KCIHH Logo" 
+                             class="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                             onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%3Crect%20width%3D%2248%22%20height%3D%2248%22%20fill%3D%22%2310b981%22%20rx%3D%228%22%2F%3E%3Ctext%20x%3D%2224%22%20y%3D%2232%22%20font-size%3D%2218%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-family%3D%22Arial%2C%20sans-serif%22%3EKCIHH%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                        <!-- Glow effect on hover -->
+                        <div class="absolute inset-0 bg-green-400 rounded-full filter blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    </div>
+                    
+                    <!-- Organization Name - BOLD and CLEAR -->
+                    <div class="hidden sm:block">
+                        <span class="block text-lg font-black text-gray-900 leading-tight tracking-tight">KENYA CLIMATE INNOVATION</span>
+                        <span class="block text-sm font-extrabold text-green-700 tracking-wide">& HERITAGE HUB</span>
+                    </div>
                 </a>
             </div>
             
-            <!-- Desktop Navigation - Far Right, Bold, Uppercase, No Wrap -->
+            <!-- Desktop Navigation - Far Right, BOLD, UPPERCASE, NO WRAP -->
             <div class="hidden lg:flex lg:items-center lg:space-x-1 flex-nowrap ml-auto">
                 
                 <!-- Home -->
-                <a href="/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if request.path == '/' %}text-green-600 bg-green-50{% endif %}">
-                    Home
+                <a href="/" 
+                   class="relative px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group {% if request.path == '/' %}text-green-600{% endif %}">
+                    <span class="relative z-10">Home</span>
+                    <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+                    {% if request.path == '/' %}
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-full"></span>
+                    {% endif %}
                 </a>
                 
                 <!-- About Us -->
-                <a href="/about/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/about/' in request.path %}text-green-600 bg-green-50{% endif %}">
-                    About Us
+                <a href="/about/" 
+                   class="relative px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group {% if '/about/' in request.path %}text-green-600{% endif %}">
+                    <span class="relative z-10">About Us</span>
+                    <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+                    {% if '/about/' in request.path %}
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-full"></span>
+                    {% endif %}
                 </a>
                 
                 <!-- Our Work Dropdown -->
                 <div class="relative" 
                      @mouseenter="activeDropdown = 'work'"
                      @mouseleave="activeDropdown = null">
-                    <button class="flex items-center px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 group">
-                        Our Work
-                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': activeDropdown === 'work' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button class="relative flex items-center px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group">
+                        <span class="relative z-10">Our Work</span>
+                        <svg class="w-4 h-4 ml-1 relative z-10 transition-transform duration-200" :class="{ 'rotate-180': activeDropdown === 'work' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
+                        <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
                     </button>
                     
-                    <!-- Dropdown Menu -->
+                    <!-- Dropdown Menu - Premium Design -->
                     <div x-show="activeDropdown === 'work'" 
                          x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 translate-y-1"
+                         x-transition:enter-start="opacity-0 translate-y-2"
                          x-transition:enter-end="opacity-100 translate-y-0"
                          x-transition:leave="transition ease-in duration-150"
                          x-transition:leave-start="opacity-100 translate-y-0"
-                         x-transition:leave-end="opacity-0 translate-y-1"
-                         class="absolute left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50">
+                         x-transition:leave-end="opacity-0 translate-y-2"
+                         class="absolute left-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+                         style="display: none;">
                         
-                        <div class="py-2">
-                            <a href="/our-work/innovation-hub/" class="block px-6 py-3 hover:bg-green-50 transition-colors group">
+                        <!-- Decorative Header -->
+                        <div class="bg-gradient-to-r from-green-600 to-green-500 px-6 py-3">
+                            <h3 class="text-white font-black text-sm tracking-wider">OUR PROGRAMS</h3>
+                        </div>
+                        
+                        <div class="py-3">
+                            <a href="/our-work/innovation-hub/" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
                                 <div class="flex items-center">
-                                    <span class="text-2xl mr-3">🔬</span>
+                                    <span class="text-3xl mr-4 transform group-hover:scale-110 transition-transform">🔬</span>
                                     <div>
-                                        <div class="font-semibold text-gray-900 group-hover:text-green-600">Innovation Hub</div>
+                                        <div class="font-black text-gray-900 group-hover:text-green-600 transition-colors">Innovation Hub</div>
                                         <div class="text-sm text-gray-500">Supporting climate enterprises</div>
                                     </div>
+                                    <svg class="w-5 h-5 ml-auto text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
                                 </div>
                             </a>
                             
-                            <a href="/our-work/indigenous-knowledge/" class="block px-6 py-3 hover:bg-green-50 transition-colors group">
+                            <a href="/our-work/indigenous-knowledge/" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
                                 <div class="flex items-center">
-                                    <span class="text-2xl mr-3">🌿</span>
+                                    <span class="text-3xl mr-4 transform group-hover:scale-110 transition-transform">🌿</span>
                                     <div>
-                                        <div class="font-semibold text-gray-900 group-hover:text-green-600">Indigenous Knowledge</div>
+                                        <div class="font-black text-gray-900 group-hover:text-green-600 transition-colors">Indigenous Knowledge</div>
                                         <div class="text-sm text-gray-500">Preserving ecological wisdom</div>
                                     </div>
+                                    <svg class="w-5 h-5 ml-auto text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
                                 </div>
                             </a>
                             
-                            <a href="/our-work/training-fellowship/" class="block px-6 py-3 hover:bg-green-50 transition-colors group">
+                            <a href="/our-work/training-fellowship/" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
                                 <div class="flex items-center">
-                                    <span class="text-2xl mr-3">📚</span>
+                                    <span class="text-3xl mr-4 transform group-hover:scale-110 transition-transform">📚</span>
                                     <div>
-                                        <div class="font-semibold text-gray-900 group-hover:text-green-600">Training & Fellowship</div>
+                                        <div class="font-black text-gray-900 group-hover:text-green-600 transition-colors">Training & Fellowship</div>
                                         <div class="text-sm text-gray-500">Building climate leaders</div>
                                     </div>
+                                    <svg class="w-5 h-5 ml-auto text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
                                 </div>
                             </a>
                             
-                            <a href="/our-work/community-action/" class="block px-6 py-3 hover:bg-green-50 transition-colors group">
+                            <a href="/our-work/community-action/" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
                                 <div class="flex items-center">
-                                    <span class="text-2xl mr-3">🤝</span>
+                                    <span class="text-3xl mr-4 transform group-hover:scale-110 transition-transform">🤝</span>
                                     <div>
-                                        <div class="font-semibold text-gray-900 group-hover:text-green-600">Community Action</div>
+                                        <div class="font-black text-gray-900 group-hover:text-green-600 transition-colors">Community Action</div>
                                         <div class="text-sm text-gray-500">Locally-led solutions</div>
                                     </div>
+                                    <svg class="w-5 h-5 ml-auto text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
                                 </div>
                             </a>
                         </div>
                         
-                        <!-- View All Link -->
-                        <div class="border-t border-gray-100 bg-gray-50 px-6 py-3">
-                            <a href="/our-work/" class="text-sm font-semibold text-green-600 hover:text-green-700 flex items-center">
-                                View All Programs
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        <!-- View All Link with Arrow Animation -->
+                        <div class="border-t border-gray-100 bg-gray-50 px-6 py-4">
+                            <a href="/our-work/" class="text-sm font-black text-green-600 hover:text-green-700 flex items-center justify-between group">
+                                <span>VIEW ALL PROGRAMS</span>
+                                <svg class="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                 </svg>
                             </a>
                         </div>
@@ -150,66 +192,126 @@
                 </div>
                 
                 <!-- Impact -->
-                <a href="/impact/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/impact/' in request.path %}text-green-600 bg-green-50{% endif %}">
-                    Impact
+                <a href="/impact/" 
+                   class="relative px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group {% if '/impact/' in request.path %}text-green-600{% endif %}">
+                    <span class="relative z-10">Impact</span>
+                    <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+                    {% if '/impact/' in request.path %}
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-full"></span>
+                    {% endif %}
                 </a>
                 
                 <!-- Get Involved Dropdown -->
                 <div class="relative" 
                      @mouseenter="activeDropdown = 'involved'"
                      @mouseleave="activeDropdown = null">
-                    <button class="flex items-center px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50">
-                        Get Involved
-                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': activeDropdown === 'involved' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button class="relative flex items-center px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group">
+                        <span class="relative z-10">Get Involved</span>
+                        <svg class="w-4 h-4 ml-1 relative z-10 transition-transform duration-200" :class="{ 'rotate-180': activeDropdown === 'involved' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
+                        <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
                     </button>
                     
                     <div x-show="activeDropdown === 'involved'" 
-                         x-transition
-                         class="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
-                        <a href="/get-involved/volunteer/" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Volunteer</a>
-                        <a href="/get-involved/donate/" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Donate</a>
-                        <a href="/get-involved/#partner" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Partner with Us</a>
-                        <a href="/get-involved/#innovator" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Youth Innovator</a>
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 translate-y-2"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 translate-y-2"
+                         class="absolute left-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-50"
+                         style="display: none;">
+                        
+                        <a href="/get-involved/volunteer/" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
+                            <div class="flex items-center justify-between">
+                                <span class="font-black text-gray-900 group-hover:text-green-600">Volunteer</span>
+                                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
+                        
+                        <a href="/get-involved/donate/" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
+                            <div class="flex items-center justify-between">
+                                <span class="font-black text-gray-900 group-hover:text-green-600">Donate</span>
+                                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
+                        
+                        <a href="/get-involved/#partner" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
+                            <div class="flex items-center justify-between">
+                                <span class="font-black text-gray-900 group-hover:text-green-600">Partner with Us</span>
+                                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
+                        
+                        <a href="/get-involved/#innovator" class="block px-6 py-4 hover:bg-green-50 transition-all duration-300 group">
+                            <div class="flex items-center justify-between">
+                                <span class="font-black text-gray-900 group-hover:text-green-600">Youth Innovator</span>
+                                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 
                 <!-- Resources -->
-                <a href="/resources/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/resources/' in request.path %}text-green-600 bg-green-50{% endif %}">
-                    Resources
+                <a href="/resources/" 
+                   class="relative px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group {% if '/resources/' in request.path %}text-green-600{% endif %}">
+                    <span class="relative z-10">Resources</span>
+                    <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+                    {% if '/resources/' in request.path %}
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-full"></span>
+                    {% endif %}
                 </a>
                 
                 <!-- Blog -->
-                <a href="/blog/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/blog/' in request.path %}text-green-600 bg-green-50{% endif %}">
-                    Insights
+                <a href="/blog/" 
+                   class="relative px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group {% if '/blog/' in request.path %}text-green-600{% endif %}">
+                    <span class="relative z-10">Insights</span>
+                    <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+                    {% if '/blog/' in request.path %}
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-full"></span>
+                    {% endif %}
                 </a>
                 
                 <!-- Contact -->
-                <a href="/contact/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/contact/' in request.path %}text-green-600 bg-green-50{% endif %}">
-                    Contact
+                <a href="/contact/" 
+                   class="relative px-3 py-2 text-gray-700 hover:text-green-600 font-black uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 group {% if '/contact/' in request.path %}text-green-600{% endif %}">
+                    <span class="relative z-10">Contact</span>
+                    <span class="absolute inset-0 bg-green-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
+                    {% if '/contact/' in request.path %}
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 rounded-full"></span>
+                    {% endif %}
                 </a>
             </div>
             
             <!-- Right Side Actions -->
-            <div class="flex items-center space-x-4 ml-4">
-                <!-- Search Button -->
-                <button class="p-2 text-gray-500 hover:text-green-600 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Search">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex items-center space-x-3 ml-4">
+                <!-- Search Button with Hover Effect -->
+                <button class="p-2.5 text-gray-500 hover:text-green-600 rounded-full hover:bg-green-50 transition-all duration-300 group" aria-label="Search">
+                    <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                 </button>
                 
-                <!-- Donate Button -->
-                <a href="/get-involved/donate/" class="hidden lg:inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wide text-sm py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl whitespace-nowrap">
-                    Donate
-                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Donate Button - Premium with Animation -->
+                <a href="/get-involved/donate/" class="hidden lg:inline-flex items-center bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-black uppercase tracking-wide text-sm py-2.5 px-6 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg whitespace-nowrap group relative overflow-hidden">
+                    <span class="relative z-10">Donate</span>
+                    <svg class="w-4 h-4 ml-2 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                     </svg>
+                    <span class="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 opacity-20"></span>
                 </a>
                 
-                <!-- Mobile Menu Button -->
-                <button class="lg:hidden p-2 text-gray-500 hover:text-green-600 rounded-lg hover:bg-gray-100 transition-colors"
+                <!-- Mobile Menu Button - Premium Design -->
+                <button class="lg:hidden p-2.5 text-gray-500 hover:text-green-600 rounded-full hover:bg-green-50 transition-all duration-300 relative"
                         @click="mobileMenuOpen = !mobileMenuOpen"
                         aria-label="Toggle menu">
                     <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,60 +325,118 @@
         </div>
     </div>
     
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu - Premium Full Screen Overlay Style -->
     <div x-show="mobileMenuOpen" 
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 -translate-y-10"
          x-transition:enter-end="opacity-100 translate-y-0"
-         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100 translate-y-0"
-         x-transition:leave-end="opacity-0 -translate-y-2"
-         class="lg:hidden border-t border-gray-200 bg-white"
+         x-transition:leave-end="opacity-0 -translate-y-10"
+         class="lg:hidden fixed inset-x-0 top-20 bg-white shadow-2xl border-t border-gray-100 z-50 overflow-y-auto max-h-[calc(100vh-5rem)]"
          @click.away="mobileMenuOpen = false">
         
-        <div class="px-4 py-6 space-y-1">
-            <a href="/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Home</a>
-            <a href="/about/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">About Us</a>
+        <div class="px-4 py-6 space-y-2">
+            <!-- Home -->
+            <a href="/" class="block px-4 py-4 text-gray-900 hover:bg-green-50 hover:text-green-600 rounded-xl font-black uppercase tracking-wide text-base transition-all duration-300 flex items-center justify-between group" @click="mobileMenuOpen = false">
+                <span>Home</span>
+                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
             
-            <!-- Mobile Work Section -->
-            <div class="px-4 py-2">
-                <div class="font-bold uppercase tracking-wide text-gray-900 mb-2">Our Work</div>
-                <div class="pl-4 space-y-2">
-                    <a href="/our-work/innovation-hub/" class="block py-2 text-gray-600 hover:text-green-600">🔬 Innovation Hub</a>
-                    <a href="/our-work/indigenous-knowledge/" class="block py-2 text-gray-600 hover:text-green-600">🌿 Indigenous Knowledge</a>
-                    <a href="/our-work/training-fellowship/" class="block py-2 text-gray-600 hover:text-green-600">📚 Training & Fellowship</a>
-                    <a href="/our-work/community-action/" class="block py-2 text-gray-600 hover:text-green-600">🤝 Community Action</a>
+            <!-- About Us -->
+            <a href="/about/" class="block px-4 py-4 text-gray-900 hover:bg-green-50 hover:text-green-600 rounded-xl font-black uppercase tracking-wide text-base transition-all duration-300 flex items-center justify-between group" @click="mobileMenuOpen = false">
+                <span>About Us</span>
+                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+            
+            <!-- Our Work Section -->
+            <div class="px-4 py-3">
+                <div class="font-black text-green-600 mb-3 text-sm tracking-wider">OUR WORK</div>
+                <div class="space-y-2 pl-2 border-l-2 border-green-200">
+                    <a href="/our-work/innovation-hub/" class="block py-3 px-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all duration-300 font-bold flex items-center" @click="mobileMenuOpen = false">
+                        <span class="text-xl mr-3">🔬</span> Innovation Hub
+                    </a>
+                    <a href="/our-work/indigenous-knowledge/" class="block py-3 px-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all duration-300 font-bold flex items-center" @click="mobileMenuOpen = false">
+                        <span class="text-xl mr-3">🌿</span> Indigenous Knowledge
+                    </a>
+                    <a href="/our-work/training-fellowship/" class="block py-3 px-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all duration-300 font-bold flex items-center" @click="mobileMenuOpen = false">
+                        <span class="text-xl mr-3">📚</span> Training & Fellowship
+                    </a>
+                    <a href="/our-work/community-action/" class="block py-3 px-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all duration-300 font-bold flex items-center" @click="mobileMenuOpen = false">
+                        <span class="text-xl mr-3">🤝</span> Community Action
+                    </a>
                 </div>
             </div>
             
-            <a href="/impact/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Impact</a>
+            <!-- Impact -->
+            <a href="/impact/" class="block px-4 py-4 text-gray-900 hover:bg-green-50 hover:text-green-600 rounded-xl font-black uppercase tracking-wide text-base transition-all duration-300 flex items-center justify-between group" @click="mobileMenuOpen = false">
+                <span>Impact</span>
+                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
             
-            <!-- Mobile Get Involved -->
-            <div class="px-4 py-2">
-                <div class="font-bold uppercase tracking-wide text-gray-900 mb-2">Get Involved</div>
-                <div class="pl-4 space-y-2">
-                    <a href="/get-involved/volunteer/" class="block py-2 text-gray-600 hover:text-green-600">Volunteer</a>
-                    <a href="/get-involved/donate/" class="block py-2 text-gray-600 hover:text-green-600">Donate</a>
-                    <a href="/get-involved/#partner" class="block py-2 text-gray-600 hover:text-green-600">Partner with Us</a>
+            <!-- Get Involved Section -->
+            <div class="px-4 py-3">
+                <div class="font-black text-green-600 mb-3 text-sm tracking-wider">GET INVOLVED</div>
+                <div class="space-y-2 pl-2 border-l-2 border-green-200">
+                    <a href="/get-involved/volunteer/" class="block py-3 px-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all duration-300 font-bold" @click="mobileMenuOpen = false">Volunteer</a>
+                    <a href="/get-involved/donate/" class="block py-3 px-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all duration-300 font-bold" @click="mobileMenuOpen = false">Donate</a>
+                    <a href="/get-involved/#partner" class="block py-3 px-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all duration-300 font-bold" @click="mobileMenuOpen = false">Partner with Us</a>
                 </div>
             </div>
             
-            <a href="/resources/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Resources</a>
-            <a href="/blog/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Insights</a>
-            <a href="/contact/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Contact</a>
+            <!-- Resources -->
+            <a href="/resources/" class="block px-4 py-4 text-gray-900 hover:bg-green-50 hover:text-green-600 rounded-xl font-black uppercase tracking-wide text-base transition-all duration-300 flex items-center justify-between group" @click="mobileMenuOpen = false">
+                <span>Resources</span>
+                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
             
-            <!-- Mobile Logo -->
-            <div class="pt-4 flex justify-center">
-                <img src="{% static 'images/kcihh-logo.png' %}" 
-                     alt="KCIHH Logo" 
-                     class="h-10 w-auto opacity-50"
-                     onerror="this.style.display='none'">
+            <!-- Insights -->
+            <a href="/blog/" class="block px-4 py-4 text-gray-900 hover:bg-green-50 hover:text-green-600 rounded-xl font-black uppercase tracking-wide text-base transition-all duration-300 flex items-center justify-between group" @click="mobileMenuOpen = false">
+                <span>Insights</span>
+                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+            
+            <!-- Contact -->
+            <a href="/contact/" class="block px-4 py-4 text-gray-900 hover:bg-green-50 hover:text-green-600 rounded-xl font-black uppercase tracking-wide text-base transition-all duration-300 flex items-center justify-between group" @click="mobileMenuOpen = false">
+                <span>Contact</span>
+                <svg class="w-5 h-5 text-green-600 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+            
+            <!-- Mobile Donate Button - Prominent -->
+            <div class="pt-6 pb-4">
+                <a href="/get-involved/donate/" class="block w-full text-center bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-black uppercase tracking-wide py-5 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl text-base" @click="mobileMenuOpen = false">
+                    DONATE NOW
+                </a>
             </div>
             
-            <!-- Mobile Donate Button -->
-            <div class="pt-4">
-                <a href="/get-involved/donate/" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wide py-3 px-6 rounded-lg transition-colors">
-                    Donate Now
+            <!-- Mobile Social Links -->
+            <div class="flex justify-center space-x-6 pt-4 pb-2">
+                <a href="#" class="text-gray-400 hover:text-green-600 transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-green-600 transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-green-600 transition-all duration-300 hover:scale-110">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+                    </svg>
                 </a>
             </div>
         </div>
@@ -288,3 +448,30 @@
 
 <!-- HTMX for dynamic content -->
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+<script>
+    // Navigation scroll effect
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.getElementById('main-nav');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-xl');
+                nav.classList.remove('shadow-lg');
+            } else {
+                nav.classList.add('shadow-lg');
+                nav.classList.remove('shadow-xl');
+            }
+        });
+        
+        // Close mobile menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                const mobileMenu = document.querySelector('[x-data]').__x.$data.mobileMenuOpen;
+                if (mobileMenu) {
+                    document.querySelector('[x-data]').__x.$data.mobileMenuOpen = false;
+                }
+            }
+        });
+    });
+</script>
