@@ -51,30 +51,26 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
-            <!-- Logo -->
+            <!-- Logo - Far Left -->
             <div class="flex-shrink-0">
-                <a href="/" class="flex items-center space-x-3">
+                <a href="/" class="flex items-center">
                     <img src="{% static 'images/kcihh-logo.png' %}" 
                          alt="KCIHH Logo" 
-                         class="h-12 w-auto object-contain"
+                         class="h-14 w-auto object-contain"
                          onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%3Crect%20width%3D%2248%22%20height%3D%2248%22%20fill%3D%22%2310b981%22%20rx%3D%228%22%2F%3E%3Ctext%20x%3D%2224%22%20y%3D%2232%22%20font-size%3D%2218%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-family%3D%22Arial%2C%20sans-serif%22%3EKCIHH%3C%2Ftext%3E%3C%2Fsvg%3E';">
-                    <div class="hidden lg:block">
-                        <span class="block text-lg font-bold text-gray-900 leading-tight">Kenya Climate Innovation</span>
-                        <span class="block text-sm text-gray-600">& Heritage Hub</span>
-                    </div>
                 </a>
             </div>
             
-            <!-- Desktop Navigation - ALL HARDCODED PATHS -->
-            <div class="hidden lg:flex lg:items-center lg:space-x-1">
+            <!-- Desktop Navigation - Far Right, Bold, Uppercase, No Wrap -->
+            <div class="hidden lg:flex lg:items-center lg:space-x-1 flex-nowrap ml-auto">
                 
                 <!-- Home -->
-                <a href="/" class="px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors {% if request.path == '/' %}text-green-600 bg-green-50{% endif %}">
+                <a href="/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if request.path == '/' %}text-green-600 bg-green-50{% endif %}">
                     Home
                 </a>
                 
                 <!-- About Us -->
-                <a href="/about/" class="px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors {% if '/about/' in request.path %}text-green-600 bg-green-50{% endif %}">
+                <a href="/about/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/about/' in request.path %}text-green-600 bg-green-50{% endif %}">
                     About Us
                 </a>
                 
@@ -82,7 +78,7 @@
                 <div class="relative" 
                      @mouseenter="activeDropdown = 'work'"
                      @mouseleave="activeDropdown = null">
-                    <button class="flex items-center px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors group">
+                    <button class="flex items-center px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 group">
                         Our Work
                         <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': activeDropdown === 'work' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -154,15 +150,15 @@
                 </div>
                 
                 <!-- Impact -->
-                <a href="/impact/" class="px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors {% if '/impact/' in request.path %}text-green-600 bg-green-50{% endif %}">
+                <a href="/impact/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/impact/' in request.path %}text-green-600 bg-green-50{% endif %}">
                     Impact
                 </a>
                 
-                <!-- Get Involved Dropdown - ALL HARDCODED -->
+                <!-- Get Involved Dropdown -->
                 <div class="relative" 
                      @mouseenter="activeDropdown = 'involved'"
                      @mouseleave="activeDropdown = null">
-                    <button class="flex items-center px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors">
+                    <button class="flex items-center px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50">
                         Get Involved
                         <svg class="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': activeDropdown === 'involved' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -172,31 +168,31 @@
                     <div x-show="activeDropdown === 'involved'" 
                          x-transition
                          class="absolute left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
-                        <a href="/get-involved/volunteer/" class="block px-6 py-3 hover:bg-green-50 transition-colors">Volunteer</a>
-                        <a href="/get-involved/donate/" class="block px-6 py-3 hover:bg-green-50 transition-colors">Donate</a>
-                        <a href="/get-involved/#partner" class="block px-6 py-3 hover:bg-green-50 transition-colors">Partner with Us</a>
-                        <a href="/get-involved/#innovator" class="block px-6 py-3 hover:bg-green-50 transition-colors">Youth Innovator</a>
+                        <a href="/get-involved/volunteer/" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Volunteer</a>
+                        <a href="/get-involved/donate/" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Donate</a>
+                        <a href="/get-involved/#partner" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Partner with Us</a>
+                        <a href="/get-involved/#innovator" class="block px-6 py-3 hover:bg-green-50 transition-colors font-medium">Youth Innovator</a>
                     </div>
                 </div>
                 
                 <!-- Resources -->
-                <a href="/resources/" class="px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors {% if '/resources/' in request.path %}text-green-600 bg-green-50{% endif %}">
+                <a href="/resources/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/resources/' in request.path %}text-green-600 bg-green-50{% endif %}">
                     Resources
                 </a>
                 
                 <!-- Blog -->
-                <a href="/blog/" class="px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors {% if '/blog/' in request.path %}text-green-600 bg-green-50{% endif %}">
+                <a href="/blog/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/blog/' in request.path %}text-green-600 bg-green-50{% endif %}">
                     Insights
                 </a>
                 
                 <!-- Contact -->
-                <a href="/contact/" class="px-4 py-2 text-gray-700 hover:text-green-600 font-medium rounded-lg transition-colors {% if '/contact/' in request.path %}text-green-600 bg-green-50{% endif %}">
+                <a href="/contact/" class="px-3 py-2 text-gray-700 hover:text-green-600 font-bold uppercase tracking-wide text-sm whitespace-nowrap rounded-lg transition-all duration-300 hover:bg-green-50 {% if '/contact/' in request.path %}text-green-600 bg-green-50{% endif %}">
                     Contact
                 </a>
             </div>
             
             <!-- Right Side Actions -->
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4 ml-4">
                 <!-- Search Button -->
                 <button class="p-2 text-gray-500 hover:text-green-600 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Search">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -205,7 +201,7 @@
                 </button>
                 
                 <!-- Donate Button -->
-                <a href="/get-involved/donate/" class="hidden lg:inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <a href="/get-involved/donate/" class="hidden lg:inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wide text-sm py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl whitespace-nowrap">
                     Donate
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
@@ -227,7 +223,7 @@
         </div>
     </div>
     
-    <!-- Mobile Menu - ALL HARDCODED -->
+    <!-- Mobile Menu -->
     <div x-show="mobileMenuOpen" 
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0 -translate-y-2"
@@ -239,12 +235,12 @@
          @click.away="mobileMenuOpen = false">
         
         <div class="px-4 py-6 space-y-1">
-            <a href="/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-medium">Home</a>
-            <a href="/about/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-medium">About Us</a>
+            <a href="/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Home</a>
+            <a href="/about/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">About Us</a>
             
             <!-- Mobile Work Section -->
             <div class="px-4 py-2">
-                <div class="font-semibold text-gray-900 mb-2">Our Work</div>
+                <div class="font-bold uppercase tracking-wide text-gray-900 mb-2">Our Work</div>
                 <div class="pl-4 space-y-2">
                     <a href="/our-work/innovation-hub/" class="block py-2 text-gray-600 hover:text-green-600">🔬 Innovation Hub</a>
                     <a href="/our-work/indigenous-knowledge/" class="block py-2 text-gray-600 hover:text-green-600">🌿 Indigenous Knowledge</a>
@@ -253,11 +249,11 @@
                 </div>
             </div>
             
-            <a href="/impact/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-medium">Impact</a>
+            <a href="/impact/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Impact</a>
             
             <!-- Mobile Get Involved -->
             <div class="px-4 py-2">
-                <div class="font-semibold text-gray-900 mb-2">Get Involved</div>
+                <div class="font-bold uppercase tracking-wide text-gray-900 mb-2">Get Involved</div>
                 <div class="pl-4 space-y-2">
                     <a href="/get-involved/volunteer/" class="block py-2 text-gray-600 hover:text-green-600">Volunteer</a>
                     <a href="/get-involved/donate/" class="block py-2 text-gray-600 hover:text-green-600">Donate</a>
@@ -265,9 +261,9 @@
                 </div>
             </div>
             
-            <a href="/resources/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-medium">Resources</a>
-            <a href="/blog/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-medium">Insights</a>
-            <a href="/contact/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-medium">Contact</a>
+            <a href="/resources/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Resources</a>
+            <a href="/blog/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Insights</a>
+            <a href="/contact/" class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 rounded-lg font-bold uppercase tracking-wide">Contact</a>
             
             <!-- Mobile Logo -->
             <div class="pt-4 flex justify-center">
@@ -279,7 +275,7 @@
             
             <!-- Mobile Donate Button -->
             <div class="pt-4">
-                <a href="/get-involved/donate/" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                <a href="/get-involved/donate/" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-bold uppercase tracking-wide py-3 px-6 rounded-lg transition-colors">
                     Donate Now
                 </a>
             </div>
