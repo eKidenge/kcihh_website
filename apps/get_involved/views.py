@@ -11,7 +11,7 @@ def volunteer_application(request):
         form = VolunteerApplicationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('get_involved')
+            return redirect('/get-involved/')
     else:
         form = VolunteerApplicationForm()
     return render(request, 'get_involved/volunteer.html', {'form': form})
@@ -21,7 +21,7 @@ def donate(request):
         form = DonationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('get_involved')
+            return redirect('/get-involved/')
     else:
         form = DonationForm()
     return render(request, 'get_involved/donate.html', {'form': form})
