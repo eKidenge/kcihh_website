@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Primary Meta Tags -->
+    <title>{% block title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}</title>
+    <meta name="title" content="{% block meta_title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom for climate-resilient communities.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}climate action, Kenya, youth innovation, indigenous knowledge, sustainability, climate resilience, green technology{% endblock %}">
+    <meta name="author" content="Kenya Climate Innovation & Heritage Hub">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="{% block twitter_title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Youth-led platform advancing grassroots climate solutions across Kenya.{% endblock %}">
+    <meta property="twitter:image" content="{% block twitter_image %}{% static 'images/twitter-image.jpg' %}{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#10b981">
+    <meta name="msapplication-TileColor" content="#10b981">
+    <meta name="theme-color" content="#10b981">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    
+    <!-- Preconnect to External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN (replace with compiled version in production) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    
+    <!-- Additional CSS -->
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "NGO",
+        "name": "Kenya Climate Innovation & Heritage Hub",
+        "alternateName": "KCIHH",
+        "url": "https://www.kcihh.org",
+        "logo": "https://www.kcihh.org{% static 'images/logo.png' %}",
+        "sameAs": [
+            "https://twitter.com/kcihh",
+            "https://www.linkedin.com/company/kcihh",
+            "https://www.facebook.com/kcihh",
+            "https://www.instagram.com/kcihh"
+        ],
+        "description": "Youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Nairobi, Kenya",
+            "addressLocality": "Nairobi",
+            "addressRegion": "Nairobi",
+            "addressCountry": "KE"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+254-XXX-XXXXXX",
+            "contactType": "customer service",
+            "email": "info@kcihh.org"
+        }
+    }
+    </script>
+    
+    <!-- Additional Head Content -->
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="font-['Inter'] antialiased bg-white text-gray-900" 
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+      {% block body_attributes %}{% endblock %}>
+    
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-green-600 text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Loading indicator for HTMX requests -->
+    <div id="loading-indicator" class="fixed top-0 left-0 w-full h-1 bg-green-600 transform -translate-x-full transition-transform duration-300 z-50"></div>
+    
+    
+    <!-- Main content start -->
+    <main id="main-content">

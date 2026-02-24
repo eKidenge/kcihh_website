@@ -1,0 +1,270 @@
+<!-- /home/cs/Desktop/PROJECTS/kcihh_website/apps/impact/templates/impact/impact_list.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Impact - KCIHH{% endblock %}
+
+{% block meta_description %}Track the measurable impact of Kenya Climate Innovation & Heritage Hub - youth trained, startups incubated, trees restored, and indigenous knowledge preserved.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="relative py-20 bg-green-700">
+    <div class="absolute inset-0 opacity-10">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Our Impact</h1>
+        <p class="text-xl text-green-100 max-w-3xl mx-auto">Measuring what matters: Innovation, ecosystems, livelihoods, and knowledge preservation.</p>
+    </div>
+</section>
+
+<!-- Impact Metrics Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Key Metrics</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Real results from grassroots climate action across Kenya</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {% for metric in metrics %}
+            <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                <div class="text-4xl mb-3"><i class="{{ metric.icon }}"></i></div>
+                <div class="text-4xl font-bold text-green-600 mb-2 counter" 
+                     data-target="{{ metric.current_value }}"
+                     style="color: {{ metric.color }}">0</div>
+                <div class="text-gray-600 font-medium">{{ metric.get_metric_type_display }}</div>
+                {% if metric.unit %}
+                <div class="text-sm text-gray-500">{{ metric.unit }}</div>
+                {% endif %}
+                <div class="text-xs text-gray-400 mt-2">Updated: {{ metric.updated_date|date:"M Y" }}</div>
+            </div>
+            {% empty %}
+            <!-- Default metrics if none in database -->
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="text-4xl mb-3"><i class="fas fa-users"></i></div>
+                <div class="text-4xl font-bold text-green-600 mb-2 counter" data-target="500">0</div>
+                <div class="text-gray-600">Youth Trained</div>
+            </div>
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="text-4xl mb-3"><i class="fas fa-rocket"></i></div>
+                <div class="text-4xl font-bold text-green-600 mb-2 counter" data-target="20">0</div>
+                <div class="text-gray-600">Startups Incubated</div>
+            </div>
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="text-4xl mb-3"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="text-4xl font-bold text-green-600 mb-2 counter" data-target="10">0</div>
+                <div class="text-gray-600">Counties Reached</div>
+            </div>
+            <div class="text-center p-6 bg-gray-50 rounded-xl">
+                <div class="text-4xl mb-3"><i class="fas fa-tree"></i></div>
+                <div class="text-4xl font-bold text-green-600 mb-2 counter" data-target="50000">0</div>
+                <div class="text-gray-600">Trees Restored</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Case Studies Section -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Success Stories</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Real communities, real solutions, real impact</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for case in case_studies %}
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                {% if case.image %}
+                <img src="{{ case.image.url }}" alt="{{ case.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                <div class="w-full h-48 bg-green-100 flex items-center justify-center">
+                    <span class="text-4xl">🌍</span>
+                </div>
+                {% endif %}
+                <div class="p-6">
+                    <div class="flex items-center text-sm text-gray-500 mb-2">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded">{{ case.sector }}</span>
+                        <span class="ml-2">{{ case.location }}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ case.title }}</h3>
+                    <p class="text-gray-600 mb-4">{{ case.challenge|striptags|truncatechars:100 }}</p>
+                    <a href="{% url 'impact:case_study_detail' case.slug %}" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                        Read More
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center col-span-3">
+                <p class="text-gray-500">Case studies coming soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if case_studies %}
+        <div class="text-center mt-12">
+            <a href="{% url 'impact:case_study_list' %}" class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
+                View All Case Studies
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Voices from the Community</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Hear from the youth and community leaders driving change</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for testimonial in testimonials %}
+            <div class="bg-gray-50 rounded-xl p-8 relative">
+                <svg class="absolute top-6 right-6 w-8 h-8 text-green-200" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                </svg>
+                <p class="text-gray-600 mb-6 relative z-10">"{{ testimonial.quote }}"</p>
+                <div class="flex items-center">
+                    {% if testimonial.image %}
+                    <img src="{{ testimonial.image.url }}" alt="{{ testimonial.person_name }}" class="w-12 h-12 rounded-full object-cover mr-4">
+                    {% else %}
+                    <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white font-bold mr-4">
+                        {{ testimonial.person_name|first }}
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h4 class="font-bold text-gray-900">{{ testimonial.person_name }}</h4>
+                        <p class="text-sm text-gray-500">{{ testimonial.person_role }}, {{ testimonial.location }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="bg-gray-50 rounded-xl p-8 text-center col-span-3">
+                <p class="text-gray-500">Testimonials coming soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if testimonials %}
+        <div class="text-center mt-12">
+            <a href="{% url 'impact:testimonial_list' %}" class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
+                View All Testimonials
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Annual Reports Section -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Annual Reports</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Download our detailed impact reports</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for report in reports %}
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                {% if report.cover_image %}
+                <img src="{{ report.cover_image.url }}" alt="{{ report.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                <div class="w-full h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                    <span class="text-6xl text-white opacity-50">📄</span>
+                </div>
+                {% endif %}
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ report.title }}</h3>
+                    <p class="text-gray-600 mb-4">{{ report.summary|striptags|truncatechars:100 }}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">{{ report.year }}</span>
+                        <a href="{% url 'impact:download_report' report.year %}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center col-span-3">
+                <p class="text-gray-500">Annual reports coming soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if reports %}
+        <div class="text-center mt-12">
+            <a href="{% url 'impact:report_list' %}" class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
+                View All Reports
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Counter animation with Intersection Observer
+    document.addEventListener('DOMContentLoaded', function() {
+        const counters = document.querySelectorAll('.counter');
+        
+        const animateCounter = (counter) => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const startTime = performance.now();
+            const startValue = 0;
+            
+            const updateCounter = (currentTime) => {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                const currentValue = Math.floor(progress * target);
+                counter.innerText = currentValue.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+            
+            requestAnimationFrame(updateCounter);
+        };
+        
+        // Use Intersection Observer to start animation when visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        counters.forEach(counter => observer.observe(counter));
+    });
+</script>
+{% endblock %}

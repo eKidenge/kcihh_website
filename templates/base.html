@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Primary Meta Tags -->
+    <title>{% block title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}</title>
+    <meta name="title" content="{% block meta_title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom for climate-resilient communities.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}climate action, Kenya, youth innovation, indigenous knowledge, sustainability, climate resilience, green technology{% endblock %}">
+    <meta name="author" content="Kenya Climate Innovation & Heritage Hub">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'images/og-image.jpg' %}{% endblock %}">
+    <meta property="og:site_name" content="KCIHH">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:title" content="{% block twitter_title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Youth-led platform advancing grassroots climate solutions across Kenya.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% static 'images/twitter-image.jpg' %}{% endblock %}">
+    <meta name="twitter:site" content="@kcihh">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#10b981">
+    <meta name="msapplication-TileColor" content="#10b981">
+    <meta name="theme-color" content="#10b981">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    
+    <!-- Preconnect to External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Tailwind Config */
+        @layer base {
+            html {
+                scroll-behavior: smooth;
+                font-family: 'Inter', system-ui, sans-serif;
+            }
+        }
+    </style>
+    
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    
+    <!-- Additional CSS -->
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "NGO",
+        "name": "Kenya Climate Innovation & Heritage Hub",
+        "alternateName": "KCIHH",
+        "url": "https://www.kcihh.org",
+        "logo": "https://www.kcihh.org{% static 'images/logo.png' %}",
+        "sameAs": [
+            "https://twitter.com/kcihh",
+            "https://www.linkedin.com/company/kcihh",
+            "https://www.facebook.com/kcihh",
+            "https://www.instagram.com/kcihh"
+        ],
+        "description": "Youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Nairobi, Kenya",
+            "addressLocality": "Nairobi",
+            "addressRegion": "Nairobi",
+            "addressCountry": "KE"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+254-700-000000",
+            "contactType": "customer service",
+            "email": "info@kcihh.org"
+        },
+        "foundingDate": "2020",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Kenya"
+        }
+    }
+    </script>
+    
+    <!-- Additional Head Content -->
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="font-['Inter'] antialiased bg-white text-gray-900 min-h-screen flex flex-col" 
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+      {% block body_attributes %}{% endblock %}>
+    
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-green-600 text-white px-4 py-2 rounded-lg z-50 focus:outline-none focus:ring-4 focus:ring-green-500/50">
+        Skip to main content
+    </a>
+    
+    <!-- Loading indicator for HTMX requests -->
+    <div id="loading-indicator" class="fixed top-0 left-0 w-full h-1 bg-green-600 transform -translate-x-full transition-transform duration-300 z-50"></div>
+    
+    <!-- Header -->
+    {% include 'includes/header.html' %}
+    
+    <!-- Navigation -->
+    {% include 'includes/navigation.html' %}
+    
+    <!-- Main Content -->
+    <main id="main-content" class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+    
+    <!-- Alpine.js for interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- HTMX for dynamic content -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-green-600 hover:bg-green-700 text-white p-3 rounded-lg shadow-lg transition-all duration-300 opacity-0 invisible hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-500/50 z-40" aria-label="Back to top">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <!-- JavaScript for interactive features -->
+    <script>
+        (function() {
+            // Back to top button functionality
+            const backToTop = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 500) {
+                    backToTop.classList.remove('opacity-0', 'invisible');
+                    backToTop.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTop.classList.add('opacity-0', 'invisible');
+                    backToTop.classList.remove('opacity-100', 'visible');
+                }
+            });
+            
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // HTMX loading indicator
+            document.body.addEventListener('htmx:beforeRequest', function() {
+                const indicator = document.getElementById('loading-indicator');
+                if (indicator) indicator.classList.remove('-translate-x-full');
+            });
+            
+            document.body.addEventListener('htmx:afterRequest', function() {
+                const indicator = document.getElementById('loading-indicator');
+                if (indicator) indicator.classList.add('-translate-x-full');
+            });
+
+            // Add active state to current navigation item
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('nav a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href !== '#' && currentPath.startsWith(href) && href !== '/') {
+                    link.classList.add('text-green-600', 'bg-green-50');
+                } else if (href === '/' && currentPath === '/') {
+                    link.classList.add('text-green-600', 'bg-green-50');
+                }
+            });
+        })();
+    </script>
+    
+    <!-- Additional Scripts -->
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

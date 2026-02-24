@@ -1,0 +1,857 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}KCIHH - Kenya Climate Innovation & Heritage Hub{% endblock %}
+
+{% block meta_description %}Youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom for climate-resilient communities.{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ===== PROFESSIONAL ANIMATIONS ===== */
+    
+    /* Hero Slider Styles */
+    .hero-slider {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+    }
+    
+    .hero-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        background-size: cover;
+        background-position: center;
+        transform: scale(1.05);
+        transition: opacity 1.5s ease, transform 8s ease;
+    }
+    
+    .hero-slide.active {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    .hero-slide::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 100%);
+    }
+    
+    /* Smooth transitions */
+    .fade-up {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .fade-up.appear {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .fade-in {
+        opacity: 0;
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .fade-in.appear {
+        opacity: 1;
+    }
+    
+    /* Scale on hover */
+    .scale-hover {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .scale-hover:hover {
+        transform: scale(1.02);
+    }
+    
+    /* Image overlay */
+    .image-overlay {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .image-overlay::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .image-overlay:hover::after {
+        opacity: 1;
+    }
+    
+    /* Progress bar for slider */
+    .slider-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: #10b981;
+        width: 0%;
+        transition: width 5s linear;
+        z-index: 20;
+    }
+    
+    .slider-progress.active {
+        width: 100%;
+    }
+    
+    /* Card styles */
+    .pillar-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .pillar-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    /* Counter styles */
+    .counter-item {
+        position: relative;
+    }
+    
+    .counter-item::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 2px;
+        background: #10b981;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .counter-item:hover::after {
+        opacity: 1;
+    }
+    
+    /* Blog card */
+    .blog-card {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .blog-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .blog-image {
+        overflow: hidden;
+    }
+    
+    .blog-image img {
+        transition: transform 0.5s ease;
+    }
+    
+    .blog-card:hover .blog-image img {
+        transform: scale(1.05);
+    }
+    
+    /* Newsletter */
+    .newsletter-input {
+        transition: all 0.3s ease;
+    }
+    
+    .newsletter-input:focus {
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+    
+    /* Slide indicators */
+    .slide-indicator {
+        width: 40px;
+        height: 2px;
+        background: rgba(255,255,255,0.3);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .slide-indicator.active {
+        background: #10b981;
+        width: 60px;
+    }
+    
+    /* Parallax effect */
+    .parallax {
+        transition: transform 0.1s linear;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ===== CINEMATIC HERO WITH SLIDING IMAGES ===== -->
+<section class="relative h-screen overflow-hidden" id="hero">
+    <!-- Slider Container -->
+    <div class="hero-slider" id="hero-slider">
+        <!-- Slide 1: Youth Innovation -->
+        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
+        
+        <!-- Slide 2: Indigenous Knowledge -->
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
+        
+        <!-- Slide 3: Community Action -->
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
+        
+        <!-- Slide 4: Climate Innovation -->
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
+        
+        <!-- Slide 5: Tree Planting -->
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
+    </div>
+    
+    <!-- Progress Bar -->
+    <div class="slider-progress" id="slider-progress"></div>
+    
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80 z-10"></div>
+    
+    <!-- Slide Indicators -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex space-x-3">
+        <div class="slide-indicator active" data-index="0"></div>
+        <div class="slide-indicator" data-index="1"></div>
+        <div class="slide-indicator" data-index="2"></div>
+        <div class="slide-indicator" data-index="3"></div>
+        <div class="slide-indicator" data-index="4"></div>
+    </div>
+    
+    <!-- Slide Controls -->
+    <button class="absolute left-8 top-1/2 transform -translate-y-1/2 z-30 text-white/50 hover:text-white transition-colors" id="prev-slide">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+    <button class="absolute right-8 top-1/2 transform -translate-y-1/2 z-30 text-white/50 hover:text-white transition-colors" id="next-slide">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+    </button>
+    
+    <!-- Hero Content -->
+    <div class="relative z-20 h-full flex items-center justify-center text-center text-white px-4 max-w-7xl mx-auto">
+        <div class="max-w-4xl">
+            <!-- Animated Badge -->
+            <div class="fade-up" data-delay="0">
+                <span class="inline-block px-4 py-2 bg-green-600/20 backdrop-blur-sm rounded-full text-sm font-semibold tracking-wider text-green-400 mb-6 border border-green-500/30">
+                    KENYA CLIMATE INNOVATION & HERITAGE HUB
+                </span>
+            </div>
+            
+            <!-- Headline with staggered animation -->
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <span class="fade-up block" data-delay="100">Youth-Led.</span>
+                <span class="fade-up block" data-delay="200">Community-Driven.</span>
+                <span class="fade-up block text-green-400" data-delay="300">Climate Solutions for Kenya.</span>
+            </h1>
+            
+            <!-- Subheading -->
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-gray-200 leading-relaxed fade-up" data-delay="400">
+                We incubate climate innovations, preserve indigenous knowledge, and empower grassroots communities to build a climate-resilient future.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-up" data-delay="500">
+                <a href="/get-involved/" class="group inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    Join the Movement
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+                <a href="/contact/" class="group inline-flex items-center justify-center border-2 border-white hover:bg-white hover:text-gray-900 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 backdrop-blur-sm">
+                    Partner with Us
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="flex flex-wrap justify-center gap-8 mt-12 fade-up" data-delay="600">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-400">500+</div>
+                    <div class="text-sm text-gray-300">Youth Trained</div>
+                </div>
+                <div class="w-px h-10 bg-white/20"></div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-400">20</div>
+                    <div class="text-sm text-gray-300">Startups</div>
+                </div>
+                <div class="w-px h-10 bg-white/20"></div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-400">10</div>
+                    <div class="text-sm text-gray-300">Counties</div>
+                </div>
+                <div class="w-px h-10 bg-white/20"></div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-400">50K</div>
+                    <div class="text-sm text-gray-300">Trees</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+        <svg class="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- ===== IMPACT METRICS BAR ===== -->
+<div class="bg-green-800 text-white py-3 border-t border-b border-green-700">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-wrap justify-center items-center gap-8 text-sm">
+            <div class="flex items-center">
+                <div class="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                <span><span class="font-bold">500+</span> Youth Trained</span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                <span><span class="font-bold">20</span> Startups Incubated</span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                <span><span class="font-bold">50K</span> Trees Restored</span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                <span><span class="font-bold">15</span> Knowledge Archives</span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                <span><span class="font-bold">10</span> Counties</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== ABOUT SNAPSHOT ===== -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Left Column -->
+            <div>
+                <span class="text-green-600 font-semibold text-sm tracking-wider uppercase mb-3 block fade-up">Our Purpose</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 fade-up" data-delay="100">Bridging Innovation with Heritage</h2>
+                <div class="w-16 h-1 bg-green-600 mb-6 fade-up" data-delay="150"></div>
+                <p class="text-gray-600 text-lg leading-relaxed mb-6 fade-up" data-delay="200">
+                    Kenya Climate Innovation & Heritage Hub (KCIHH) is a youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom to design scalable, community-driven climate action.
+                </p>
+                
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-3 gap-4 mt-8">
+                    <div class="text-center p-4 bg-gray-50 rounded-lg fade-up" data-delay="250">
+                        <div class="text-2xl font-bold text-green-600">500+</div>
+                        <div class="text-sm text-gray-600">Youth</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg fade-up" data-delay="300">
+                        <div class="text-2xl font-bold text-green-600">15</div>
+                        <div class="text-sm text-gray-600">Archives</div>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-lg fade-up" data-delay="350">
+                        <div class="text-2xl font-bold text-green-600">50</div>
+                        <div class="text-sm text-gray-600">Communities</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Image Grid -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-3">
+                    <div class="rounded-lg overflow-hidden h-40 image-overlay fade-up" data-delay="200">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Youth" class="w-full h-full object-cover scale-hover">
+                    </div>
+                    <div class="rounded-lg overflow-hidden h-52 image-overlay fade-up" data-delay="250">
+                        <img src="https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Community" class="w-full h-full object-cover scale-hover">
+                    </div>
+                </div>
+                <div class="space-y-3 mt-6">
+                    <div class="rounded-lg overflow-hidden h-52 image-overlay fade-up" data-delay="300">
+                        <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Innovation" class="w-full h-full object-cover scale-hover">
+                    </div>
+                    <div class="rounded-lg overflow-hidden h-40 image-overlay fade-up" data-delay="350">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Knowledge" class="w-full h-full object-cover scale-hover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== OUR PILLARS ===== -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-green-600 font-semibold text-sm tracking-wider uppercase mb-3 block fade-up">What We Do</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 fade-up" data-delay="100">Our Strategic Pillars</h2>
+            <p class="text-gray-600 fade-up" data-delay="150">Four interconnected approaches driving climate resilience across Kenya</p>
+        </div>
+        
+        <!-- Pillars Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- Pillar 1: Innovation Lab -->
+            <div class="pillar-card fade-up" data-delay="200">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-2xl">🔬</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Innovation Lab</h3>
+                    <p class="text-sm text-gray-600 mb-4">Supporting youth-led climate enterprises and scalable green technologies.</p>
+                    <a href="#" class="text-green-600 text-sm font-semibold flex items-center group">
+                        Learn more
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Pillar 2: Indigenous Knowledge -->
+            <div class="pillar-card fade-up" data-delay="250">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-2xl">🌿</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Indigenous Knowledge</h3>
+                    <p class="text-sm text-gray-600 mb-4">Documenting and preserving traditional ecological systems.</p>
+                    <a href="#" class="text-green-600 text-sm font-semibold flex items-center group">
+                        Learn more
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Pillar 3: Training & Fellowship -->
+            <div class="pillar-card fade-up" data-delay="300">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-2xl">📚</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Training & Fellowship</h3>
+                    <p class="text-sm text-gray-600 mb-4">Building next-gen climate leaders through mentorship.</p>
+                    <a href="#" class="text-green-600 text-sm font-semibold flex items-center group">
+                        Learn more
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Pillar 4: Community Action -->
+            <div class="pillar-card fade-up" data-delay="350">
+                <div class="p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <span class="text-2xl">🤝</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Community Action</h3>
+                    <p class="text-sm text-gray-600 mb-4">Partnering with counties for locally-led solutions.</p>
+                    <a href="#" class="text-green-600 text-sm font-semibold flex items-center group">
+                        Learn more
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== IMPACT HIGHLIGHTS ===== -->
+<section class="py-16 bg-green-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-green-200 font-semibold text-sm tracking-wider uppercase mb-3 block fade-up">Our Impact</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 fade-up" data-delay="100">Measuring What Matters</h2>
+            <p class="text-green-100 fade-up" data-delay="150">Real results from grassroots climate action across Kenya</p>
+        </div>
+        
+        <!-- Impact Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+            <div class="text-center text-white counter-item fade-up" data-delay="200">
+                <div class="text-3xl md:text-4xl font-bold text-green-200 mb-2 counter" data-target="500">0</div>
+                <div class="text-xs uppercase tracking-wider">Youth Trained</div>
+            </div>
+            <div class="text-center text-white counter-item fade-up" data-delay="250">
+                <div class="text-3xl md:text-4xl font-bold text-green-200 mb-2 counter" data-target="20">0</div>
+                <div class="text-xs uppercase tracking-wider">Startups</div>
+            </div>
+            <div class="text-center text-white counter-item fade-up" data-delay="300">
+                <div class="text-3xl md:text-4xl font-bold text-green-200 mb-2 counter" data-target="10">0</div>
+                <div class="text-xs uppercase tracking-wider">Counties</div>
+            </div>
+            <div class="text-center text-white counter-item fade-up" data-delay="350">
+                <div class="text-3xl md:text-4xl font-bold text-green-200 mb-2 counter" data-target="50000">0</div>
+                <div class="text-xs uppercase tracking-wider">Trees</div>
+            </div>
+            <div class="text-center text-white counter-item fade-up" data-delay="400">
+                <div class="text-3xl md:text-4xl font-bold text-green-200 mb-2 counter" data-target="15">0</div>
+                <div class="text-xs uppercase tracking-wider">Archives</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FEATURED WORK ===== -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <span class="text-green-600 font-semibold text-sm tracking-wider uppercase mb-3 block fade-up">Success Stories</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 fade-up" data-delay="100">Climate Action in Motion</h2>
+            </div>
+            <a href="{% url 'impact' %}" class="text-green-600 hover:text-green-700 font-semibold flex items-center fade-up" data-delay="150">
+                View all stories
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+        
+        <!-- Stories Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <!-- Story 1 -->
+            <div class="relative rounded-xl overflow-hidden group h-64 fade-up" data-delay="200">
+                <img src="https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Community" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-5">
+                    <span class="px-2 py-1 bg-green-600 text-white rounded text-xs font-semibold mb-2 inline-block">Water Harvesting</span>
+                    <h3 class="text-xl font-bold text-white mb-1">Kitui County</h3>
+                    <p class="text-sm text-gray-200">5,000 households reached with clean water</p>
+                </div>
+            </div>
+            
+            <!-- Story 2 -->
+            <div class="relative rounded-xl overflow-hidden group h-64 fade-up" data-delay="250">
+                <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Youth" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-5">
+                    <span class="px-2 py-1 bg-green-600 text-white rounded text-xs font-semibold mb-2 inline-block">Youth Innovation</span>
+                    <h3 class="text-xl font-bold text-white mb-1">EcoChar Startup</h3>
+                    <p class="text-sm text-gray-200">Converting waste to clean cooking fuel</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mini Stories Row -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
+            <div class="relative rounded-lg overflow-hidden h-24 group">
+                <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="absolute bottom-2 left-2 text-white text-xs font-semibold">50K Trees</div>
+            </div>
+            <div class="relative rounded-lg overflow-hidden h-24 group">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="absolute bottom-2 left-2 text-white text-xs font-semibold">15 Archives</div>
+            </div>
+            <div class="relative rounded-lg overflow-hidden h-24 group">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="absolute bottom-2 left-2 text-white text-xs font-semibold">500+ Youth</div>
+            </div>
+            <div class="relative rounded-lg overflow-hidden h-24 group">
+                <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-105 transition">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="absolute bottom-2 left-2 text-white text-xs font-semibold">20 Startups</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== LATEST INSIGHTS ===== -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <span class="text-green-600 font-semibold text-sm tracking-wider uppercase mb-3 block fade-up">Insights</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 fade-up" data-delay="100">Latest Updates</h2>
+            </div>
+            <a href="/blog/" class="text-green-600 hover:text-green-700 font-semibold flex items-center fade-up" data-delay="150">
+                View all posts
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+        
+        <!-- Blog Posts Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Post 1 -->
+            <article class="blog-card fade-up" data-delay="200">
+                <div class="blog-image h-40">
+                    <img src="https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Post" class="w-full h-full object-cover">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center text-xs text-gray-500 mb-2">
+                        <span>March 15, 2025</span>
+                        <span class="mx-2">•</span>
+                        <span class="text-green-600">Climate Action</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Youth-Led Restoration in Kitui</h3>
+                    <p class="text-sm text-gray-600 mb-3">How young innovators are bringing degraded lands back to life using indigenous techniques.</p>
+                    <a href="#" class="text-green-600 text-sm font-semibold flex items-center group">
+                        Read article
+                        <svg class="w-3 h-3 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+            
+            <!-- Post 2 -->
+            <article class="blog-card fade-up" data-delay="250">
+                <div class="blog-image h-40">
+                    <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Post" class="w-full h-full object-cover">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center text-xs text-gray-500 mb-2">
+                        <span>March 10, 2025</span>
+                        <span class="mx-2">•</span>
+                        <span class="text-green-600">Innovation</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Solar Irrigation Transforms Farms</h3>
+                    <p class="text-sm text-gray-600 mb-3">Smallholder farmers in semi-arid regions adopt solar-powered solutions.</p>
+                    <a href="#" class="text-green-600 text-sm font-semibold flex items-center group">
+                        Read article
+                        <svg class="w-3 h-3 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+            
+            <!-- Post 3 -->
+            <article class="blog-card fade-up" data-delay="300">
+                <div class="blog-image h-40">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Post" class="w-full h-full object-cover">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center text-xs text-gray-500 mb-2">
+                        <span>March 5, 2025</span>
+                        <span class="mx-2">•</span>
+                        <span class="text-green-600">Heritage</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Youth-Elder Knowledge Exchange</h3>
+                    <p class="text-sm text-gray-600 mb-3">Bridging generations to preserve indigenous forecasting methods.</p>
+                    <a href="#" class="text-green-600 text-sm font-semibold flex items-center group">
+                        Read article
+                        <svg class="w-3 h-3 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PARTNER LOGOS ===== -->
+<section class="py-10 bg-white border-t border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4">
+        <p class="text-center text-gray-400 text-xs font-semibold tracking-wide mb-6">TRUSTED BY LEADING ORGANIZATIONS</p>
+        <div class="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            <span class="text-gray-500 font-bold text-sm">UNDP</span>
+            <span class="text-gray-500 font-bold text-sm">GIZ</span>
+            <span class="text-gray-500 font-bold text-sm">WWF</span>
+            <span class="text-gray-500 font-bold text-sm">KENYA GOVT</span>
+            <span class="text-gray-500 font-bold text-sm">MASTERCARD</span>
+            <span class="text-gray-500 font-bold text-sm">ROCKEFELLER</span>
+            <span class="text-gray-500 font-bold text-sm">USAID</span>
+        </div>
+    </div>
+</section>
+
+<!-- ===== NEWSLETTER ===== -->
+<section class="py-12 bg-gray-900">
+    <div class="max-w-5xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <h3 class="text-xl font-bold text-white mb-1">Join the Movement</h3>
+                <p class="text-sm text-gray-400">Get weekly updates on climate action and innovation opportunities</p>
+            </div>
+            
+            <form class="flex-1 max-w-md flex gap-2">
+                <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-2 rounded-lg text-sm bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-600">
+                <button type="submit" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Hero Slider Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.hero-slide');
+        const indicators = document.querySelectorAll('.slide-indicator');
+        const progress = document.getElementById('slider-progress');
+        let currentSlide = 0;
+        const slideCount = slides.length;
+        let slideInterval;
+        let progressInterval;
+        
+        // Show slide function
+        function showSlide(index) {
+            // Remove active class from all slides and indicators
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(ind => ind.classList.remove('active'));
+            
+            // Add active class to current slide and indicator
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            // Reset progress bar
+            progress.classList.remove('active');
+            setTimeout(() => {
+                progress.classList.add('active');
+            }, 10);
+        }
+        
+        // Next slide
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slideCount;
+            showSlide(currentSlide);
+        }
+        
+        // Previous slide
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+            showSlide(currentSlide);
+        }
+        
+        // Start auto-slide
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+        
+        // Reset auto-slide
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+        
+        // Event listeners for controls
+        document.getElementById('next-slide').addEventListener('click', () => {
+            nextSlide();
+            resetAutoSlide();
+        });
+        
+        document.getElementById('prev-slide').addEventListener('click', () => {
+            prevSlide();
+            resetAutoSlide();
+        });
+        
+        // Event listeners for indicators
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+                resetAutoSlide();
+            });
+        });
+        
+        // Pause auto-slide on hover
+        const hero = document.getElementById('hero');
+        hero.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        hero.addEventListener('mouseleave', () => {
+            startAutoSlide();
+        });
+        
+        // Start auto-slide
+        startAutoSlide();
+        showSlide(0);
+    });
+
+    // Fade-up animation on scroll
+    const fadeElements = document.querySelectorAll('.fade-up, .fade-in');
+    
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('appear');
+                }, entry.target.dataset.delay || 0);
+                fadeObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+    
+    fadeElements.forEach(el => fadeObserver.observe(el));
+
+    // Counter animation
+    const counters = document.querySelectorAll('.counter');
+    
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.getAttribute('data-target'));
+                let count = 0;
+                const duration = 2000;
+                const stepTime = 20;
+                const steps = duration / stepTime;
+                const increment = target / steps;
+                
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count < target) {
+                        counter.innerText = Math.floor(count).toLocaleString();
+                    } else {
+                        counter.innerText = target.toLocaleString();
+                        clearInterval(timer);
+                    }
+                }, stepTime);
+                
+                counterObserver.unobserve(counter);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    counters.forEach(counter => counterObserver.observe(counter));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,301 @@
+<!-- /home/cs/Desktop/PROJECTS/kcihh_website/apps/blog/templates/blog/index.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load hitcount_tags %}
+
+{% block title %}Blog - KCIHH{% endblock %}
+
+{% block meta_description %}Read the latest stories, insights, and updates from the Kenya Climate Innovation & Heritage Hub on climate action, innovation, and heritage preservation.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="relative py-20 bg-green-700">
+    <div class="absolute inset-0 opacity-10">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Our Blog</h1>
+        <p class="text-xl text-green-100 max-w-3xl mx-auto">Stories, insights, and updates from the frontlines of climate innovation and heritage preservation</p>
+    </div>
+</section>
+
+<!-- Featured Post Section -->
+{% if featured_post %}
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Featured Story</h2>
+        
+        <div class="bg-gradient-to-r from-green-600 to-green-800 rounded-2xl overflow-hidden shadow-xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+                <div class="h-64 lg:h-auto">
+                    {% if featured_post.featured_image %}
+                    <img src="{{ featured_post.featured_image.url }}" alt="{{ featured_post.title }}" class="w-full h-full object-cover">
+                    {% else %}
+                    <div class="w-full h-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
+                        <span class="text-8xl text-white opacity-50">📝</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-8 lg:p-12 text-white">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">Featured</span>
+                        <span class="text-green-100">{{ featured_post.category.name }}</span>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">{{ featured_post.title }}</h3>
+                    <p class="text-green-100 mb-6">{{ featured_post.summary }}</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-700 font-bold">
+                                {{ featured_post.author.get_full_name|first|default:'K' }}
+                            </div>
+                            <div class="ml-3">
+                                <p class="font-semibold">{{ featured_post.author.get_full_name|default:'KCIHH Team' }}</p>
+                                <p class="text-sm text-green-200">{{ featured_post.published_date|date:"F j, Y" }} • {% get_hit_count for featured_post %} views • {{ featured_post.read_time }} min read</p>
+                            </div>
+                        </div>
+                        <a href="{{ featured_post.get_absolute_url }}" class="bg-white text-green-700 hover:bg-green-50 px-6 py-2 rounded-lg font-semibold transition-colors">
+                            Read Story
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Blog Posts Grid -->
+<section class="py-16 {% if featured_post %}bg-gray-50{% else %}bg-white{% endif %}">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Category Filter -->
+        <div class="flex flex-wrap gap-3 mb-8 justify-center">
+            <a href="{% url 'blog:blog_list' %}" class="px-4 py-2 rounded-full {% if not selected_category %}bg-green-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition-colors">
+                All
+            </a>
+            {% for category in categories %}
+            <a href="?category={{ category.slug }}" class="px-4 py-2 rounded-full {% if selected_category == category.slug %}bg-green-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition-colors">
+                {{ category.name }}
+            </a>
+            {% endfor %}
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="max-w-2xl mx-auto mb-12">
+            <form method="get" class="relative">
+                <input type="text" name="q" value="{{ search_query }}" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                <svg class="absolute left-4 top-3.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <button type="submit" class="absolute right-2 top-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    Search
+                </button>
+            </form>
+        </div>
+        
+        <!-- Posts Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for post in posts %}
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <a href="{{ post.get_absolute_url }}" class="block">
+                    <div class="h-48 overflow-hidden relative">
+                        {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                            <span class="text-6xl text-white opacity-50">📄</span>
+                        </div>
+                        {% endif %}
+                        {% if post.featured %}
+                        <span class="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-2 py-1 rounded text-xs font-semibold">Featured</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                {{ post.category.name|default:'Uncategorized' }}
+                            </span>
+                            <span class="text-xs text-gray-500">{{ post.published_date|date:"M j, Y" }}</span>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 hover:text-green-600 transition-colors">
+                            {{ post.title }}
+                        </h3>
+                        
+                        <p class="text-gray-600 mb-4">{{ post.summary|truncatechars:120 }}</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                                    {{ post.author.get_full_name|first|default:'K' }}
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600">{{ post.author.get_full_name|default:'KCIHH Team' }}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                {% get_hit_count for post %}
+                                <span class="mx-2">•</span>
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                {{ post.read_time }} min
+                            </div>
+                        </div>
+                        
+                        <!-- Tags -->
+                        {% if post.tags.all %}
+                        <div class="mt-4 flex flex-wrap gap-1">
+                            {% for tag in post.tags.all|slice:":3" %}
+                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">#{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </a>
+            </article>
+            {% empty %}
+            <div class="col-span-3 text-center py-12">
+                <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                </svg>
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">No Posts Found</h3>
+                <p class="text-gray-500">Check back soon for new stories and updates.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="mt-12 flex justify-center">
+            <nav class="inline-flex rounded-md shadow">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="px-4 py-2 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 text-sm font-medium text-gray-700">
+                    Previous
+                </a>
+                {% endif %}
+                
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="px-4 py-2 bg-green-600 border border-green-600 text-white text-sm font-medium">{{ num }}</span>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-sm font-medium text-gray-700">
+                        {{ num }}
+                    </a>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="px-4 py-2 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 text-sm font-medium text-gray-700">
+                    Next
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Browse by Category</h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <a href="?category=explainers" class="bg-green-50 hover:bg-green-100 rounded-lg p-6 text-center transition-colors group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🌍</div>
+                <h3 class="font-medium text-gray-900">Climate Explainers</h3>
+                <p class="text-xs text-gray-500 mt-1">{{ categories.explainers_count|default:'0' }} articles</p>
+            </a>
+            
+            <a href="?category=spotlight" class="bg-blue-50 hover:bg-blue-100 rounded-lg p-6 text-center transition-colors group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">👥</div>
+                <h3 class="font-medium text-gray-900">Community Spotlight</h3>
+                <p class="text-xs text-gray-500 mt-1">{{ categories.spotlight_count|default:'0' }} articles</p>
+            </a>
+            
+            <a href="?category=innovation" class="bg-purple-50 hover:bg-purple-100 rounded-lg p-6 text-center transition-colors group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🚀</div>
+                <h3 class="font-medium text-gray-900">Innovation Features</h3>
+                <p class="text-xs text-gray-500 mt-1">{{ categories.innovation_count|default:'0' }} articles</p>
+            </a>
+            
+            <a href="?category=youth_voices" class="bg-orange-50 hover:bg-orange-100 rounded-lg p-6 text-center transition-colors group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🗣️</div>
+                <h3 class="font-medium text-gray-900">Youth Voices</h3>
+                <p class="text-xs text-gray-500 mt-1">{{ categories.youth_count|default:'0' }} articles</p>
+            </a>
+            
+            <a href="?category=indigenous" class="bg-amber-50 hover:bg-amber-100 rounded-lg p-6 text-center transition-colors group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">📚</div>
+                <h3 class="font-medium text-gray-900">Indigenous Knowledge</h3>
+                <p class="text-xs text-gray-500 mt-1">{{ categories.indigenous_count|default:'0' }} articles</p>
+            </a>
+            
+            <a href="?category=events" class="bg-red-50 hover:bg-red-100 rounded-lg p-6 text-center transition-colors group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">📅</div>
+                <h3 class="font-medium text-gray-900">Event Reports</h3>
+                <p class="text-xs text-gray-500 mt-1">{{ categories.events_count|default:'0' }} articles</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Tags -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Popular Topics</h2>
+        
+        <div class="flex flex-wrap gap-3 justify-center">
+            <a href="?tag=climate-action" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #climate-action
+            </a>
+            <a href="?tag=indigenous-knowledge" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #indigenous-knowledge
+            </a>
+            <a href="?tag=youth-innovation" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #youth-innovation
+            </a>
+            <a href="?tag=ecosystem-restoration" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #ecosystem-restoration
+            </a>
+            <a href="?tag=tree-planting" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #tree-planting
+            </a>
+            <a href="?tag=climate-finance" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #climate-finance
+            </a>
+            <a href="?tag=women-leadership" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #women-leadership
+            </a>
+            <a href="?tag=agroecology" class="px-4 py-2 bg-white rounded-full shadow hover:shadow-md text-gray-700 hover:text-green-600 transition-all">
+                #agroecology
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-16 bg-green-700">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Subscribe to Our Newsletter</h2>
+        <p class="text-xl text-green-100 mb-8">Get the latest stories and updates delivered to your inbox</p>
+        
+        <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+            <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none" required>
+            <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-8 py-3 rounded-lg font-semibold transition-colors">
+                Subscribe
+            </button>
+        </form>
+        
+        <p class="text-sm text-green-200 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+    </div>
+</section>
+{% endblock %}

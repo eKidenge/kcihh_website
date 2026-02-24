@@ -1,0 +1,453 @@
+<!-- /home/cs/Desktop/PROJECTS/kcihh_website/apps/get_involved/templates/get_involved/index.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Get Involved - KCIHH{% endblock %}
+
+{% block meta_description %}Join the Kenya Climate Innovation & Heritage Hub. Discover opportunities to volunteer, donate, partner with us, or become a youth innovator.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="relative py-20 bg-green-700">
+    <div class="absolute inset-0 opacity-10">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Get Involved</h1>
+        <p class="text-xl text-green-100 max-w-3xl mx-auto">Join a community of changemakers working at the intersection of climate innovation, ecosystem restoration, and heritage preservation</p>
+    </div>
+</section>
+
+<!-- Introduction -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Together, We Can Make a Difference</h2>
+        <p class="text-lg text-gray-600 mb-8">
+            Whether you're a youth innovator with a groundbreaking idea, a professional looking to volunteer your skills, 
+            or an organization seeking partnership, there's a place for you at KCIHH. Your involvement helps us train the 
+            next generation of climate leaders, restore critical ecosystems, and preserve invaluable indigenous knowledge.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <div class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">🌱 50K+ Trees Planted</div>
+            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">👥 500+ Youth Trained</div>
+            <div class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">📚 100+ Indigenous Practices</div>
+        </div>
+    </div>
+</section>
+
+<!-- Involvement Options -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Ways to Get Involved</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for option in options %}
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                {% if option.icon %}
+                <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                    <img src="{{ option.icon.url }}" alt="{{ option.title }}" class="w-24 h-24 object-contain filter brightness-0 invert opacity-80 group-hover:scale-110 transition-transform">
+                </div>
+                {% else %}
+                <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">
+                        {% if option.option_type == 'innovator' %}🚀
+                        {% elif option.option_type == 'volunteer' %}🤝
+                        {% elif option.option_type == 'community' %}🌍
+                        {% elif option.option_type == 'corporate' %}🏢
+                        {% elif option.option_type == 'donor' %}❤️
+                        {% elif option.option_type == 'researcher' %}🔬
+                        {% else %}✨
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
+                
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ option.title }}</h3>
+                    <div class="prose prose-sm text-gray-600 mb-4">
+                        {{ option.description|safe|truncatechars_html:150 }}
+                    </div>
+                    
+                    {% if option.option_type == 'innovator' %}
+                    <a href="{% url 'get_involved:innovator' %}" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        {{ option.call_to_action }}
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    {% elif option.option_type == 'volunteer' %}
+                    <a href="/get-involved/volunteer/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        {{ option.call_to_action }}
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    {% elif option.option_type == 'donor' %}
+                    <a href="/get-involved/donate/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        {{ option.call_to_action }}
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    {% elif option.form_link %}
+                    <a href="{{ option.form_link }}" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold" target="_blank">
+                        {{ option.call_to_action }}
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </a>
+                    {% else %}
+                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        {{ option.call_to_action }}
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default options if none in database -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🚀</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Youth Innovator</h3>
+                    <p class="text-gray-600 mb-4">Have a climate innovation idea? Join our incubation program and turn your vision into reality.</p>
+                    <a href="/get-involved/innovator/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        Apply Now
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                <div class="h-48 bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
+                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🤝</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Volunteer</h3>
+                    <p class="text-gray-600 mb-4">Share your skills and time to support our programs in restoration, training, and documentation.</p>
+                    <a href="/get-involved/volunteer/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        Join as Volunteer
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                <div class="h-48 bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center">
+                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🌍</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Community Partner</h3>
+                    <p class="text-gray-600 mb-4">Partner with us to bring climate action and heritage preservation to your community.</p>
+                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        Become a Partner
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                <div class="h-48 bg-gradient-to-br from-orange-600 to-orange-800 flex items-center justify-center">
+                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🏢</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Corporate Sponsor</h3>
+                    <p class="text-gray-600 mb-4">Align your brand with climate action through strategic partnership and sponsorship.</p>
+                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        Partner With Us
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                <div class="h-48 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
+                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">❤️</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Donor</h3>
+                    <p class="text-gray-600 mb-4">Support our work through one-time or recurring donations. Every contribution counts.</p>
+                    <a href="/get-involved/donate/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        Make a Donation
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                <div class="h-48 bg-gradient-to-br from-teal-600 to-teal-800 flex items-center justify-center">
+                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🔬</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Research Collaborator</h3>
+                    <p class="text-gray-600 mb-4">Collaborate on research around climate innovation, indigenous knowledge, and restoration.</p>
+                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                        Collaborate
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Programs -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Featured Programs</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="flex flex-col md:flex-row bg-green-50 rounded-xl overflow-hidden">
+                <div class="md:w-1/3 bg-green-600 flex items-center justify-center p-6">
+                    <span class="text-6xl">🌱</span>
+                </div>
+                <div class="md:w-2/3 p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ecosystem Restoration Corps</h3>
+                    <p class="text-gray-600 mb-4">Join our restoration efforts across Kenya. Help plant trees, restore degraded land, and monitor biodiversity.</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Multiple locations across Kenya</span>
+                    </div>
+                    <a href="/get-involved/volunteer/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                        Learn More
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row bg-blue-50 rounded-xl overflow-hidden">
+                <div class="md:w-1/3 bg-blue-600 flex items-center justify-center p-6">
+                    <span class="text-6xl">👥</span>
+                </div>
+                <div class="md:w-2/3 p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Youth Climate Innovation Fellowship</h3>
+                    <p class="text-gray-600 mb-4">A 6-month program for young innovators to develop and scale climate solutions.</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Applications open: March - May 2026</span>
+                    </div>
+                    <a href="/get-involved/innovator/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                        Apply Now
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row bg-purple-50 rounded-xl overflow-hidden">
+                <div class="md:w-1/3 bg-purple-600 flex items-center justify-center p-6">
+                    <span class="text-6xl">📚</span>
+                </div>
+                <div class="md:w-2/3 p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Indigenous Knowledge Documentation Project</h3>
+                    <p class="text-gray-600 mb-4">Help document and preserve traditional knowledge related to climate adaptation and conservation.</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <span>Remote & field opportunities</span>
+                    </div>
+                    <a href="/get-involved/volunteer/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                        Get Involved
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row bg-orange-50 rounded-xl overflow-hidden">
+                <div class="md:w-1/3 bg-orange-600 flex items-center justify-center p-6">
+                    <span class="text-6xl">💧</span>
+                </div>
+                <div class="md:w-2/3 p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Water Harvesting Initiative</h3>
+                    <p class="text-gray-600 mb-4">Support community water harvesting projects that build climate resilience.</p>
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Fundraising goal: $50,000</span>
+                    </div>
+                    <a href="/get-involved/donate/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                        Support the Project
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Impact Counter -->
+<section class="py-16 bg-green-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-bold text-white counter" data-target="500">0</div>
+                <div class="text-green-100">Active Volunteers</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-white counter" data-target="50">0</div>
+                <div class="text-green-100">Community Partners</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-white counter" data-target="1000">0</div>
+                <div class="text-green-100">Donors</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-white counter" data-target="25">0</div>
+                <div class="text-green-100">Corporate Sponsors</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Voices from Our Community</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-gray-50 rounded-xl p-6">
+                <svg class="h-8 w-8 text-green-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                </svg>
+                <p class="text-gray-600 mb-4">"Volunteering with KCIHH opened my eyes to the power of indigenous knowledge in climate adaptation. I've learned so much from community elders."</p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">MK</div>
+                    <div class="ml-3">
+                        <h4 class="font-bold text-gray-900">Mary Kiprop</h4>
+                        <p class="text-sm text-gray-500">Research Volunteer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-xl p-6">
+                <svg class="h-8 w-8 text-green-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                </svg>
+                <p class="text-gray-600 mb-4">"Our company partnered with KCIHH to support tree planting in local communities. It's been incredibly rewarding to see the impact."</p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">JO</div>
+                    <div class="ml-3">
+                        <h4 class="font-bold text-gray-900">James Omondi</h4>
+                        <p class="text-sm text-gray-500">Corporate Partner, EcoBank</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-xl p-6">
+                <svg class="h-8 w-8 text-green-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                </svg>
+                <p class="text-gray-600 mb-4">"The youth innovation program gave me the mentorship and funding I needed to launch my agri-tech startup. Now we're helping 200+ farmers."</p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">DW</div>
+                    <div class="ml-3">
+                        <h4 class="font-bold text-gray-900">David Waweru</h4>
+                        <p class="text-sm text-gray-500">Youth Innovator Alumnus</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Make a Difference?</h2>
+        <p class="text-lg text-gray-600 mb-8">Choose how you'd like to get involved and join our community of changemakers today.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/get-involved/volunteer/" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                Become a Volunteer
+            </a>
+            <a href="/get-involved/donate/" class="bg-white hover:bg-gray-100 text-green-700 border-2 border-green-600 px-8 py-3 rounded-lg font-semibold transition-colors">
+                Make a Donation
+            </a>
+            <a href="/contact/" class="bg-white hover:bg-gray-100 text-gray-700 border-2 border-gray-300 px-8 py-3 rounded-lg font-semibold transition-colors">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Counter animation
+    document.addEventListener('DOMContentLoaded', function() {
+        const counters = document.querySelectorAll('.counter');
+        
+        const animateCounter = (counter) => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            const updateCounter = (currentTime) => {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                const currentValue = Math.floor(progress * target);
+                counter.innerText = currentValue.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+            
+            requestAnimationFrame(updateCounter);
+        };
+        
+        // Use Intersection Observer to start animation when visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => animateCounter(counter));
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const impactSection = document.querySelector('.bg-green-700');
+        if (impactSection) {
+            observer.observe(impactSection);
+        }
+    });
+</script>
+{% endblock %}
