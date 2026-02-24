@@ -1,5 +1,5 @@
 # Core Django
-Django==6.0.1
+Django==4.2.11
 psycopg2-binary==2.9.9
 python-decouple==3.8
 python-dotenv==1.0.0
@@ -9,7 +9,7 @@ gunicorn==21.2.0
 # Storage & Media
 django-storages==1.14.2
 boto3==1.34.7
-#pillow==10.1.0
+pillow==10.1.0
 
 # Forms & UI
 django-crispy-forms==2.1
@@ -54,7 +54,7 @@ django-payments==1.0.0
 
 # Analytics
 sentry-sdk==1.39.0
-django-google-analytics-app==6.0.0
+django-google-analytics-app==4.4.0
 mixpanel==4.10.0
 
 # Utilities
