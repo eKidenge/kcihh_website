@@ -108,17 +108,26 @@ TEMPLATES = [
 WSGI_APPLICATION = 'kcihh_website.wsgi.application'
 
 # Database
+#DATABASES = {
+ #   'default': {
+ #       'ENGINE': 'django.contrib.gis.db.backends.postgis',
+ #       'NAME': 'kcihh_db',
+ #       'USER': 'postgres',
+ #       'PASSWORD': '.',
+ #       'HOST': 'localhost',
+ #       'PORT': '5432',
+   # }
+#}
+# Password validation
+
+# settings.py
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'kcihh_db',
-        'USER': 'postgres',
-        'PASSWORD': '.',
-        'HOST': 'localhost',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",  # creates a file in your project root
     }
 }
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',

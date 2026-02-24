@@ -1,0 +1,1281 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Work - KCIHH | Kenya Climate Innovation & Heritage Hub{% endblock %}
+
+{% block meta_description %}Discover how KCIHH is driving climate action through innovation hubs, indigenous knowledge preservation, youth training, and community-led initiatives across Kenya.{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ===== PREMIUM CINEMATIC OUR WORK STYLES ===== */
+    
+    /* Custom Properties */
+    :root {
+        --primary: #10b981;
+        --primary-dark: #059669;
+        --primary-light: #34d399;
+        --primary-glow: rgba(16, 185, 129, 0.5);
+        --accent-1: #fbbf24;
+        --accent-2: #8b5cf6;
+        --accent-3: #f97316;
+        --accent-4: #3b82f6;
+        --accent-5: #ec4899;
+    }
+    
+    /* Animated Background */
+    .animated-bg {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .animated-bg::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent 30%,
+            rgba(16, 185, 129, 0.1) 50%,
+            transparent 70%
+        );
+        animation: shine 8s infinite;
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    /* Gradient Orbs */
+    .gradient-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: 0;
+        animation: float 15s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    
+    .orb-1 {
+        top: 5%;
+        left: 5%;
+        width: 400px;
+        height: 400px;
+        background: rgba(16, 185, 129, 0.15);
+        animation-delay: 0s;
+    }
+    
+    .orb-2 {
+        bottom: 5%;
+        right: 5%;
+        width: 500px;
+        height: 500px;
+        background: rgba(5, 150, 105, 0.15);
+        animation-delay: -5s;
+    }
+    
+    .orb-3 {
+        top: 40%;
+        right: 20%;
+        width: 300px;
+        height: 300px;
+        background: rgba(251, 191, 36, 0.1);
+        animation-delay: -2s;
+    }
+    
+    /* Page Header - Cinematic */
+    .cinematic-header {
+        position: relative;
+        min-height: 550px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: linear-gradient(135deg, #065f46, #047857, #059669, #10b981);
+        background-size: 400% 400%;
+        animation: gradientShift 10s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .header-particles {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+    
+    .particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        animation: particleFloat 20s linear infinite;
+    }
+    
+    @keyframes particleFloat {
+        0% {
+            transform: translateY(100vh) translateX(0);
+            opacity: 0;
+        }
+        10% { opacity: 0.7; }
+        90% { opacity: 0.7; }
+        100% {
+            transform: translateY(-20vh) translateX(100px);
+            opacity: 0;
+        }
+    }
+    
+    .header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        max-width: 1000px;
+        padding: 0 20px;
+    }
+    
+    .header-badge {
+        display: inline-block;
+        padding: 3px;
+        background: linear-gradient(90deg, white, var(--primary-light), white);
+        background-size: 300% 100%;
+        border-radius: 60px;
+        margin-bottom: 30px;
+        animation: gradientMove 3s linear infinite;
+    }
+    
+    .badge-inner {
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        padding: 8px 30px;
+        border-radius: 58px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: white;
+    }
+    
+    /* Pill Badges - Premium */
+    .pill-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 30px;
+    }
+    
+    .pill-premium {
+        padding: 10px 24px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .pill-premium:hover {
+        background: white;
+        color: var(--primary-dark);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+    }
+    
+    /* Approach Section */
+    .approach-section {
+        position: relative;
+        padding: 100px 0;
+        background: white;
+        overflow: hidden;
+    }
+    
+    .approach-pattern {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle at center, rgba(16,185,129,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(300px, -300px);
+    }
+    
+    .approach-pattern-2 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle at center, rgba(16,185,129,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(-200px, 200px);
+    }
+    
+    .stats-mini-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 30px;
+    }
+    
+    .stat-mini-item {
+        background: linear-gradient(135deg, #f9fafb, white);
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(16,185,129,0.1);
+    }
+    
+    .stat-mini-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -10px var(--primary-glow);
+        border-color: transparent;
+    }
+    
+    .stat-mini-number {
+        font-size: 32px;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 5px;
+    }
+    
+    .stat-mini-label {
+        color: #6b7280;
+        font-size: 14px;
+    }
+    
+    /* Work Cards - Premium */
+    .work-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        margin-top: 40px;
+    }
+    
+    .work-card {
+        background: white;
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.15);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        height: 100%;
+        position: relative;
+        border: 1px solid rgba(16, 185, 129, 0.1);
+    }
+    
+    .work-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 30px 40px -20px var(--primary-glow);
+        border-color: transparent;
+    }
+    
+    .work-media {
+        height: 280px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .work-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .work-card:hover .work-media img {
+        transform: scale(1.1);
+    }
+    
+    .work-media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .work-card:hover .work-media::after {
+        opacity: 1;
+    }
+    
+    .work-hover-content {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(16,185,129,0.9), rgba(16,185,129,0.4));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .work-card:hover .work-hover-content {
+        opacity: 1;
+    }
+    
+    .work-hover-btn {
+        background: white;
+        color: var(--primary-dark);
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 700;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+    }
+    
+    .work-card:hover .work-hover-btn {
+        transform: translateY(0);
+    }
+    
+    .work-hover-btn:hover {
+        background: var(--primary-dark);
+        color: white;
+        transform: translateY(-2px) scale(1.05);
+    }
+    
+    .work-content {
+        padding: 30px;
+        position: relative;
+    }
+    
+    .work-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: white;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px -5px var(--primary-glow);
+    }
+    
+    .work-card:hover .work-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 15px 30px -5px var(--primary);
+    }
+    
+    .work-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+    
+    .work-description {
+        color: #6b7280;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+    
+    .work-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 20px;
+        border-top: 1px solid #f3f4f6;
+    }
+    
+    .work-type {
+        background: #ecfdf5;
+        color: #047857;
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .work-link {
+        color: var(--primary);
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+    }
+    
+    .work-link:hover {
+        gap: 10px;
+        color: var(--primary-dark);
+    }
+    
+    /* Impact Stats - Premium */
+    .impact-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    
+    .impact-stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 25px 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .impact-stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
+    }
+    
+    .impact-stat-number {
+        font-size: 42px;
+        font-weight: 800;
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 5px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .impact-stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* How We Work Steps */
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 40px;
+    }
+    
+    .step-card {
+        text-align: center;
+        padding: 40px 25px;
+        background: white;
+        border-radius: 30px;
+        box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(16,185,129,0.1);
+        height: 100%;
+    }
+    
+    .step-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 40px -20px var(--primary-glow);
+        border-color: transparent;
+    }
+    
+    .step-icon {
+        width: 90px;
+        height: 90px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        color: white;
+        margin: 0 auto 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px -5px var(--primary-glow);
+    }
+    
+    .step-card:hover .step-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 15px 30px -5px var(--primary);
+    }
+    
+    .step-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 15px;
+    }
+    
+    .step-description {
+        color: #6b7280;
+        line-height: 1.7;
+    }
+    
+    /* Featured Stories */
+    .stories-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .story-card {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        height: 350px;
+        transition: all 0.3s ease;
+    }
+    
+    .story-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 40px -20px var(--primary-glow);
+    }
+    
+    .story-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .story-card:hover .story-image {
+        transform: scale(1.1);
+    }
+    
+    .story-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+    }
+    
+    .story-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 30px;
+        color: white;
+        transform: translateY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .story-card:hover .story-content {
+        transform: translateY(-10px);
+    }
+    
+    .story-tag {
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .story-title {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+    
+    .story-description {
+        color: rgba(255,255,255,0.8);
+        font-size: 14px;
+        line-height: 1.6;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease 0.1s;
+        max-width: 90%;
+    }
+    
+    .story-card:hover .story-description {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Get Involved Section */
+    .get-involved-premium {
+        background: linear-gradient(135deg, #f9fafb, white);
+        border-radius: 50px;
+        padding: 60px;
+        box-shadow: 0 30px 40px -20px rgba(0,0,0,0.2);
+        border: 1px solid rgba(16,185,129,0.1);
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+    
+    .cta-btn {
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .cta-btn.primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        box-shadow: 0 10px 20px -5px var(--primary-glow);
+    }
+    
+    .cta-btn.primary:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 20px 30px -5px var(--primary);
+    }
+    
+    .cta-btn.secondary {
+        background: white;
+        color: var(--primary-dark);
+        border: 2px solid var(--primary);
+    }
+    
+    .cta-btn.secondary:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px) scale(1.05);
+    }
+    
+    /* Reveal Animations */
+    .reveal-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-up {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-scale {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .revealed {
+        opacity: 1;
+        transform: translate(0) scale(1);
+    }
+    
+    /* Section Headers */
+    .section-header {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 50px;
+    }
+    
+    .section-subtitle {
+        display: inline-block;
+        background: #ecfdf5;
+        color: var(--primary-dark);
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        font-size: 13px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+    
+    .section-title {
+        font-size: 42px;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .section-title span {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .section-divider {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        margin: 20px auto;
+        border-radius: 2px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .work-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .impact-stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .steps-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .stories-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .steps-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .impact-stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .get-involved-premium {
+            padding: 40px 20px;
+        }
+        
+        .gradient-orb {
+            opacity: 0.2;
+        }
+        
+        .section-title {
+            font-size: 32px;
+        }
+        
+        .stats-mini-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ===== CINEMATIC HEADER ===== -->
+<section class="cinematic-header">
+    <!-- Particles -->
+    <div class="header-particles" id="particles"></div>
+    
+    <!-- Gradient Orbs -->
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    
+    <!-- Header Content -->
+    <div class="header-content">
+        <div class="header-badge reveal-scale">
+            <div class="badge-inner">✦ DRIVING CLIMATE ACTION ✦</div>
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight reveal-up">
+            Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-white">Work</span>
+        </h1>
+        
+        <p class="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed reveal-up" data-delay="100">
+            Driving climate action through innovation, heritage preservation, and community-led 
+            initiatives across Kenya.
+        </p>
+        
+        <!-- Pill Badges -->
+        <div class="pill-container reveal-up" data-delay="200">
+            <span class="pill-premium">🔬 Innovation Hub</span>
+            <span class="pill-premium">🌿 Indigenous Knowledge</span>
+            <span class="pill-premium">📚 Training & Fellowship</span>
+            <span class="pill-premium">🤝 Community Action</span>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div class="w-1 h-2 bg-white rounded-full mt-2 animate-bounce"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== OUR APPROACH SECTION ===== -->
+<section class="approach-section">
+    <div class="approach-pattern"></div>
+    <div class="approach-pattern-2"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <!-- Left Column -->
+            <div>
+                <span class="section-subtitle reveal-left">Our Approach</span>
+                <h2 class="section-title reveal-left" data-delay="100">
+                    Four Pillars of<br><span>Climate Action</span>
+                </h2>
+                <div class="section-divider reveal-left" data-delay="150"></div>
+                <p class="text-lg text-gray-700 mb-6 reveal-left" data-delay="200">
+                    We take a holistic approach to climate action, recognizing that lasting solutions must bridge modern innovation with traditional wisdom, while empowering communities to lead their own transformation.
+                </p>
+                <p class="text-lg text-gray-700 mb-8 reveal-left" data-delay="250">
+                    Our four interconnected pillars work together to create a comprehensive ecosystem for climate resilience across Kenya.
+                </p>
+                
+                <!-- Impact Numbers -->
+                <div class="stats-mini-grid reveal-left" data-delay="300">
+                    <div class="stat-mini-item">
+                        <div class="stat-mini-number">4</div>
+                        <div class="stat-mini-label">Strategic Pillars</div>
+                    </div>
+                    <div class="stat-mini-item">
+                        <div class="stat-mini-number">10+</div>
+                        <div class="stat-mini-label">Counties</div>
+                    </div>
+                    <div class="stat-mini-item">
+                        <div class="stat-mini-number">500+</div>
+                        <div class="stat-mini-label">Communities</div>
+                    </div>
+                    <div class="stat-mini-item">
+                        <div class="stat-mini-number">50+</div>
+                        <div class="stat-mini-label">Partners</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Visual -->
+            <div class="relative reveal-right" data-delay="200">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Youth innovation" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Indigenous knowledge" class="w-full h-64 object-cover">
+                        </div>
+                    </div>
+                    <div class="space-y-4 mt-8">
+                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Training" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Community action" class="w-full h-48 object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== OUR PILLARS SECTION ===== -->
+<section class="py-24 bg-gray-50 relative overflow-hidden">
+    <!-- Gradient Orbs -->
+    <div class="gradient-orb orb-1" style="opacity: 0.1;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="section-header">
+            <span class="section-subtitle reveal-up">What We Do</span>
+            <h2 class="section-title reveal-up" data-delay="100">
+                Our Strategic <span>Pillars</span>
+            </h2>
+            <p class="text-xl text-gray-600 reveal-up" data-delay="150">
+                Four interconnected approaches driving climate resilience across Kenya
+            </p>
+        </div>
+        
+        <div class="work-grid">
+            {% for category in categories %}
+            <div class="work-card reveal-scale" data-delay="{{ forloop.counter|add:'200' }}">
+                <div class="work-media">
+                    {% if category.featured_image %}
+                    <img src="{{ category.featured_image.url }}" alt="{{ category.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="{{ category.title }}">
+                    {% endif %}
+                    <div class="work-hover-content">
+                        <a href="/our-work/{{ category.slug }}/" class="work-hover-btn">
+                            Explore Program →
+                        </a>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <div class="work-icon">
+                        {{ category.icon|default:'🔬' }}
+                    </div>
+                    <h3 class="work-title">{{ category.title }}</h3>
+                    <p class="work-description">{{ category.summary }}</p>
+                    
+                    <div class="work-meta">
+                        <span class="work-type">{{ category.get_category_type_display|default:'Program' }}</span>
+                        <a href="/our-work/{{ category.slug }}/" class="work-link">
+                            Learn more
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default categories if none in database -->
+            <div class="work-card reveal-scale" data-delay="200">
+                <div class="work-media">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Innovation Hub">
+                    <div class="work-hover-content">
+                        <a href="/our-work/innovation-hub/" class="work-hover-btn">
+                            Explore Program →
+                        </a>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <div class="work-icon">🔬</div>
+                    <h3 class="work-title">Innovation Hub</h3>
+                    <p class="work-description">Supporting youth-led climate enterprises and scalable green technologies grounded in local realities.</p>
+                    <div class="work-meta">
+                        <span class="work-type">Innovation Hub</span>
+                        <a href="/our-work/innovation-hub/" class="work-link">
+                            Learn more
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="work-card reveal-scale" data-delay="250">
+                <div class="work-media">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Indigenous Knowledge">
+                    <div class="work-hover-content">
+                        <a href="/our-work/indigenous-knowledge/" class="work-hover-btn">
+                            Explore Program →
+                        </a>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <div class="work-icon">🌿</div>
+                    <h3 class="work-title">Indigenous Knowledge</h3>
+                    <p class="work-description">Documenting, preserving, and revitalizing traditional ecological systems for climate resilience.</p>
+                    <div class="work-meta">
+                        <span class="work-type">Indigenous Knowledge</span>
+                        <a href="/our-work/indigenous-knowledge/" class="work-link">
+                            Learn more
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="work-card reveal-scale" data-delay="300">
+                <div class="work-media">
+                    <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Training & Fellowship">
+                    <div class="work-hover-content">
+                        <a href="/our-work/training-fellowship/" class="work-hover-btn">
+                            Explore Program →
+                        </a>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <div class="work-icon">📚</div>
+                    <h3 class="work-title">Training & Fellowship</h3>
+                    <p class="work-description">Building the next generation of climate leaders through training, mentorship, and applied learning.</p>
+                    <div class="work-meta">
+                        <span class="work-type">Training & Fellowship</span>
+                        <a href="/our-work/training-fellowship/" class="work-link">
+                            Learn more
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="work-card reveal-scale" data-delay="350">
+                <div class="work-media">
+                    <img src="https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Community Action">
+                    <div class="work-hover-content">
+                        <a href="/our-work/community-action/" class="work-hover-btn">
+                            Explore Program →
+                        </a>
+                    </div>
+                </div>
+                <div class="work-content">
+                    <div class="work-icon">🤝</div>
+                    <h3 class="work-title">Community Action</h3>
+                    <p class="work-description">Partnering with counties and communities to co-design and implement locally led climate solutions.</p>
+                    <div class="work-meta">
+                        <span class="work-type">Community Action</span>
+                        <a href="/our-work/community-action/" class="work-link">
+                            Learn more
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ===== IMPACT STATS SECTION ===== -->
+<section class="py-20 bg-gradient-to-r from-green-700 to-green-600 relative overflow-hidden">
+    <!-- Particles -->
+    <div class="header-particles" id="impact-particles"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="impact-stats-grid">
+            <div class="impact-stat-card reveal-scale" data-delay="200">
+                <div class="impact-stat-number counter" data-target="500">0</div>
+                <div class="impact-stat-label">Youth Trained</div>
+            </div>
+            <div class="impact-stat-card reveal-scale" data-delay="250">
+                <div class="impact-stat-number counter" data-target="20">0</div>
+                <div class="impact-stat-label">Startups Incubated</div>
+            </div>
+            <div class="impact-stat-card reveal-scale" data-delay="300">
+                <div class="impact-stat-number counter" data-target="50000">0</div>
+                <div class="impact-stat-label">Trees Restored</div>
+            </div>
+            <div class="impact-stat-card reveal-scale" data-delay="350">
+                <div class="impact-stat-number counter" data-target="15">0</div>
+                <div class="impact-stat-label">Knowledge Archives</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW WE WORK SECTION ===== -->
+<section class="py-24 bg-white relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg width="100%" height="100%">
+            <defs>
+                <pattern id="steps-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <circle cx="25" cy="25" r="5" fill="#10b981"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#steps-pattern)"/>
+        </svg>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="section-header">
+            <span class="section-subtitle reveal-up">Our Methodology</span>
+            <h2 class="section-title reveal-up" data-delay="100">
+                How We <span>Work</span>
+            </h2>
+            <p class="text-xl text-gray-600 reveal-up" data-delay="150">
+                A collaborative approach that puts communities at the center
+            </p>
+        </div>
+        
+        <div class="steps-grid">
+            <!-- Step 1 -->
+            <div class="step-card reveal-scale" data-delay="200">
+                <div class="step-icon">🤝</div>
+                <h3 class="step-title">Co-Design</h3>
+                <p class="step-description">We work alongside communities to understand needs and co-design solutions that respect local context.</p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step-card reveal-scale" data-delay="250">
+                <div class="step-icon">⚙️</div>
+                <h3 class="step-title">Implement</h3>
+                <p class="step-description">With partners, we deploy resources and expertise to bring community-led solutions to life.</p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step-card reveal-scale" data-delay="300">
+                <div class="step-icon">📊</div>
+                <h3 class="step-title">Scale & Share</h3>
+                <p class="step-description">We document, learn, and scale successful approaches across counties and communities.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FEATURED SUCCESS STORIES ===== -->
+<section class="py-24 bg-gray-50 relative overflow-hidden">
+    <!-- Gradient Orbs -->
+    <div class="gradient-orb orb-2" style="opacity: 0.1;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div>
+                <span class="section-subtitle reveal-left">Success Stories</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 reveal-left" data-delay="100">
+                    Impact in <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400">Action</span>
+                </h2>
+            </div>
+            <a href="/impact/" class="text-green-600 hover:text-green-700 font-bold flex items-center reveal-right" data-delay="150">
+                View all stories
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+        </div>
+        
+        <div class="stories-grid">
+            <!-- Story 1 -->
+            <div class="story-card reveal-scale" data-delay="200">
+                <img src="https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Water harvesting" class="story-image">
+                <div class="story-overlay"></div>
+                <div class="story-content">
+                    <span class="story-tag">Water Harvesting</span>
+                    <h3 class="story-title">Kitui County</h3>
+                    <p class="story-description">5,000 households reached with clean water through community-led rainwater harvesting systems.</p>
+                </div>
+            </div>
+            
+            <!-- Story 2 -->
+            <div class="story-card reveal-scale" data-delay="250">
+                <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Solar innovation" class="story-image">
+                <div class="story-overlay"></div>
+                <div class="story-content">
+                    <span class="story-tag">Youth Innovation</span>
+                    <h3 class="story-title">EcoChar Startup</h3>
+                    <p class="story-description">Converting agricultural waste to clean cooking fuel, reducing deforestation and creating jobs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== GET INVOLVED SECTION ===== -->
+<section class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="get-involved-premium reveal-scale">
+            <div class="text-center">
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">Be Part of the Solution</h2>
+                <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+                    Join us in building a climate-resilient Kenya through innovation, heritage preservation, and community action.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="/get-involved/volunteer/" class="cta-btn primary">
+                        Volunteer With Us
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <a href="/contact/" class="cta-btn secondary">
+                        Partner With Us
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                        </a>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Particle Generation
+    document.addEventListener('DOMContentLoaded', function() {
+        function createParticles(containerId) {
+            const particlesContainer = document.getElementById(containerId);
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = 10 + Math.random() * 20 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        createParticles('particles');
+        createParticles('impact-particles');
+        
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        
+        const animateCounter = (counter) => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const startTime = performance.now();
+            const startValue = 0;
+            
+            const easeOutQuart = (x) => 1 - Math.pow(1 - x, 4);
+            
+            const updateCounter = (currentTime) => {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                const easedProgress = easeOutQuart(progress);
+                
+                const currentValue = Math.floor(easedProgress * target);
+                counter.innerText = currentValue.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target.toLocaleString();
+                }
+            };
+            
+            requestAnimationFrame(updateCounter);
+        };
+        
+        // Use Intersection Observer for counters
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => animateCounter(counter));
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const impactSection = document.querySelector('.impact-stats-grid');
+        if (impactSection) {
+            counterObserver.observe(impactSection);
+        }
+        
+        // Reveal on Scroll
+        const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up, .reveal-scale, .fade-up');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed', 'appear');
+                    }, entry.target.dataset.delay || 0);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+    });
+</script>
+{% endblock %}

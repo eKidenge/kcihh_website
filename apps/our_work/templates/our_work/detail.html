@@ -1,0 +1,406 @@
+<!-- /home/cs/Desktop/PROJECTS/kcihh_website/apps/our_work/templates/our_work/detail.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ category.title }} - KCIHH | Kenya Climate Innovation & Heritage Hub{% endblock %}
+
+{% block meta_description %}{{ category.summary }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ===== PROFESSIONAL ANIMATIONS ===== */
+    
+    /* Custom Properties */
+    :root {
+        --color-primary: #10b981;
+        --color-primary-dark: #059669;
+        --color-primary-light: #34d399;
+        --color-accent: #f59e0b;
+    }
+    
+    /* Fade Animations */
+    .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .fade-up.appear {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Feature Card */
+    .feature-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2);
+    }
+    
+    /* Icon Circle */
+    .icon-circle {
+        width: 48px;
+        height: 48px;
+        background: rgba(16, 185, 129, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .icon-circle {
+        background: var(--color-primary);
+        transform: scale(1.1);
+    }
+    
+    .feature-card:hover .icon-circle span {
+        color: white;
+    }
+    
+    /* Gradient Text */
+    .gradient-text {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* Section Divider */
+    .section-divider {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+        margin: 1.5rem 0;
+        border-radius: 2px;
+    }
+    
+    .section-divider.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Stat Card */
+    .stat-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2);
+    }
+    
+    /* Program Card */
+    .program-card {
+        background: #f9fafb;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .program-card:hover {
+        background: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
+    }
+    
+    /* Pill Badge */
+    .pill-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--color-primary);
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .pill-badge:hover {
+        background: var(--color-primary);
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ===== HERO SECTION ===== -->
+<section class="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0">
+        {% if category.featured_image %}
+        <img src="{{ category.featured_image.url }}" alt="{{ category.title }}" class="w-full h-full object-cover">
+        {% else %}
+        <div class="w-full h-full bg-gradient-to-br from-green-800 to-green-600"></div>
+        {% endif %}
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80"></div>
+        
+        <!-- Animated Grid Overlay -->
+        <svg class="absolute inset-0 w-full h-full opacity-10">
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+    </div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center justify-center space-x-2 text-sm text-green-200 mb-6 fade-up">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <a href="/our-work/" class="hover:text-white transition-colors">Our Work</a>
+            <span>/</span>
+            <span class="text-white font-semibold">{{ category.title }}</span>
+        </nav>
+        
+        <!-- Icon -->
+        <div class="text-7xl mb-6 fade-up" data-delay="100">{{ category.icon|default:'🔬' }}</div>
+        
+        <!-- Title -->
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 fade-up" data-delay="200">
+            {{ category.title }}
+        </h1>
+        
+        <!-- Category Type -->
+        <span class="inline-block px-4 py-2 bg-green-600/30 backdrop-blur-sm text-green-200 rounded-full text-sm font-semibold mb-6 fade-up" data-delay="250">
+            {{ category.get_category_type_display }}
+        </span>
+        
+        <!-- Summary -->
+        <p class="text-xl text-green-50 max-w-3xl mx-auto fade-up" data-delay="300">
+            {{ category.summary }}
+        </p>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+        <a href="#content" class="text-white/60 hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7-7-7m14-6l-7 7-7-7"></path>
+            </svg>
+        </a>
+    </div>
+</section>
+
+<!-- ===== CONTENT SECTION ===== -->
+<section id="content" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-12">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Section Header -->
+                <span class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold tracking-wider mb-4 fade-up">Overview</span>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 fade-up" data-delay="100">About {{ category.title }}</h2>
+                <div class="section-divider fade-up" data-delay="150"></div>
+                
+                <!-- Content -->
+                <div class="prose prose-lg prose-green max-w-none fade-up" data-delay="200">
+                    {% if category.content %}
+                        {{ category.content|safe }}
+                    {% else %}
+                        <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                        <p class="text-gray-700">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Focus Areas - FIXED: Added .all -->
+                {% if category.focus_areas.all %}
+                <div class="mt-12 fade-up" data-delay="250">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Focus Areas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for area in category.focus_areas.all %}
+                        <div class="flex items-center space-x-3 bg-gray-50 p-4 rounded-lg">
+                            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-gray-700">{{ area.title }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Programs - FIXED: Added .all -->
+                {% if category.programs.all %}
+                <div class="mt-12 fade-up" data-delay="300">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Programs & Initiatives</h3>
+                    <div class="space-y-4">
+                        {% for program in category.programs.all %}
+                        <div class="program-card">
+                            <h4 class="font-bold text-gray-900 mb-2">{{ program.title }}</h4>
+                            <p class="text-gray-600 text-sm">{{ program.description }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Key Info Card -->
+                <div class="bg-gray-50 rounded-2xl p-6 sticky top-24 fade-up" data-delay="200">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Key Information</h3>
+                    
+                    <!-- Category Type -->
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-600">Category</span>
+                        <span class="font-semibold text-gray-900">{{ category.get_category_type_display }}</span>
+                    </div>
+                    
+                    <!-- Icon -->
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-600">Icon</span>
+                        <span class="text-2xl">{{ category.icon|default:'🔬' }}</span>
+                    </div>
+                    
+                    <!-- Success Stories Count - FIXED: Used .count -->
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-600">Success Stories</span>
+                        <span class="font-semibold text-gray-900">{{ category.successstory_set.count }}</span>
+                    </div>
+                    
+                    <!-- Focus Areas Count - NEW -->
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-600">Focus Areas</span>
+                        <span class="font-semibold text-gray-900">{{ category.focus_areas.count }}</span>
+                    </div>
+                    
+                    <!-- Programs Count - NEW -->
+                    <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                        <span class="text-gray-600">Programs</span>
+                        <span class="font-semibold text-gray-900">{{ category.programs.count }}</span>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="mt-6 space-y-3">
+                        <a href="/get-involved/volunteer/" class="block w-full bg-green-600 hover:bg-green-700 text-white text-center font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105">
+                            Get Involved
+                        </a>
+                        <a href="/contact/" class="block w-full bg-white hover:bg-gray-100 text-gray-700 text-center font-semibold py-3 px-4 rounded-lg border-2 border-gray-300 transition-all duration-300 transform hover:scale-105">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== STATS SECTION ===== -->
+<section class="py-16 bg-green-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="text-center text-white fade-up" data-delay="200">
+                <div class="text-4xl font-bold mb-2">500+</div>
+                <div class="text-sm text-green-200">Youth Engaged</div>
+            </div>
+            <div class="text-center text-white fade-up" data-delay="250">
+                <div class="text-4xl font-bold mb-2">20</div>
+                <div class="text-sm text-green-200">Projects</div>
+            </div>
+            <div class="text-center text-white fade-up" data-delay="300">
+                <div class="text-4xl font-bold mb-2">10</div>
+                <div class="text-sm text-green-200">Counties</div>
+            </div>
+            <div class="text-center text-white fade-up" data-delay="350">
+                <div class="text-4xl font-bold mb-2">50+</div>
+                <div class="text-sm text-green-200">Partners</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SUCCESS STORIES ===== -->
+{% if category.successstory_set.all %}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold tracking-wider mb-4 fade-up">Success Stories</span>
+            <h2 class="text-4xl font-bold text-gray-900 mb-4 fade-up" data-delay="100">Impact in Action</h2>
+            <p class="text-xl text-gray-600 fade-up" data-delay="150">Real stories from communities across Kenya</p>
+        </div>
+        
+        <!-- Stories Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for story in category.successstory_set.all %}
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 fade-up" data-delay="{{ forloop.counter|add:'200' }}">
+                {% if story.image %}
+                <img src="{{ story.image.url }}" alt="{{ story.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                <div class="w-full h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                    <span class="text-6xl text-white opacity-50">📖</span>
+                </div>
+                {% endif %}
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ story.title }}</h3>
+                    <p class="text-gray-600 mb-4">{{ story.description|truncatechars:100 }}</p>
+                    <a href="#" class="text-green-600 hover:text-green-700 font-semibold flex items-center group">
+                        Read Story
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ===== GET INVOLVED CTA ===== -->
+<section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 fade-up">Be Part of {{ category.title }}</h2>
+        <p class="text-xl text-gray-600 mb-10 fade-up" data-delay="100">Join us in advancing climate action through {{ category.title|lower }}.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center fade-up" data-delay="150">
+            <a href="/get-involved/volunteer/" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                Volunteer With Us
+            </a>
+            <a href="/contact/" class="bg-white hover:bg-gray-100 text-gray-700 font-bold py-4 px-8 rounded-lg border-2 border-gray-300 transition-all duration-300 transform hover:scale-105">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Fade-up animation on scroll
+    const fadeElements = document.querySelectorAll('.fade-up');
+    
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('appear');
+                }, entry.target.dataset.delay || 0);
+                fadeObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+    
+    fadeElements.forEach(el => fadeObserver.observe(el));
+</script>
+{% endblock %}

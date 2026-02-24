@@ -87,7 +87,8 @@ class ProjectLocation(models.Model):
     name = models.CharField(max_length=200)
     project_type = models.CharField(max_length=20, choices=PROJECT_TYPES)
     county = models.CharField(max_length=100)
-    coordinates = gis_models.PointField(srid=4326)  # For GeoDjango
+    #coordinates = gis_models.PointField(srid=4326)  # For GeoDjango
+    coordinates = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField()
     image = models.ImageField(upload_to='project-locations/')
     beneficiaries = models.IntegerField(default=0)
