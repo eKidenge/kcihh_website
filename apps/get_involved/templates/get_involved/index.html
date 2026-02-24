@@ -1,307 +1,1090 @@
-<!-- /home/cs/Desktop/PROJECTS/kcihh_website/apps/get_involved/templates/get_involved/index.html -->
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Get Involved - KCIHH{% endblock %}
+{% block title %}Get Involved - KCIHH | Kenya Climate Innovation & Heritage Hub{% endblock %}
 
 {% block meta_description %}Join the Kenya Climate Innovation & Heritage Hub. Discover opportunities to volunteer, donate, partner with us, or become a youth innovator.{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* ===== PREMIUM CINEMATIC GET INVOLVED STYLES ===== */
+    
+    /* Custom Properties */
+    :root {
+        --primary: #10b981;
+        --primary-dark: #059669;
+        --primary-light: #34d399;
+        --primary-glow: rgba(16, 185, 129, 0.5);
+        --accent-1: #fbbf24;
+        --accent-2: #8b5cf6;
+        --accent-3: #f97316;
+        --accent-4: #3b82f6;
+        --accent-5: #ec4899;
+    }
+    
+    /* Animated Background */
+    .animated-bg {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .animated-bg::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent 30%,
+            rgba(16, 185, 129, 0.1) 50%,
+            transparent 70%
+        );
+        animation: shine 8s infinite;
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    /* Gradient Orbs */
+    .gradient-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: 0;
+        animation: float 15s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    
+    .orb-1 {
+        top: 5%;
+        left: 5%;
+        width: 400px;
+        height: 400px;
+        background: rgba(16, 185, 129, 0.15);
+        animation-delay: 0s;
+    }
+    
+    .orb-2 {
+        bottom: 5%;
+        right: 5%;
+        width: 500px;
+        height: 500px;
+        background: rgba(5, 150, 105, 0.15);
+        animation-delay: -5s;
+    }
+    
+    .orb-3 {
+        top: 40%;
+        right: 20%;
+        width: 300px;
+        height: 300px;
+        background: rgba(251, 191, 36, 0.1);
+        animation-delay: -2s;
+    }
+    
+    /* Page Header - Cinematic */
+    .cinematic-header {
+        position: relative;
+        min-height: 550px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: linear-gradient(135deg, #065f46, #047857, #059669, #10b981);
+        background-size: 400% 400%;
+        animation: gradientShift 10s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .header-particles {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+    
+    .particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        animation: particleFloat 20s linear infinite;
+    }
+    
+    @keyframes particleFloat {
+        0% {
+            transform: translateY(100vh) translateX(0);
+            opacity: 0;
+        }
+        10% { opacity: 0.7; }
+        90% { opacity: 0.7; }
+        100% {
+            transform: translateY(-20vh) translateX(100px);
+            opacity: 0;
+        }
+    }
+    
+    .header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        max-width: 1000px;
+        padding: 0 20px;
+    }
+    
+    .header-badge {
+        display: inline-block;
+        padding: 3px;
+        background: linear-gradient(90deg, white, var(--primary-light), white);
+        background-size: 300% 100%;
+        border-radius: 60px;
+        margin-bottom: 30px;
+        animation: gradientMove 3s linear infinite;
+    }
+    
+    .badge-inner {
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        padding: 8px 30px;
+        border-radius: 58px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: white;
+    }
+    
+    /* Stats Row */
+    .header-stats {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 50px;
+    }
+    
+    .header-stat {
+        text-align: center;
+        padding: 0 20px;
+        position: relative;
+    }
+    
+    .header-stat::after {
+        content: '';
+        position: absolute;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent);
+    }
+    
+    .header-stat:last-child::after {
+        display: none;
+    }
+    
+    .header-stat-number {
+        font-size: 48px;
+        font-weight: 800;
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 5px;
+        text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    
+    .header-stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* Introduction Section */
+    .intro-section {
+        position: relative;
+        padding: 100px 0;
+        background: white;
+        overflow: hidden;
+    }
+    
+    .intro-pattern {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle at center, rgba(16,185,129,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(300px, -300px);
+    }
+    
+    .intro-pattern-2 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle at center, rgba(16,185,129,0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(-200px, 200px);
+    }
+    
+    .intro-tag {
+        display: inline-flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    
+    .intro-tag-item {
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .intro-tag-item:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 10px 20px -10px currentColor;
+    }
+    
+    .tag-green {
+        background: #ecfdf5;
+        color: #047857;
+    }
+    
+    .tag-blue {
+        background: #eff6ff;
+        color: #1d4ed8;
+    }
+    
+    .tag-purple {
+        background: #f5f3ff;
+        color: #7c3aed;
+    }
+    
+    /* Involvement Cards - Premium */
+    .involvement-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-top: 40px;
+    }
+    
+    .involvement-card {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.15);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        border: 1px solid rgba(16, 185, 129, 0.1);
+    }
+    
+    .involvement-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 30px 40px -20px var(--primary-glow);
+        border-color: transparent;
+    }
+    
+    .card-gradient {
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .card-gradient::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+    
+    .involvement-card:hover .card-gradient::before {
+        transform: translateX(100%);
+    }
+    
+    .card-icon {
+        font-size: 72px;
+        color: white;
+        opacity: 0.9;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+    }
+    
+    .involvement-card:hover .card-icon {
+        transform: scale(1.2) rotate(5deg);
+        opacity: 1;
+    }
+    
+    .card-content {
+        padding: 30px 25px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .card-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .card-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        border-radius: 3px;
+        transition: width 0.3s ease;
+    }
+    
+    .involvement-card:hover .card-title::after {
+        width: 60px;
+    }
+    
+    .card-description {
+        color: #6b7280;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        flex-grow: 1;
+    }
+    
+    .card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary);
+        font-weight: 700;
+        transition: all 0.3s ease;
+        margin-top: auto;
+        padding: 10px 0;
+        border-top: 1px solid #f3f4f6;
+    }
+    
+    .card-link:hover {
+        gap: 15px;
+        color: var(--primary-dark);
+    }
+    
+    .card-link svg {
+        transition: transform 0.3s ease;
+    }
+    
+    .card-link:hover svg {
+        transform: translateX(5px);
+    }
+    
+    /* Gradient backgrounds for cards */
+    .gradient-innovator { background: linear-gradient(135deg, #059669, #10b981); }
+    .gradient-volunteer { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+    .gradient-community { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+    .gradient-corporate { background: linear-gradient(135deg, #ea580c, #f97316); }
+    .gradient-donor { background: linear-gradient(135deg, #dc2626, #ef4444); }
+    .gradient-research { background: linear-gradient(135deg, #0d9488, #14b8a6); }
+    
+    /* Featured Programs */
+    .program-card {
+        display: flex;
+        background: #f9fafb;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 1px solid rgba(16, 185, 129, 0.1);
+    }
+    
+    .program-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 30px -15px var(--primary-glow);
+        border-color: transparent;
+    }
+    
+    .program-icon {
+        width: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        transition: all 0.3s ease;
+    }
+    
+    .program-card:hover .program-icon {
+        transform: scale(1.1);
+    }
+    
+    .program-content {
+        flex: 1;
+        padding: 25px 25px 25px 0;
+    }
+    
+    .program-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 10px;
+    }
+    
+    .program-description {
+        color: #6b7280;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    
+    .program-meta {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        padding: 10px 0;
+        border-top: 1px dashed #e5e7eb;
+        border-bottom: 1px dashed #e5e7eb;
+    }
+    
+    .program-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #6b7280;
+        font-size: 13px;
+    }
+    
+    .program-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    
+    .program-link:hover {
+        gap: 10px;
+        color: var(--primary-dark);
+    }
+    
+    /* Impact Counter Section */
+    .impact-section {
+        position: relative;
+        background: linear-gradient(135deg, #047857, #065f46, #059669);
+        padding: 80px 0;
+        overflow: hidden;
+    }
+    
+    .impact-particles {
+        position: absolute;
+        inset: 0;
+        opacity: 0.1;
+    }
+    
+    .impact-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .impact-item {
+        text-align: center;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .impact-item:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .impact-number {
+        font-size: 48px;
+        font-weight: 800;
+        color: white;
+        line-height: 1.2;
+        margin-bottom: 5px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .impact-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* Testimonial Cards */
+    .testimonial-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(16, 185, 129, 0.1);
+        position: relative;
+        box-shadow: 0 10px 25px -10px rgba(0,0,0,0.1);
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 35px -15px var(--primary-glow);
+        border-color: transparent;
+    }
+    
+    .testimonial-quote {
+        color: var(--primary);
+        opacity: 0.2;
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+    
+    .testimonial-text {
+        color: #4b5563;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+    
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #f3f4f6;
+    }
+    
+    .author-avatar {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 20px;
+    }
+    
+    .author-info h4 {
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 5px;
+    }
+    
+    .author-info p {
+        color: #6b7280;
+        font-size: 13px;
+    }
+    
+    /* CTA Section */
+    .cta-premium {
+        position: relative;
+        background: linear-gradient(135deg, #065f46, #047857, #059669);
+        border-radius: 40px;
+        padding: 60px;
+        overflow: hidden;
+        box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.5);
+        margin: 0 20px;
+    }
+    
+    .cta-particles {
+        position: absolute;
+        inset: 0;
+        opacity: 0.1;
+    }
+    
+    .cta-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+    
+    .cta-btn {
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .cta-btn.primary {
+        background: white;
+        color: var(--primary-dark);
+        box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+    }
+    
+    .cta-btn.primary:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 20px 30px -5px rgba(0,0,0,0.3);
+    }
+    
+    .cta-btn.secondary {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .cta-btn.secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px) scale(1.05);
+    }
+    
+    .cta-btn.outline {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .cta-btn.outline:hover {
+        border-color: white;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px) scale(1.05);
+    }
+    
+    /* Reveal Animations */
+    .reveal-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-up {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-scale {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .revealed {
+        opacity: 1;
+        transform: translate(0) scale(1);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .involvement-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .impact-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .header-stats {
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .header-stat::after {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .involvement-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .program-card {
+            flex-direction: column;
+        }
+        
+        .program-icon {
+            width: 100%;
+            height: 100px;
+        }
+        
+        .program-content {
+            padding: 20px;
+        }
+        
+        .impact-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .cta-premium {
+            padding: 40px 20px;
+        }
+        
+        .gradient-orb {
+            opacity: 0.2;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- Page Header -->
-<section class="relative py-20 bg-green-700">
-    <div class="absolute inset-0 opacity-10">
-        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
-            </pattern>
-            <rect width="100%" height="100%" fill="url(#grid)"/>
-        </svg>
+<!-- ===== CINEMATIC HEADER ===== -->
+<section class="cinematic-header">
+    <!-- Particles -->
+    <div class="header-particles" id="particles"></div>
+    
+    <!-- Gradient Orbs -->
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    
+    <!-- Header Content -->
+    <div class="header-content">
+        <div class="header-badge reveal-scale">
+            <div class="badge-inner">✦ JOIN THE MOVEMENT ✦</div>
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight reveal-up">
+            Get <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-white">Involved</span>
+        </h1>
+        
+        <p class="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed reveal-up" data-delay="100">
+            Join a community of changemakers working at the intersection of climate innovation, 
+            ecosystem restoration, and heritage preservation across Kenya.
+        </p>
+        
+        <!-- Header Stats -->
+        <div class="header-stats reveal-up" data-delay="200">
+            <div class="header-stat">
+                <div class="header-stat-number counter" data-target="500">0</div>
+                <div class="header-stat-label">Active Volunteers</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-number counter" data-target="50">0</div>
+                <div class="header-stat-label">Community Partners</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-number counter" data-target="1000">0</div>
+                <div class="header-stat-label">Donors</div>
+            </div>
+            <div class="header-stat">
+                <div class="header-stat-number counter" data-target="25">0</div>
+                <div class="header-stat-label">Corporate Sponsors</div>
+            </div>
+        </div>
     </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Get Involved</h1>
-        <p class="text-xl text-green-100 max-w-3xl mx-auto">Join a community of changemakers working at the intersection of climate innovation, ecosystem restoration, and heritage preservation</p>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div class="w-1 h-2 bg-white rounded-full mt-2 animate-bounce"></div>
+        </div>
     </div>
 </section>
 
-<!-- Introduction -->
-<section class="py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Together, We Can Make a Difference</h2>
-        <p class="text-lg text-gray-600 mb-8">
+<!-- ===== INTRODUCTION SECTION ===== -->
+<section class="intro-section">
+    <div class="intro-pattern"></div>
+    <div class="intro-pattern-2"></div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+        <span class="text-green-600 font-semibold tracking-[0.2em] text-sm uppercase mb-4 block reveal-up">Together We Can</span>
+        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 reveal-up" data-delay="100">
+            Make a <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400">Difference</span>
+        </h2>
+        <p class="text-lg text-gray-600 mb-8 leading-relaxed reveal-up" data-delay="150">
             Whether you're a youth innovator with a groundbreaking idea, a professional looking to volunteer your skills, 
             or an organization seeking partnership, there's a place for you at KCIHH. Your involvement helps us train the 
             next generation of climate leaders, restore critical ecosystems, and preserve invaluable indigenous knowledge.
         </p>
-        <div class="flex flex-wrap justify-center gap-4">
-            <div class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">🌱 50K+ Trees Planted</div>
-            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">👥 500+ Youth Trained</div>
-            <div class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">📚 100+ Indigenous Practices</div>
+        
+        <div class="intro-tag reveal-scale" data-delay="200">
+            <span class="intro-tag-item tag-green">🌱 50K+ Trees Planted</span>
+            <span class="intro-tag-item tag-blue">👥 500+ Youth Trained</span>
+            <span class="intro-tag-item tag-purple">📚 100+ Indigenous Practices</span>
         </div>
     </div>
 </section>
 
-<!-- Involvement Options -->
-<section class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Ways to Get Involved</h2>
+<!-- ===== INVOLVEMENT OPTIONS ===== -->
+<section class="py-24 bg-gray-50 relative overflow-hidden">
+    <!-- Gradient Orbs -->
+    <div class="gradient-orb orb-1" style="opacity: 0.1;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="text-center mb-16">
+            <span class="text-green-600 font-semibold tracking-[0.2em] text-sm uppercase reveal-up">Choose Your Path</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4 reveal-up" data-delay="100">
+                Ways to <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400">Get Involved</span>
+            </h2>
+        </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for option in options %}
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
-                {% if option.icon %}
-                <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
-                    <img src="{{ option.icon.url }}" alt="{{ option.title }}" class="w-24 h-24 object-contain filter brightness-0 invert opacity-80 group-hover:scale-110 transition-transform">
+        <div class="involvement-grid">
+            <!-- Youth Innovator -->
+            <div class="involvement-card reveal-scale" data-delay="200">
+                <div class="card-gradient gradient-innovator">
+                    <span class="card-icon">🚀</span>
                 </div>
-                {% else %}
-                <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
-                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">
-                        {% if option.option_type == 'innovator' %}🚀
-                        {% elif option.option_type == 'volunteer' %}🤝
-                        {% elif option.option_type == 'community' %}🌍
-                        {% elif option.option_type == 'corporate' %}🏢
-                        {% elif option.option_type == 'donor' %}❤️
-                        {% elif option.option_type == 'researcher' %}🔬
-                        {% else %}✨
-                        {% endif %}
-                    </span>
-                </div>
-                {% endif %}
-                
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">{{ option.title }}</h3>
-                    <div class="prose prose-sm text-gray-600 mb-4">
-                        {{ option.description|safe|truncatechars_html:150 }}
-                    </div>
-                    
-                    {% if option.option_type == 'innovator' %}
-                    <a href="{% url 'get_involved:innovator' %}" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
-                        {{ option.call_to_action }}
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                    {% elif option.option_type == 'volunteer' %}
-                    <a href="/get-involved/volunteer/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
-                        {{ option.call_to_action }}
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                    {% elif option.option_type == 'donor' %}
-                    <a href="/get-involved/donate/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
-                        {{ option.call_to_action }}
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                    {% elif option.form_link %}
-                    <a href="{{ option.form_link }}" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold" target="_blank">
-                        {{ option.call_to_action }}
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                        </svg>
-                    </a>
-                    {% else %}
-                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
-                        {{ option.call_to_action }}
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-            {% empty %}
-            <!-- Default options if none in database -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
-                <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
-                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🚀</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Youth Innovator</h3>
-                    <p class="text-gray-600 mb-4">Have a climate innovation idea? Join our incubation program and turn your vision into reality.</p>
-                    <a href="/get-involved/innovator/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                <div class="card-content">
+                    <h3 class="card-title">Youth Innovator</h3>
+                    <p class="card-description">Have a climate innovation idea? Join our incubation program and turn your vision into reality with mentorship and funding.</p>
+                    <a href="/get-involved/innovator/" class="card-link">
                         Apply Now
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
-                <div class="h-48 bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
-                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🤝</span>
+            <!-- Volunteer -->
+            <div class="involvement-card reveal-scale" data-delay="250">
+                <div class="card-gradient gradient-volunteer">
+                    <span class="card-icon">🤝</span>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Volunteer</h3>
-                    <p class="text-gray-600 mb-4">Share your skills and time to support our programs in restoration, training, and documentation.</p>
-                    <a href="/get-involved/volunteer/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                <div class="card-content">
+                    <h3 class="card-title">Volunteer</h3>
+                    <p class="card-description">Share your skills and time to support our programs in ecosystem restoration, youth training, and knowledge documentation.</p>
+                    <a href="/get-involved/volunteer/" class="card-link">
                         Join as Volunteer
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
-                <div class="h-48 bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center">
-                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🌍</span>
+            <!-- Community Partner -->
+            <div class="involvement-card reveal-scale" data-delay="300">
+                <div class="card-gradient gradient-community">
+                    <span class="card-icon">🌍</span>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Community Partner</h3>
-                    <p class="text-gray-600 mb-4">Partner with us to bring climate action and heritage preservation to your community.</p>
-                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                <div class="card-content">
+                    <h3 class="card-title">Community Partner</h3>
+                    <p class="card-description">Partner with us to bring climate action and heritage preservation to your community through collaborative projects.</p>
+                    <a href="/contact/" class="card-link">
                         Become a Partner
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
-                <div class="h-48 bg-gradient-to-br from-orange-600 to-orange-800 flex items-center justify-center">
-                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🏢</span>
+            <!-- Corporate Sponsor -->
+            <div class="involvement-card reveal-scale" data-delay="350">
+                <div class="card-gradient gradient-corporate">
+                    <span class="card-icon">🏢</span>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Corporate Sponsor</h3>
-                    <p class="text-gray-600 mb-4">Align your brand with climate action through strategic partnership and sponsorship.</p>
-                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                <div class="card-content">
+                    <h3 class="card-title">Corporate Sponsor</h3>
+                    <p class="card-description">Align your brand with climate action through strategic partnership, sponsorship, and employee engagement programs.</p>
+                    <a href="/contact/" class="card-link">
                         Partner With Us
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
-                <div class="h-48 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
-                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">❤️</span>
+            <!-- Donor -->
+            <div class="involvement-card reveal-scale" data-delay="400">
+                <div class="card-gradient gradient-donor">
+                    <span class="card-icon">❤️</span>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Donor</h3>
-                    <p class="text-gray-600 mb-4">Support our work through one-time or recurring donations. Every contribution counts.</p>
-                    <a href="/get-involved/donate/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                <div class="card-content">
+                    <h3 class="card-title">Donor</h3>
+                    <p class="card-description">Support our work through one-time or recurring donations. Every contribution helps train youth, plant trees, and preserve knowledge.</p>
+                    <a href="/get-involved/donate/" class="card-link">
                         Make a Donation
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
-                <div class="h-48 bg-gradient-to-br from-teal-600 to-teal-800 flex items-center justify-center">
-                    <span class="text-7xl text-white opacity-80 group-hover:scale-110 transition-transform">🔬</span>
+            <!-- Research Collaborator -->
+            <div class="involvement-card reveal-scale" data-delay="450">
+                <div class="card-gradient gradient-research">
+                    <span class="card-icon">🔬</span>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Research Collaborator</h3>
-                    <p class="text-gray-600 mb-4">Collaborate on research around climate innovation, indigenous knowledge, and restoration.</p>
-                    <a href="/contact/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold">
+                <div class="card-content">
+                    <h3 class="card-title">Research Collaborator</h3>
+                    <p class="card-description">Collaborate on research around climate innovation, indigenous knowledge systems, and ecosystem restoration.</p>
+                    <a href="/contact/" class="card-link">
                         Collaborate
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
-            {% endfor %}
         </div>
     </div>
 </section>
 
-<!-- Featured Programs -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Featured Programs</h2>
+<!-- ===== FEATURED PROGRAMS ===== -->
+<section class="py-24 bg-white relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg width="100%" height="100%">
+            <defs>
+                <pattern id="programs-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <path d="M25 0 L50 25 L25 50 L0 25 Z" fill="none" stroke="#10b981" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#programs-pattern)"/>
+        </svg>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="text-center mb-16">
+            <span class="text-green-600 font-semibold tracking-[0.2em] text-sm uppercase reveal-up">Active Programs</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4 reveal-up" data-delay="100">
+                Featured <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400">Initiatives</span>
+            </h2>
+        </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="flex flex-col md:flex-row bg-green-50 rounded-xl overflow-hidden">
-                <div class="md:w-1/3 bg-green-600 flex items-center justify-center p-6">
-                    <span class="text-6xl">🌱</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Program 1 -->
+            <div class="program-card reveal-left" data-delay="200">
+                <div class="program-icon" style="background: #ecfdf5; color: #059669;">
+                    🌱
                 </div>
-                <div class="md:w-2/3 p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Ecosystem Restoration Corps</h3>
-                    <p class="text-gray-600 mb-4">Join our restoration efforts across Kenya. Help plant trees, restore degraded land, and monitor biodiversity.</p>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        <span>Multiple locations across Kenya</span>
+                <div class="program-content">
+                    <h3 class="program-title">Ecosystem Restoration Corps</h3>
+                    <p class="program-description">Join our restoration efforts across Kenya. Help plant trees, restore degraded land, and monitor biodiversity.</p>
+                    <div class="program-meta">
+                        <span class="program-meta-item">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Multiple locations
+                        </span>
                     </div>
-                    <a href="/get-involved/volunteer/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                    <a href="/get-involved/volunteer/" class="program-link">
                         Learn More
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="flex flex-col md:flex-row bg-blue-50 rounded-xl overflow-hidden">
-                <div class="md:w-1/3 bg-blue-600 flex items-center justify-center p-6">
-                    <span class="text-6xl">👥</span>
+            <!-- Program 2 -->
+            <div class="program-card reveal-right" data-delay="250">
+                <div class="program-icon" style="background: #eff6ff; color: #2563eb;">
+                    👥
                 </div>
-                <div class="md:w-2/3 p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Youth Climate Innovation Fellowship</h3>
-                    <p class="text-gray-600 mb-4">A 6-month program for young innovators to develop and scale climate solutions.</p>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span>Applications open: March - May 2026</span>
+                <div class="program-content">
+                    <h3 class="program-title">Youth Climate Innovation Fellowship</h3>
+                    <p class="program-description">A 6-month program for young innovators to develop and scale climate solutions with mentorship and funding.</p>
+                    <div class="program-meta">
+                        <span class="program-meta-item">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Applications: Mar-May 2026
+                        </span>
                     </div>
-                    <a href="/get-involved/innovator/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                    <a href="/get-involved/innovator/" class="program-link">
                         Apply Now
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="flex flex-col md:flex-row bg-purple-50 rounded-xl overflow-hidden">
-                <div class="md:w-1/3 bg-purple-600 flex items-center justify-center p-6">
-                    <span class="text-6xl">📚</span>
+            <!-- Program 3 -->
+            <div class="program-card reveal-left" data-delay="300">
+                <div class="program-icon" style="background: #f5f3ff; color: #7c3aed;">
+                    📚
                 </div>
-                <div class="md:w-2/3 p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Indigenous Knowledge Documentation Project</h3>
-                    <p class="text-gray-600 mb-4">Help document and preserve traditional knowledge related to climate adaptation and conservation.</p>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                        </svg>
-                        <span>Remote & field opportunities</span>
+                <div class="program-content">
+                    <h3 class="program-title">Indigenous Knowledge Documentation</h3>
+                    <p class="program-description">Help document and preserve traditional knowledge related to climate adaptation, agriculture, and conservation.</p>
+                    <div class="program-meta">
+                        <span class="program-meta-item">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            Remote & field options
+                        </span>
                     </div>
-                    <a href="/get-involved/volunteer/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                    <a href="/get-involved/volunteer/" class="program-link">
                         Get Involved
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
             </div>
             
-            <div class="flex flex-col md:flex-row bg-orange-50 rounded-xl overflow-hidden">
-                <div class="md:w-1/3 bg-orange-600 flex items-center justify-center p-6">
-                    <span class="text-6xl">💧</span>
+            <!-- Program 4 -->
+            <div class="program-card reveal-right" data-delay="350">
+                <div class="program-icon" style="background: #fff7ed; color: #ea580c;">
+                    💧
                 </div>
-                <div class="md:w-2/3 p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Water Harvesting Initiative</h3>
-                    <p class="text-gray-600 mb-4">Support community water harvesting projects that build climate resilience.</p>
-                    <div class="flex items-center text-sm text-gray-500 mb-3">
-                        <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span>Fundraising goal: $50,000</span>
+                <div class="program-content">
+                    <h3 class="program-title">Water Harvesting Initiative</h3>
+                    <p class="program-description">Support community water harvesting projects that build climate resilience in arid and semi-arid regions.</p>
+                    <div class="program-meta">
+                        <span class="program-meta-item">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Goal: $50,000
+                        </span>
                     </div>
-                    <a href="/get-involved/donate/" class="text-green-600 hover:text-green-700 font-semibold inline-flex items-center">
+                    <a href="/get-involved/donate/" class="program-link">
                         Support the Project
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -311,74 +1094,82 @@
     </div>
 </section>
 
-<!-- Impact Counter -->
-<section class="py-16 bg-green-700">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-                <div class="text-4xl font-bold text-white counter" data-target="500">0</div>
-                <div class="text-green-100">Active Volunteers</div>
+<!-- ===== IMPACT COUNTER SECTION ===== -->
+<section class="impact-section">
+    <!-- Particles -->
+    <div class="impact-particles" id="impact-particles"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="impact-grid">
+            <div class="impact-item reveal-scale" data-delay="200">
+                <div class="impact-number counter" data-target="500">0</div>
+                <div class="impact-label">Active Volunteers</div>
             </div>
-            <div>
-                <div class="text-4xl font-bold text-white counter" data-target="50">0</div>
-                <div class="text-green-100">Community Partners</div>
+            <div class="impact-item reveal-scale" data-delay="250">
+                <div class="impact-number counter" data-target="50">0</div>
+                <div class="impact-label">Community Partners</div>
             </div>
-            <div>
-                <div class="text-4xl font-bold text-white counter" data-target="1000">0</div>
-                <div class="text-green-100">Donors</div>
+            <div class="impact-item reveal-scale" data-delay="300">
+                <div class="impact-number counter" data-target="1000">0</div>
+                <div class="impact-label">Donors</div>
             </div>
-            <div>
-                <div class="text-4xl font-bold text-white counter" data-target="25">0</div>
-                <div class="text-green-100">Corporate Sponsors</div>
+            <div class="impact-item reveal-scale" data-delay="350">
+                <div class="impact-number counter" data-target="25">0</div>
+                <div class="impact-label">Corporate Sponsors</div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Testimonials -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Voices from Our Community</h2>
+<!-- ===== TESTIMONIALS SECTION ===== -->
+<section class="py-24 bg-white relative overflow-hidden">
+    <!-- Gradient Orbs -->
+    <div class="gradient-orb orb-2" style="opacity: 0.1;"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="text-center mb-16">
+            <span class="text-green-600 font-semibold tracking-[0.2em] text-sm uppercase reveal-up">Stories</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4 reveal-up" data-delay="100">
+                Voices from Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400">Community</span>
+            </h2>
+        </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-gray-50 rounded-xl p-6">
-                <svg class="h-8 w-8 text-green-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                </svg>
-                <p class="text-gray-600 mb-4">"Volunteering with KCIHH opened my eyes to the power of indigenous knowledge in climate adaptation. I've learned so much from community elders."</p>
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">MK</div>
-                    <div class="ml-3">
-                        <h4 class="font-bold text-gray-900">Mary Kiprop</h4>
-                        <p class="text-sm text-gray-500">Research Volunteer</p>
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card reveal-scale" data-delay="200">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">Volunteering with KCIHH opened my eyes to the power of indigenous knowledge in climate adaptation. I've learned so much from community elders.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MK</div>
+                    <div class="author-info">
+                        <h4>Mary Kiprop</h4>
+                        <p>Research Volunteer</p>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-gray-50 rounded-xl p-6">
-                <svg class="h-8 w-8 text-green-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                </svg>
-                <p class="text-gray-600 mb-4">"Our company partnered with KCIHH to support tree planting in local communities. It's been incredibly rewarding to see the impact."</p>
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">JO</div>
-                    <div class="ml-3">
-                        <h4 class="font-bold text-gray-900">James Omondi</h4>
-                        <p class="text-sm text-gray-500">Corporate Partner, EcoBank</p>
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card reveal-scale" data-delay="250">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">Our company partnered with KCIHH to support tree planting in local communities. It's been incredibly rewarding to see the impact.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JO</div>
+                    <div class="author-info">
+                        <h4>James Omondi</h4>
+                        <p>Corporate Partner, EcoBank</p>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-gray-50 rounded-xl p-6">
-                <svg class="h-8 w-8 text-green-600 mb-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                </svg>
-                <p class="text-gray-600 mb-4">"The youth innovation program gave me the mentorship and funding I needed to launch my agri-tech startup. Now we're helping 200+ farmers."</p>
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">DW</div>
-                    <div class="ml-3">
-                        <h4 class="font-bold text-gray-900">David Waweru</h4>
-                        <p class="text-sm text-gray-500">Youth Innovator Alumnus</p>
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card reveal-scale" data-delay="300">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">The youth innovation program gave me the mentorship and funding I needed to launch my agri-tech startup. Now we're helping 200+ farmers.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">DW</div>
+                    <div class="author-info">
+                        <h4>David Waweru</h4>
+                        <p>Youth Innovator Alumnus</p>
                     </div>
                 </div>
             </div>
@@ -386,41 +1177,84 @@
     </div>
 </section>
 
-<!-- Call to Action -->
-<section class="py-16 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Make a Difference?</h2>
-        <p class="text-lg text-gray-600 mb-8">Choose how you'd like to get involved and join our community of changemakers today.</p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/get-involved/volunteer/" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-                Become a Volunteer
-            </a>
-            <a href="/get-involved/donate/" class="bg-white hover:bg-gray-100 text-green-700 border-2 border-green-600 px-8 py-3 rounded-lg font-semibold transition-colors">
-                Make a Donation
-            </a>
-            <a href="/contact/" class="bg-white hover:bg-gray-100 text-gray-700 border-2 border-gray-300 px-8 py-3 rounded-lg font-semibold transition-colors">
-                Contact Us
-            </a>
+<!-- ===== CALL TO ACTION SECTION ===== -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="cta-premium">
+            <!-- Particles -->
+            <div class="cta-particles" id="cta-particles"></div>
+            
+            <div class="text-center relative z-10">
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-4">
+                    Ready to Make a <span class="text-yellow-300">Difference?</span>
+                </h2>
+                <p class="text-xl text-white/90 max-w-2xl mx-auto mb-8">
+                    Choose how you'd like to get involved and join our community of changemakers today.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="/get-involved/volunteer/" class="cta-btn primary">
+                        Become a Volunteer
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <a href="/get-involved/donate/" class="cta-btn secondary">
+                        Make a Donation
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </a>
+                    <a href="/contact/" class="cta-btn outline">
+                        Contact Us
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-{% endblock %}
 
-{% block extra_scripts %}
 <script>
-    // Counter animation
+    // Particle Generation
     document.addEventListener('DOMContentLoaded', function() {
+        function createParticles(containerId) {
+            const particlesContainer = document.getElementById(containerId);
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = 10 + Math.random() * 20 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        createParticles('particles');
+        createParticles('impact-particles');
+        createParticles('cta-particles');
+        
+        // Counter animation
         const counters = document.querySelectorAll('.counter');
         
         const animateCounter = (counter) => {
             const target = parseInt(counter.getAttribute('data-target'));
             const duration = 2000;
             const startTime = performance.now();
+            const startValue = 0;
+            
+            const easeOutQuart = (x) => 1 - Math.pow(1 - x, 4);
             
             const updateCounter = (currentTime) => {
                 const elapsedTime = currentTime - startTime;
                 const progress = Math.min(elapsedTime / duration, 1);
-                const currentValue = Math.floor(progress * target);
+                const easedProgress = easeOutQuart(progress);
+                
+                const currentValue = Math.floor(easedProgress * target);
                 counter.innerText = currentValue.toLocaleString();
                 
                 if (progress < 1) {
@@ -433,21 +1267,43 @@
             requestAnimationFrame(updateCounter);
         };
         
-        // Use Intersection Observer to start animation when visible
-        const observer = new IntersectionObserver((entries) => {
+        // Use Intersection Observer for counters
+        const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const counters = entry.target.querySelectorAll('.counter');
                     counters.forEach(counter => animateCounter(counter));
-                    observer.unobserve(entry.target);
+                    counterObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.5 });
         
-        const impactSection = document.querySelector('.bg-green-700');
+        const impactSection = document.querySelector('.impact-section');
         if (impactSection) {
-            observer.observe(impactSection);
+            counterObserver.observe(impactSection);
         }
+        
+        // Also observe header stats
+        const headerStats = document.querySelector('.header-stats');
+        if (headerStats) {
+            counterObserver.observe(headerStats);
+        }
+        
+        // Reveal on Scroll
+        const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up, .reveal-scale');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, entry.target.dataset.delay || 0);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
     });
 </script>
 {% endblock %}
