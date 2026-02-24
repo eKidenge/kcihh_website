@@ -1,0 +1,46 @@
+[
+  {
+    "model": "our_work.workcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Innovation Hub",
+      "slug": "innovation-hub",
+      "description": "Supporting climate enterprises and scalable green technologies grounded in local realities",
+      "icon": "🔬",
+      "color": "#10b981"
+    }
+  },
+  {
+    "model": "our_work.workcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Indigenous Knowledge",
+      "slug": "indigenous-knowledge",
+      "description": "Documenting, preserving, and revitalizing traditional ecological systems",
+      "icon": "🌿",
+      "color": "#047857"
+    }
+  },
+  {
+    "model": "our_work.workcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Training & Fellowship",
+      "slug": "training-fellowship",
+      "description": "Building the next generation of climate leaders through training, mentorship, and applied learning",
+      "icon": "📚",
+      "color": "#059669"
+    }
+  },
+  {
+    "model": "our_work.workcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Community Action",
+      "slug": "community-action",
+      "description": "Partnering with counties and communities to co-design and implement locally led climate solutions",
+      "icon": "🤝",
+      "color": "#065f46"
+    }
+  }
+]
