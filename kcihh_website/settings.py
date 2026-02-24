@@ -22,7 +22,11 @@ sys.path.insert(0, str(BASE_DIR / 'apps'))
 # Quick-start development settings
 SECRET_KEY = 'django-insecure-ule%5gqk#$c))-f-@8q)_#*vo)i1yjs-fzp%a^4zybzxktfl*&'
 DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'kcihh-website.onrender.com',
+]
 
 # Application definition
 INSTALLED_APPS = [
