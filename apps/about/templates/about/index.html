@@ -1,712 +1,1234 @@
-<!-- /home/cs/Desktop/PROJECTS/kcihh_website/apps/about/templates/about/about.html -->
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Us - Kenya Climate Innovation & Heritage Hub{% endblock %}
+{% block title %}About Us - KCIHH | Kenya Climate Innovation & Heritage Hub{% endblock %}
 
-{% block meta_description %}KCIHH is a national youth-led platform advancing climate resilience through innovation, heritage preservation, and community partnership across Kenya.{% endblock %}
+{% block meta_description %}KCIHH is a youth-led platform advancing grassroots climate solutions across Kenya. We bridge modern innovation with indigenous ecological wisdom for climate-resilient communities.{% endblock %}
 
 {% block og_title %}About KCIHH - Youth-Led Climate Action in Kenya{% endblock %}
-{% block og_description %}Discover how we're bridging youth innovation with indigenous wisdom to build a climate-resilient Kenya.{% endblock %}
-{% block og_image %}{% static 'images/about-og.jpg' %}{% endblock %}
+{% block og_description %}Discover how we're empowering youth and preserving indigenous knowledge to build a climate-resilient Kenya.{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* ===== PROFESSIONAL ANIMATIONS & STYLES ===== */
+    /* ===== MASTER COMPLEX ANIMATIONS ===== */
     
     /* Custom Properties */
     :root {
-        --color-primary: #10b981;
-        --color-primary-dark: #059669;
-        --color-primary-light: #34d399;
-        --color-secondary: #047857;
-        --color-accent: #f59e0b;
-        --color-dark: #1f2937;
-        --color-light: #f9fafb;
+        --primary: #10b981;
+        --primary-dark: #059669;
+        --primary-light: #34d399;
+        --primary-glow: rgba(16, 185, 129, 0.5);
+        --dark: #0f172a;
+        --light: #f8fafc;
+        --transition-slow: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        --transition-medium: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        --transition-fast: 0.2s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
-    /* Smooth Scroll Behavior */
+    /* Smooth Scrolling */
     html {
         scroll-behavior: smooth;
-        scroll-padding-top: 80px;
     }
     
-    /* Parallax Effects */
-    .parallax {
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+    /* Custom Cursor */
+    .custom-cursor {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.2s ease, width 0.2s ease, height 0.2s ease;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: difference;
+    }
+    
+    .custom-cursor.active {
+        width: 50px;
+        height: 50px;
+        background: rgba(16, 185, 129, 0.1);
+        border-color: var(--primary-light);
+    }
+    
+    /* Loading Progress Bar */
+    .loading-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark), var(--primary-light));
+        z-index: 9999;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 20px var(--primary-glow);
+    }
+    
+    /* ===== CINEMATIC HERO ===== */
+    .cinematic-hero {
+        position: relative;
+        height: 100vh;
+        min-height: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: var(--dark);
+    }
+    
+    .hero-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translateX(-50%) translateY(-50%);
+        z-index: 0;
+        opacity: 0.8;
         transition: transform 0.1s linear;
     }
     
-    /* Fade Animations */
-    .fade-up {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .fade-up.appear {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .fade-in {
-        opacity: 0;
-        transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .fade-in.appear {
-        opacity: 1;
-    }
-    
-    /* Scale on Hover */
-    .scale-hover {
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .scale-hover:hover {
-        transform: scale(1.02);
-    }
-    
-    /* Value Cards */
-    .value-card {
-        position: relative;
-        background: white;
-        border-radius: 1.5rem;
-        padding: 2rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
-        z-index: 1;
-    }
-    
-    .value-card::before {
-        content: '';
+    .hero-overlay {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
+        inset: 0;
+        background: radial-gradient(circle at center, 
+            rgba(15, 23, 42, 0.4) 0%,
+            rgba(16, 185, 129, 0.3) 50%,
+            rgba(15, 23, 42, 0.8) 100%);
+        z-index: 1;
+        mix-blend-mode: multiply;
+    }
+    
+    .hero-particles {
+        position: absolute;
+        inset: 0;
         z-index: 2;
     }
     
-    .value-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
-    .value-card:hover::before {
-        transform: scaleX(1);
-    }
-    
-    .value-icon {
-        width: 64px;
-        height: 64px;
-        background: rgba(16, 185, 129, 0.1);
-        border-radius: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-    }
-    
-    .value-card:hover .value-icon {
-        background: var(--color-primary);
-        transform: scale(1.1);
-    }
-    
-    .value-card:hover .value-icon svg {
-        color: white;
-    }
-    
-    /* Timeline Styles */
-    .timeline {
-        position: relative;
-        padding: 2rem 0;
-    }
-    
-    .timeline::before {
-        content: '';
+    .particle {
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 2px;
-        height: 100%;
-        background: linear-gradient(180deg, transparent, var(--color-primary), var(--color-primary-light), transparent);
-        opacity: 0.3;
-    }
-    
-    .timeline-item {
-        position: relative;
-        margin-bottom: 3rem;
-        width: 100%;
-    }
-    
-    .timeline-item:nth-child(odd) {
-        padding-right: 50%;
-    }
-    
-    .timeline-item:nth-child(even) {
-        padding-left: 50%;
-    }
-    
-    .timeline-content {
-        position: relative;
-        background: white;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-    
-    .timeline-content:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2);
-    }
-    
-    .timeline-dot {
-        position: absolute;
-        top: 50%;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: var(--color-primary);
-        border: 3px solid white;
-        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-        transition: all 0.3s ease;
-    }
-    
-    .timeline-item:nth-child(odd) .timeline-dot {
-        right: -8px;
-        transform: translate(50%, -50%);
-    }
-    
-    .timeline-item:nth-child(even) .timeline-dot {
-        left: -8px;
-        transform: translate(-50%, -50%);
-    }
-    
-    .timeline-content:hover .timeline-dot {
-        transform: scale(1.5);
-        background: var(--color-primary-dark);
-    }
-    
-    /* Team Cards */
-    .team-card {
-        position: relative;
-        border-radius: 1rem;
-        overflow: hidden;
-        background: white;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-    
-    .team-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2);
-    }
-    
-    .team-image {
-        position: relative;
-        height: 300px;
-        overflow: hidden;
-    }
-    
-    .team-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-    
-    .team-card:hover .team-image img {
-        transform: scale(1.1);
-    }
-    
-    .team-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        display: flex;
-        align-items: flex-end;
-        padding: 1.5rem;
-    }
-    
-    .team-card:hover .team-overlay {
-        opacity: 1;
-    }
-    
-    .team-social {
-        display: flex;
-        gap: 0.75rem;
-    }
-    
-    .team-social a {
-        width: 36px;
-        height: 36px;
-        background: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-primary);
-        transition: all 0.3s ease;
-    }
-    
-    .team-social a:hover {
-        background: var(--color-primary);
-        color: white;
-        transform: translateY(-3px);
-    }
-    
-    /* Stats Counter */
-    .stat-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 1rem;
-        padding: 2rem;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-    
-    .stat-card:hover {
-        background: rgba(255, 255, 255, 0.15);
-        transform: translateY(-4px);
-    }
-    
-    .stat-number {
-        font-size: 3rem;
-        font-weight: 800;
-        line-height: 1;
-        margin-bottom: 0.5rem;
-        background: linear-gradient(135deg, #fff, #e0f2fe);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    /* Section Dividers */
-    .section-divider {
-        width: 80px;
+        width: 4px;
         height: 4px;
-        background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
-        margin: 1.5rem 0;
-        border-radius: 2px;
+        background: var(--primary);
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: particleFloat 15s linear infinite;
     }
     
-    .section-divider.center {
-        margin-left: auto;
-        margin-right: auto;
+    @keyframes particleFloat {
+        0% {
+            transform: translateY(0) translateX(0);
+            opacity: 0;
+        }
+        10% { opacity: 0.3; }
+        90% { opacity: 0.3; }
+        100% {
+            transform: translateY(-100vh) translateX(100px);
+            opacity: 0;
+        }
     }
     
-    /* Gradient Text */
-    .gradient-text {
-        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-accent) 100%);
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        text-align: center;
+        max-width: 1200px;
+        padding: 0 20px;
+        animation: contentAppear 1.5s ease forwards;
+    }
+    
+    @keyframes contentAppear {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Animated Border Badge */
+    .animated-border-badge {
+        position: relative;
+        padding: 3px;
+        background: linear-gradient(90deg, 
+            var(--primary), 
+            var(--primary-dark), 
+            var(--primary-light), 
+            var(--primary));
+        background-size: 300% 100%;
+        border-radius: 60px;
+        animation: gradientMove 3s linear infinite;
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+    
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 300% 50%; }
+    }
+    
+    .badge-inner {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 58px;
+        padding: 12px 32px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .badge-inner span {
+        color: white;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+    
+    /* Split Text Animation */
+    .split-text {
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+    
+    .split-text span {
+        display: block;
+        animation: splitReveal 1s var(--transition-slow) forwards;
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    
+    @keyframes splitReveal {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .split-text:nth-child(1) span { animation-delay: 0.2s; }
+    .split-text:nth-child(2) span { animation-delay: 0.4s; }
+    .split-text:nth-child(3) span { animation-delay: 0.6s; }
+    
+    /* Gradient Text Premium */
+    .gradient-premium {
+        background: linear-gradient(135deg, 
+            var(--primary) 0%, 
+            var(--primary-dark) 30%, 
+            var(--primary-light) 60%,
+            var(--primary) 100%);
+        background-size: 300% 300%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        background-size: 200% 200%;
-        animation: gradient 8s ease infinite;
+        animation: gradientShift 5s ease infinite;
+        position: relative;
+        display: inline-block;
     }
     
-    @keyframes gradient {
+    @keyframes gradientShift {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
     
-    /* Floating Animation */
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
+    .gradient-premium::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--primary), var(--primary-light), var(--primary), transparent);
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: underlineReveal 1s ease forwards 1s;
     }
     
-    .float {
-        animation: float 4s ease-in-out infinite;
+    @keyframes underlineReveal {
+        to { transform: scaleX(1); }
     }
     
-    /* Pulse Animation */
-    @keyframes pulse-glow {
-        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-        70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    /* Floating Elements */
+    .float-1 {
+        animation: float1 8s ease-in-out infinite;
     }
     
-    .pulse-glow {
-        animation: pulse-glow 2s infinite;
+    .float-2 {
+        animation: float2 10s ease-in-out infinite reverse;
     }
     
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-        width: 10px;
+    .float-3 {
+        animation: float3 7s ease-in-out infinite 1s;
     }
     
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+    @keyframes float1 {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-30px) rotate(5deg); }
     }
     
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-        border-radius: 5px;
+    @keyframes float2 {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(20px) rotate(-5deg); }
     }
     
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--color-primary-dark);
+    @keyframes float3 {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-20px) scale(1.1); }
     }
     
-    /* Counter Animation */
-    .counter-number {
+    /* Stats Counter */
+    .stat-item {
+        position: relative;
+        padding: 0 20px;
+    }
+    
+    .stat-item::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent);
+    }
+    
+    .stat-item:last-child::after {
+        display: none;
+    }
+    
+    .stat-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg, #fff, var(--primary-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .stat-number::before {
+        content: attr(data-count);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: var(--primary);
+        opacity: 0.3;
+        filter: blur(10px);
+        z-index: -1;
+    }
+    
+    /* Scroll Indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+    }
+    
+    .mouse {
+        width: 30px;
+        height: 50px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 20px;
+        position: relative;
+    }
+    
+    .mouse::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 8px;
+        background: white;
+        border-radius: 2px;
+        animation: scrollWheel 2s ease infinite;
+    }
+    
+    @keyframes scrollWheel {
+        0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        100% { transform: translateX(-50%) translateY(20px); opacity: 0; }
+    }
+    
+    /* ===== 3D CARD EFFECTS ===== */
+    .card-3d-container {
+        perspective: 2000px;
+    }
+    
+    .card-3d {
+        transform-style: preserve-3d;
+        transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .card-3d:hover {
+        transform: rotateX(5deg) rotateY(5deg) scale(1.02);
+    }
+    
+    .card-3d-content {
+        background: white;
+        border-radius: 30px;
+        padding: 40px;
+        box-shadow: 0 30px 40px -20px rgba(0,0,0,0.2),
+                    0 0 0 1px rgba(16,185,129,0.1);
         transition: all 0.3s ease;
-    }
-    
-    /* Responsive Timeline */
-    @media (max-width: 768px) {
-        .timeline::before {
-            left: 30px;
-        }
-        
-        .timeline-item:nth-child(odd),
-        .timeline-item:nth-child(even) {
-            padding-left: 60px;
-            padding-right: 0;
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-dot,
-        .timeline-item:nth-child(even) .timeline-dot {
-            left: 26px;
-            right: auto;
-            transform: translate(-50%, -50%);
-        }
-    }
-    
-    /* Stats Bar */
-    .stats-bar {
-        background: linear-gradient(135deg, var(--color-primary-dark), var(--color-secondary));
-        padding: 1rem 0;
         position: relative;
         overflow: hidden;
     }
     
-    .stats-bar::before {
+    .card-3d-content::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, 
+            rgba(16,185,129,0.1) 0%,
+            transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+    
+    .card-3d:hover .card-3d-content::before {
+        opacity: 1;
+    }
+    
+    /* Glowing Effect */
+    .glow-effect {
+        position: relative;
+    }
+    
+    .glow-effect::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        background: linear-gradient(90deg, 
+            var(--primary), 
+            var(--primary-dark), 
+            var(--primary-light));
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+        filter: blur(10px);
+    }
+    
+    .glow-effect:hover::before {
+        opacity: 0.7;
+    }
+    
+    /* ===== TIMELINE ===== */
+    .timeline-container {
+        position: relative;
+        padding: 40px 0;
+    }
+    
+    .timeline-line {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, 
+            var(--primary-light) 0%,
+            var(--primary) 50%,
+            var(--primary-dark) 100%);
+        border-radius: 4px;
+        box-shadow: 0 0 20px var(--primary-glow);
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 60px;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .timeline-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .timeline-dot {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 24px;
+        height: 24px;
+        background: var(--primary);
+        border: 4px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 30px var(--primary-glow);
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+    
+    .timeline-dot:hover {
+        transform: translateX(-50%) scale(1.5);
+        box-shadow: 0 0 40px var(--primary);
+    }
+    
+    .timeline-dot.pulse::before {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        border-radius: 50%;
+        background: var(--primary);
+        opacity: 0.3;
+        animation: pulseDot 2s ease infinite;
+    }
+    
+    @keyframes pulseDot {
+        0% { transform: scale(1); opacity: 0.3; }
+        70% { transform: scale(2); opacity: 0; }
+        100% { transform: scale(1); opacity: 0; }
+    }
+    
+    .timeline-content {
+        width: 45%;
+        padding: 30px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
+        position: relative;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(16,185,129,0.1);
+    }
+    
+    .timeline-content:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 40px -10px var(--primary-glow);
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content {
+        margin-left: auto;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content::before {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 15px 10px 0;
+        border-color: transparent white transparent transparent;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content::before {
+        content: '';
+        position: absolute;
+        right: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 0 10px 15px;
+        border-color: transparent transparent transparent white;
+    }
+    
+    .timeline-year {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+    }
+    
+    /* ===== VALUE CARDS PREMIUM ===== */
+    .value-card-premium {
+        background: white;
+        border-radius: 30px;
+        padding: 40px 30px;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(16,185,129,0.1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .value-card-premium::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-        animation: shine 3s infinite;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+            rgba(16,185,129,0.1) 0%,
+            transparent 50%,
+            rgba(16,185,129,0.05) 100%);
+        transform: translateX(-100%);
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
     
-    @keyframes shine {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
+    .value-card-premium:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 40px -20px var(--primary-glow);
+        border-color: transparent;
     }
     
-    .stat-pill {
+    .value-card-premium:hover::before {
+        transform: translateX(0);
+    }
+    
+    .value-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 20px;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: rgba(255,255,255,0.1);
-        border-radius: 50px;
-        border: 1px solid rgba(255,255,255,0.2);
-    }
-    
-    .stat-pill:hover {
-        background: rgba(255,255,255,0.2);
-        transform: translateY(-2px);
-    }
-    
-    /* Partner Logo Animation */
-    .partner-logo {
-        filter: grayscale(100%);
-        opacity: 0.5;
+        justify-content: center;
+        margin-bottom: 30px;
+        color: white;
+        font-size: 36px;
         transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 10px 20px -5px var(--primary-glow);
     }
     
-    .partner-logo:hover {
-        filter: grayscale(0);
-        opacity: 1;
+    .value-card-premium:hover .value-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 20px 30px -5px var(--primary);
+    }
+    
+    .value-icon svg {
+        width: 36px;
+        height: 36px;
+        filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    }
+    
+    .value-title {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 15px;
+        color: var(--dark);
+        position: relative;
+        z-index: 2;
+    }
+    
+    .value-description {
+        color: #64748b;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        flex-grow: 1;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .value-stats-premium {
+        margin-top: auto;
+        padding-top: 25px;
+        border-top: 2px solid rgba(16,185,129,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .value-stat-label {
+        color: #64748b;
+        font-weight: 500;
+    }
+    
+    .value-stat-number {
+        font-size: 32px;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* ===== TEAM CARDS ===== */
+    .team-card-container {
+        position: relative;
+        border-radius: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .team-card-container:hover {
+        transform: translateY(-10px);
+    }
+    
+    .team-card-image {
+        position: relative;
+        overflow: hidden;
+        border-radius: 30px;
+        aspect-ratio: 3/4;
+    }
+    
+    .team-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .team-card-container:hover .team-card-image img {
         transform: scale(1.1);
     }
     
-    /* Award Badge */
-    .award-badge {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.5rem;
-        background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        border-radius: 50px;
-        color: white;
-        font-weight: 600;
-        box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
-    }
-    
-    .award-badge::before {
-        content: '';
+    .team-card-overlay {
         position: absolute;
-        inset: -2px;
-        border-radius: 52px;
-        background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
-        opacity: 0.5;
-        z-index: -1;
-        animation: pulse 2s infinite;
+        inset: 0;
+        background: linear-gradient(to top, 
+            rgba(16,185,129,0.95) 0%,
+            rgba(16,185,129,0.5) 50%,
+            transparent 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 40px 30px;
     }
     
-    /* Milestone Card */
-    .milestone-card {
+    .team-card-container:hover .team-card-overlay {
+        opacity: 1;
+    }
+    
+    .team-card-social {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.4s ease;
+    }
+    
+    .team-card-container:hover .team-card-social {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .team-social-link {
+        width: 45px;
+        height: 45px;
         background: white;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .team-social-link:hover {
+        background: var(--primary);
+        color: white;
+        transform: scale(1.1) rotate(360deg);
+    }
+    
+    .team-social-link svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .team-card-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 30px;
+        color: white;
+        transform: translateY(100%);
+        transition: transform 0.4s ease;
+    }
+    
+    .team-card-container:hover .team-card-info {
+        transform: translateY(0);
+    }
+    
+    .team-card-name {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 5px;
+    }
+    
+    .team-card-title {
+        font-size: 16px;
+        opacity: 0.9;
+        margin-bottom: 10px;
+    }
+    
+    .team-card-bio {
+        font-size: 14px;
+        opacity: 0.8;
+        line-height: 1.6;
+    }
+    
+    /* Always visible info (fallback) */
+    .team-card-info-static {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .team-card-info-static h3 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 5px;
+    }
+    
+    .team-card-info-static p {
+        color: var(--primary);
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+    
+    .team-card-info-static .bio {
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    /* ===== ADVISOR CARDS ===== */
+    .advisor-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(16,185,129,0.1);
         position: relative;
         overflow: hidden;
     }
     
-    .milestone-card::after {
+    .advisor-card::before {
         content: '';
         position: absolute;
-        top: 0;
-        right: 0;
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, transparent 50%, rgba(16,185,129,0.1) 50%);
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, 
+            rgba(16,185,129,0.1) 0%,
+            transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
-    .milestone-year {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: var(--color-primary);
-        opacity: 0.2;
+    .advisor-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 20px 30px -10px var(--primary-glow);
+        border-color: transparent;
+    }
+    
+    .advisor-card:hover::before {
+        opacity: 1;
+    }
+    
+    .advisor-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid var(--primary);
+        box-shadow: 0 10px 20px -5px var(--primary-glow);
+        transition: all 0.3s ease;
+    }
+    
+    .advisor-card:hover .advisor-avatar {
+        transform: scale(1.1);
+        box-shadow: 0 15px 30px -5px var(--primary);
+    }
+    
+    .advisor-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .advisor-info h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+    
+    .advisor-info .title {
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .advisor-info .expertise {
+        color: #64748b;
+        font-size: 14px;
+    }
+    
+    /* ===== PARTNER LOGOS ===== */
+    .partner-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 30px;
+        align-items: center;
+    }
+    
+    .partner-item {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        filter: grayscale(100%);
+        opacity: 0.6;
+        border: 1px solid transparent;
+    }
+    
+    .partner-item:hover {
+        filter: grayscale(0);
+        opacity: 1;
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 20px 30px -10px var(--primary-glow);
+        border-color: var(--primary);
+    }
+    
+    .partner-item span {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--dark);
+    }
+    
+    @media (max-width: 1024px) {
+        .partner-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .partner-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    /* ===== PARALLAX SECTION ===== */
+    .parallax-section {
+        position: relative;
+        overflow: hidden;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .parallax-overlay {
         position: absolute;
-        bottom: 0.5rem;
-        right: 1rem;
+        inset: 0;
+        background: linear-gradient(135deg, 
+            rgba(16,185,129,0.95) 0%,
+            rgba(5,150,105,0.95) 50%,
+            rgba(4,120,87,0.95) 100%);
+        mix-blend-mode: multiply;
+    }
+    
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-background {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.1s linear;
+    }
+    
+    .cta-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, 
+            rgba(15,23,42,0.95) 0%,
+            rgba(16,185,129,0.8) 100%);
+    }
+    
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* ===== REVEAL ON SCROLL ===== */
+    .reveal-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-up {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal-scale {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .revealed {
+        opacity: 1;
+        transform: translate(0) scale(1);
+    }
+    
+    /* ===== LOADING STATES ===== */
+    .skeleton {
+        background: linear-gradient(90deg, 
+            #f0f0f0 25%, 
+            #e0e0e0 50%, 
+            #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .stat-number {
+            font-size: 2.5rem;
+        }
+        
+        .timeline-content {
+            width: 100%;
+            margin-left: 0 !important;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before,
+        .timeline-item:nth-child(even) .timeline-content::before {
+            display: none;
+        }
+        
+        .timeline-dot {
+            left: 20px;
+        }
+        
+        .timeline-line {
+            left: 32px;
+        }
+        
+        .advisor-card {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .custom-cursor {
+            display: none;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- ===== HERO SECTION WITH PARALLAX ===== -->
-<section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-    <!-- Background Image with Parallax -->
-    <div class="absolute inset-0">
-        <div class="absolute inset-0 bg-cover bg-center bg-fixed parallax" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-green-900/95 via-green-800/90 to-green-900/95"></div>
-        
-        <!-- Animated Grid Overlay -->
-        <svg class="absolute inset-0 w-full h-full opacity-10">
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
-            </pattern>
-            <rect width="100%" height="100%" fill="url(#grid)"/>
-        </svg>
+<!-- Custom Cursor -->
+<div class="custom-cursor" id="custom-cursor"></div>
+
+<!-- Loading Progress -->
+<div class="loading-progress" id="loading-progress"></div>
+
+<!-- ===== CINEMATIC HERO SECTION ===== -->
+<section class="cinematic-hero" id="hero">
+    <!-- Video Background -->
+    <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80">
+        <source src="{% static 'videos/kenya-hero.mp4' %}" type="video/mp4">
+        <!-- Fallback image will show if video fails -->
+    </video>
+    
+    <!-- Overlay with Gradient -->
+    <div class="hero-overlay"></div>
+    
+    <!-- Particles -->
+    <div class="hero-particles" id="particles"></div>
+    
+    <!-- Floating Elements -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-40 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl float-1"></div>
+        <div class="absolute bottom-40 right-20 w-[500px] h-[500px] bg-green-600/10 rounded-full blur-3xl float-2"></div>
+        <div class="absolute top-1/2 left-1/3 w-80 h-80 bg-green-400/10 rounded-full blur-3xl float-3"></div>
     </div>
     
     <!-- Hero Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div class="max-w-4xl">
-            <!-- Breadcrumb Navigation -->
-            <nav class="flex items-center space-x-2 text-sm text-green-200 mb-8 fade-up">
-                <a href="/" class="hover:text-white transition-colors">Home</a>
-                <span>/</span>
-                <span class="text-white font-semibold">About Us</span>
-            </nav>
-            
-            <!-- Main Heading -->
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight fade-up" data-delay="100">
-                We Are <span class="gradient-text">Kenya's</span><br>Climate Future
-            </h1>
-            
-            <!-- Subheading -->
-            <p class="text-xl md:text-2xl text-green-50 mb-8 leading-relaxed max-w-3xl fade-up" data-delay="200">
-                A national youth-led platform advancing climate resilience through innovation, heritage preservation, and community partnership.
-            </p>
-            
-            <!-- Quick Stats Pills -->
-            <div class="flex flex-wrap gap-4 fade-up" data-delay="300">
-                <div class="stat-pill">
-                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                    <span class="text-white">500+ Youth Trained</span>
-                </div>
-                <div class="stat-pill">
-                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                    <span class="text-white">20 Startups Incubated</span>
-                </div>
-                <div class="stat-pill">
-                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                    <span class="text-white">10 Counties Reached</span>
-                </div>
+    <div class="hero-content">
+        <!-- Animated Badge -->
+        <div class="animated-border-badge">
+            <div class="badge-inner">
+                <span>✦ ESTABLISHED 2020 ✦</span>
             </div>
-            
-            <!-- CTA Buttons -->
-            <div class="flex flex-wrap gap-4 mt-10 fade-up" data-delay="400">
-                <a href="#who-we-are" class="group bg-white text-green-700 hover:bg-green-50 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center">
-                    Discover Our Story
-                    <svg class="w-5 h-5 ml-2 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7-7-7m14-6l-7 7-7-7"></path>
-                    </svg>
-                </a>
-                <a href="/get-involved/" class="group border-2 border-white text-white hover:bg-white hover:text-green-700 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center">
-                    Join the Movement
-                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        </div>
+        
+        <!-- Split Text Headline -->
+        <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6">
+            <div class="split-text">
+                <span>We Are</span>
+            </div>
+            <div class="split-text">
+                <span class="gradient-premium">Kenya's Climate</span>
+            </div>
+            <div class="split-text">
+                <span>Future</span>
+            </div>
+        </h1>
+        
+        <!-- Description -->
+        <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            A youth-led movement where ancient wisdom meets modern innovation to build a climate-resilient Kenya.
+        </p>
+        
+        <!-- CTA Buttons with Ripple Effect -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#story" class="group relative px-10 py-5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/30 overflow-hidden">
+                <span class="relative z-10 flex items-center justify-center">
+                    Discover Our Journey
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                     </svg>
-                </a>
+                </span>
+                <span class="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></span>
+            </a>
+            <a href="#values" class="group relative px-10 py-5 border-2 border-white/30 hover:border-white text-white font-bold rounded-full text-lg transition-all duration-300 transform hover:scale-105 backdrop-blur-sm overflow-hidden">
+                <span class="relative z-10 flex items-center justify-center">
+                    Our Values
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </span>
+                <span class="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></span>
+            </a>
+        </div>
+        
+        <!-- Stats Row -->
+        <div class="flex flex-wrap justify-center gap-8 mt-16">
+            <div class="stat-item">
+                <div class="stat-number" data-count="500">500+</div>
+                <div class="text-sm text-gray-400 mt-2 tracking-wider">YOUTH TRAINED</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="20">20</div>
+                <div class="text-sm text-gray-400 mt-2 tracking-wider">COUNTIES</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="50">50K</div>
+                <div class="text-sm text-gray-400 mt-2 tracking-wider">TREES</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="15">15+</div>
+                <div class="text-sm text-gray-400 mt-2 tracking-wider">ARCHIVES</div>
             </div>
         </div>
     </div>
     
     <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
-        <a href="#who-we-are" class="text-white/60 hover:text-white transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7-7-7m14-6l-7 7-7-7"></path>
-            </svg>
-        </a>
+    <div class="scroll-indicator">
+        <div class="mouse"></div>
+        <p class="text-white/50 text-xs mt-2 tracking-widest">SCROLL</p>
     </div>
 </section>
 
-<!-- ===== IMPACT METRICS BAR ===== -->
-<div class="stats-bar">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-            <div class="stat-pill">
-                <span class="text-white font-bold text-lg">500+</span>
-                <span class="text-green-100 text-sm">Youth Trained</span>
-            </div>
-            <div class="stat-pill">
-                <span class="text-white font-bold text-lg">20</span>
-                <span class="text-green-100 text-sm">Startups</span>
-            </div>
-            <div class="stat-pill">
-                <span class="text-white font-bold text-lg">50K</span>
-                <span class="text-green-100 text-sm">Trees</span>
-            </div>
-            <div class="stat-pill">
-                <span class="text-white font-bold text-lg">15</span>
-                <span class="text-green-100 text-sm">Archives</span>
-            </div>
-            <div class="stat-pill">
-                <span class="text-white font-bold text-lg">10</span>
-                <span class="text-green-100 text-sm">Counties</span>
-            </div>
+<!-- ===== STORY SECTION WITH TIMELINE ===== -->
+<section id="story" class="py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-green-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-[800px] h-[800px] bg-green-50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 relative">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <span class="text-green-600 font-semibold tracking-[0.3em] text-sm uppercase reveal-up">Our Journey</span>
+            <h2 class="text-5xl md:text-6xl font-bold mt-4 mb-6 reveal-up" data-delay="100">
+                From Vision to <span class="gradient-premium">Impact</span>
+            </h2>
+            <p class="text-xl text-gray-600 reveal-up" data-delay="200">
+                Born from a powerful realization: Kenya's climate future lies at the intersection of youth ingenuity and indigenous wisdom.
+            </p>
         </div>
-    </div>
-</div>
-
-<!-- ===== WHO WE ARE SECTION ===== -->
-<section id="who-we-are" class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-            <!-- Left Column - Content -->
-            <div>
-                <!-- Section Tag -->
-                <div class="fade-up">
-                    <span class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold tracking-wider mb-6">
-                        Who We Are
-                    </span>
-                </div>
-                
-                <!-- Main Heading -->
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight fade-up" data-delay="100">
-                    Bridging Innovation with<br><span class="gradient-text">Indigenous Wisdom</span>
-                </h2>
-                
-                <div class="section-divider fade-up" data-delay="150"></div>
-                
-                <!-- Description -->
-                <p class="text-lg text-gray-700 mb-6 leading-relaxed fade-up" data-delay="200">
-                    Kenya Climate Innovation & Heritage Hub is a national youth-led institution dedicated to advancing climate resilience through innovation, heritage preservation, and community partnership.
-                </p>
-                
-                <p class="text-lg text-gray-700 mb-8 leading-relaxed fade-up" data-delay="250">
-                    We believe <span class="font-bold text-green-600">Kenya's climate future lies at the intersection of youth ingenuity and indigenous wisdom.</span> Founded in 2020 by a coalition of young climate activists and community elders, we've grown into a nationally recognized platform for grassroots climate action.
-                </p>
-                
-                <!-- Key Features Grid -->
-                <div class="grid grid-cols-2 gap-4 mt-8 fade-up" data-delay="300">
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">Youth-Led Governance</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">Elder Advisory Council</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">10 County Presence</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">UNEP Accredited</span>
+        
+        <!-- Timeline -->
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <!-- Timeline Item 1 -->
+            <div class="timeline-item" data-delay="300">
+                <div class="timeline-dot pulse"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2020</div>
+                    <h3 class="text-2xl font-bold mb-3">Founded in Nairobi</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Started with 10 youth innovators and 5 community elders sharing a vision for climate-resilient Kenya. Our first office was a small room in Nairobi, but our dreams were boundless.
+                    </p>
+                    <div class="mt-4 flex items-center text-green-600">
+                        <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                        <span class="text-sm font-semibold">First pilot project launched</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Right Column - Visual Elements -->
-            <div class="relative">
-                <!-- Main Image Grid -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-4">
-                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition duration-500 fade-up" data-delay="200">
-                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Youth innovators" class="w-full h-48 object-cover">
-                        </div>
-                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition duration-500 fade-up" data-delay="300">
-                            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Community elders" class="w-full h-64 object-cover">
-                        </div>
-                    </div>
-                    <div class="space-y-4 mt-8">
-                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition duration-500 fade-up" data-delay="250">
-                            <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Climate innovation" class="w-full h-64 object-cover">
-                        </div>
-                        <div class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition duration-500 fade-up" data-delay="350">
-                            <img src="https://images.unsplash.com/photo-1593113598338-df59c3e3f9a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Community action" class="w-full h-48 object-cover">
-                        </div>
+            <!-- Timeline Item 2 -->
+            <div class="timeline-item" data-delay="500">
+                <div class="timeline-dot pulse"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2022</div>
+                    <h3 class="text-2xl font-bold mb-3">Expanded to 10 Counties</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Launched regional hubs across Kenya, reaching communities in arid, semi-arid, and agricultural regions. Established partnerships with county governments.
+                    </p>
+                    <div class="mt-4 flex items-center text-green-600">
+                        <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                        <span class="text-sm font-semibold">500+ youth trained</span>
                     </div>
                 </div>
-                
-                <!-- Floating Award Badge -->
-                <div class="absolute -bottom-6 -left-6 award-badge float">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h10v7h-2l-1 2H8l-1-2H5V5z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>UN Climate Award 2024</span>
-                </div>
-                
-                <!-- Recognition Card -->
-                <div class="absolute -top-6 -right-6 bg-white rounded-xl shadow-2xl p-4 max-w-xs float">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-900">Recognized by</p>
-                            <p class="text-xs text-gray-600">UNDP • GIZ • Kenya Govt</p>
-                        </div>
+            </div>
+            
+            <!-- Timeline Item 3 -->
+            <div class="timeline-item" data-delay="700">
+                <div class="timeline-dot pulse"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <h3 class="text-2xl font-bold mb-3">National Recognition</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Recognized as Kenya's leading youth climate platform by UNDP. Our indigenous knowledge archive received international acclaim for preserving traditional wisdom.
+                    </p>
+                    <div class="mt-4 flex items-center text-green-600">
+                        <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                        <span class="text-sm font-semibold">15 knowledge archives created</span>
                     </div>
                 </div>
             </div>
@@ -714,389 +1236,410 @@
     </div>
 </section>
 
-<!-- ===== VISION & MISSION SECTION ===== -->
-<section class="relative py-32 overflow-hidden">
-    <!-- Background Image with Parallax -->
-    <div class="absolute inset-0">
-        <div class="absolute inset-0 bg-cover bg-center bg-fixed parallax" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
-        <div class="absolute inset-0 bg-gradient-to-br from-green-900/95 to-green-800/90"></div>
-    </div>
+<!-- ===== VISION & MISSION WITH PARALLAX ===== -->
+<section class="parallax-section py-32" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+    <div class="parallax-overlay"></div>
     
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-12">
+    <div class="relative max-w-7xl mx-auto px-4 z-10">
+        <div class="grid md:grid-cols-2 gap-8">
             <!-- Vision Card -->
-            <div class="backdrop-blur-lg bg-white/10 rounded-3xl p-10 border border-white/20 transform hover:scale-105 transition-all duration-500 fade-up" data-delay="200">
-                <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mb-6">
-                    <svg class="w-8 h-8 text-green-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <h3 class="text-3xl font-bold text-white mb-4">Our Vision</h3>
-                <p class="text-xl text-green-50 leading-relaxed">
-                    A climate-resilient Kenya powered by youth innovation and indigenous knowledge systems.
-                </p>
-                
-                <!-- Vision Metrics -->
-                <div class="mt-8 grid grid-cols-3 gap-4">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-white">2030</div>
-                        <div class="text-xs text-green-200">Target Year</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-white">30</div>
-                        <div class="text-xs text-green-200">Counties</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-white">1M</div>
-                        <div class="text-xs text-green-200">Youth</div>
+            <div class="card-3d-container reveal-left">
+                <div class="card-3d">
+                    <div class="card-3d-content bg-white/10 backdrop-blur-xl border border-white/20 text-white">
+                        <div class="w-20 h-20 bg-green-500/20 rounded-2xl flex items-center justify-center mb-8">
+                            <svg class="w-10 h-10 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">Our Vision</h3>
+                        <p class="text-xl text-green-50 leading-relaxed">
+                            A climate-resilient Kenya powered by youth innovation and indigenous knowledge systems.
+                        </p>
+                        
+                        <!-- Animated Progress -->
+                        <div class="mt-8">
+                            <div class="flex items-center justify-between text-sm mb-2">
+                                <span>Progress to 2030</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="w-full h-2 bg-white/20 rounded-full overflow-hidden">
+                                <div class="h-full bg-green-400 rounded-full" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pulse Dots -->
+                        <div class="mt-8 flex items-center space-x-2">
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-ping" style="animation-delay: 0.2s;"></div>
+                            <div class="w-2 h-2 bg-green-400 rounded-full animate-ping" style="animation-delay: 0.4s;"></div>
+                            <span class="text-green-300 text-sm ml-2">Towards 2030</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <!-- Mission Card -->
-            <div class="backdrop-blur-lg bg-white/10 rounded-3xl p-10 border border-white/20 transform hover:scale-105 transition-all duration-500 fade-up" data-delay="300">
-                <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mb-6">
-                    <svg class="w-8 h-8 text-green-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/>
-                    </svg>
-                </div>
-                <h3 class="text-3xl font-bold text-white mb-4">Our Mission</h3>
-                <p class="text-xl text-green-50 leading-relaxed mb-6">
-                    To incubate scalable climate solutions, preserve ecological heritage, and empower communities to lead transformative climate action.
-                </p>
-                
-                <!-- Mission Pillars -->
-                <div class="space-y-3">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span class="text-green-100">Incubate 100+ climate startups by 2027</span>
+            <div class="card-3d-container reveal-right">
+                <div class="card-3d">
+                    <div class="card-3d-content bg-white/10 backdrop-blur-xl border border-white/20 text-white">
+                        <div class="w-20 h-20 bg-green-500/20 rounded-2xl flex items-center justify-center mb-8">
+                            <svg class="w-10 h-10 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">Our Mission</h3>
+                        <p class="text-xl text-green-50 leading-relaxed">
+                            To incubate scalable climate solutions, preserve ecological heritage, and empower communities to lead transformative climate action.
+                        </p>
+                        
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-3 gap-4 mt-8">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-white">500+</div>
+                                <div class="text-xs text-green-300 mt-1">Youth</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-white">20</div>
+                                <div class="text-xs text-green-300 mt-1">Startups</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-white">15</div>
+                                <div class="text-xs text-green-300 mt-1">Counties</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Button -->
+                        <a href="#values" class="inline-flex items-center text-green-400 hover:text-green-300 mt-8 group">
+                            <span>Learn more about our impact</span>
+                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
                     </div>
-                    <div class="flex items-center space-x-3">
-                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span class="text-green-100">Document 1,000 indigenous practices</span>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span class="text-green-100">Reach 1 million youth across Kenya</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== OUR STORY TIMELINE ===== -->
-<section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold tracking-wider mb-4 fade-up">Our Journey</span>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 fade-up" data-delay="100">The Path to Impact</h2>
-            <p class="text-xl text-gray-600 fade-up" data-delay="150">From a bold idea to a national movement for climate action</p>
-        </div>
-        
-        <!-- Timeline -->
-        <div class="timeline">
-            <!-- Timeline Item 1 -->
-            <div class="timeline-item fade-up" data-delay="200">
-                <div class="timeline-content">
-                    <div class="timeline-dot"></div>
-                    <div class="flex items-center mb-3">
-                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">2020</span>
-                        <span class="ml-3 text-gray-400 text-sm">Founded</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">The Beginning</h3>
-                    <p class="text-gray-600">Started in Nairobi with 10 youth innovators and 5 community elders. Our first seed bank was established in Kitui County.</p>
-                </div>
-            </div>
-            
-            <!-- Timeline Item 2 -->
-            <div class="timeline-item fade-up" data-delay="250">
-                <div class="timeline-content">
-                    <div class="timeline-dot"></div>
-                    <div class="flex items-center mb-3">
-                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">2022</span>
-                        <span class="ml-3 text-gray-400 text-sm">Expansion</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">County Expansion</h3>
-                    <p class="text-gray-600">Launched regional hubs in 10 counties. First cohort of 20 climate startups graduated from our incubation program.</p>
-                </div>
-            </div>
-            
-            <!-- Timeline Item 3 -->
-            <div class="timeline-item fade-up" data-delay="300">
-                <div class="timeline-content">
-                    <div class="timeline-dot"></div>
-                    <div class="flex items-center mb-3">
-                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">2023</span>
-                        <span class="ml-3 text-gray-400 text-sm">Recognition</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">National Recognition</h3>
-                    <p class="text-gray-600">Recognized as Kenya's leading youth climate platform. Received UNEP accreditation and partnership with UNDP.</p>
-                </div>
-            </div>
-            
-            <!-- Timeline Item 4 -->
-            <div class="timeline-item fade-up" data-delay="350">
-                <div class="timeline-content">
-                    <div class="timeline-dot"></div>
-                    <div class="flex items-center mb-3">
-                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">2024</span>
-                        <span class="ml-3 text-gray-400 text-sm">Milestone</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Impact Milestone</h3>
-                    <p class="text-gray-600">Reached 500+ youth trained, 50K trees planted, and 15 indigenous knowledge archives established.</p>
-                </div>
-            </div>
-            
-            <!-- Timeline Item 5 -->
-            <div class="timeline-item fade-up" data-delay="400">
-                <div class="timeline-content">
-                    <div class="timeline-dot"></div>
-                    <div class="flex items-center mb-3">
-                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">2025</span>
-                        <span class="ml-3 text-gray-400 text-sm">Present</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Scaling Impact</h3>
-                    <p class="text-gray-600">Launching innovation labs in 5 new counties. Developing digital platform for indigenous knowledge documentation.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== CORE VALUES ===== -->
-<section class="py-24 bg-gradient-to-b from-gray-50 to-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- ===== CORE VALUES SECTION ===== -->
+<section id="values" class="py-32 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg width="100%" height="100%">
+            <pattern id="pattern-circles" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+                <circle cx="25" cy="25" r="5" fill="#10b981" />
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#pattern-circles)" />
+        </svg>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 relative">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold tracking-wider mb-4 fade-up">Our Values</span>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 fade-up" data-delay="100">Principles That Guide Us</h2>
-            <p class="text-xl text-gray-600 fade-up" data-delay="150">Every decision we make is rooted in these core values</p>
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <span class="text-green-600 font-semibold tracking-[0.3em] text-sm uppercase reveal-up">Our Guiding Principles</span>
+            <h2 class="text-5xl md:text-6xl font-bold mt-4 mb-6 reveal-up" data-delay="100">
+                Values That <span class="gradient-premium">Drive Us</span>
+            </h2>
+            <p class="text-xl text-gray-600 reveal-up" data-delay="200">
+                Every decision we make is guided by these core principles
+            </p>
         </div>
         
         <!-- Values Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Value 1: Youth Leadership -->
-            <div class="value-card fade-up" data-delay="200">
+            <div class="value-card-premium reveal-scale" data-delay="300">
                 <div class="value-icon">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">Youth Leadership</h3>
-                <p class="text-gray-600 leading-relaxed">Young people are not just participants—they lead our initiatives, drive innovation, and shape Kenya's climate future.</p>
-                
-                <!-- Value Metrics -->
-                <div class="mt-6 pt-6 border-t border-gray-100">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Youth-led projects</span>
-                        <span class="text-green-600 font-bold">100%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 h-1 mt-2 rounded-full">
-                        <div class="bg-green-600 h-1 rounded-full" style="width: 100%"></div>
-                    </div>
+                <h3 class="value-title">Youth Leadership</h3>
+                <p class="value-description">
+                    Young people are not just participants—they lead our initiatives, drive innovation, and shape Kenya's climate future.
+                </p>
+                <div class="value-stats-premium">
+                    <span class="value-stat-label">Youth-led projects</span>
+                    <span class="value-stat-number">100%</span>
                 </div>
             </div>
             
             <!-- Value 2: Intergenerational Learning -->
-            <div class="value-card fade-up" data-delay="250">
+            <div class="value-card-premium reveal-scale" data-delay="400">
                 <div class="value-icon">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M21 15.5v-6c0-.8-.5-1.5-1.2-1.8L13 4.2c-.6-.3-1.4-.3-2 0L4.2 7.7c-.7.3-1.2 1-1.2 1.8v6c0 .8.5 1.5 1.2 1.8l6.8 3.5c.6.3 1.4.3 2 0l6.8-3.5c.7-.3 1.2-1 1.2-1.8zM12 12l4-2v4l-4 2-4-2v-4l4 2z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">Intergenerational Learning</h3>
-                <p class="text-gray-600 leading-relaxed">Elders share ancestral wisdom while youth bring innovation—together, we create powerful climate solutions.</p>
-                
-                <div class="mt-6 pt-6 border-t border-gray-100">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Elder-youth exchanges</span>
-                        <span class="text-green-600 font-bold">50+</span>
-                    </div>
-                    <div class="w-full bg-gray-200 h-1 mt-2 rounded-full">
-                        <div class="bg-green-600 h-1 rounded-full" style="width: 85%"></div>
-                    </div>
+                <h3 class="value-title">Intergenerational Learning</h3>
+                <p class="value-description">
+                    Elders share ancestral wisdom while youth bring innovation—together, we create powerful climate solutions.
+                </p>
+                <div class="value-stats-premium">
+                    <span class="value-stat-label">Elder-youth exchanges</span>
+                    <span class="value-stat-number">50+</span>
                 </div>
             </div>
             
             <!-- Value 3: Sustainability -->
-            <div class="value-card fade-up" data-delay="300">
+            <div class="value-card-premium reveal-scale" data-delay="500">
                 <div class="value-icon">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">Sustainability</h3>
-                <p class="text-gray-600 leading-relaxed">We build solutions that last—environmentally, economically, and socially—for generations to come.</p>
-                
-                <div class="mt-6 pt-6 border-t border-gray-100">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Trees planted</span>
-                        <span class="text-green-600 font-bold">50K+</span>
-                    </div>
-                    <div class="w-full bg-gray-200 h-1 mt-2 rounded-full">
-                        <div class="bg-green-600 h-1 rounded-full" style="width: 90%"></div>
-                    </div>
+                <h3 class="value-title">Sustainability</h3>
+                <p class="value-description">
+                    We build solutions that last—environmentally, economically, and socially—for generations to come.
+                </p>
+                <div class="value-stats-premium">
+                    <span class="value-stat-label">Trees planted</span>
+                    <span class="value-stat-number">50k+</span>
                 </div>
             </div>
             
             <!-- Value 4: Innovation with Purpose -->
-            <div class="value-card fade-up" data-delay="350">
+            <div class="value-card-premium reveal-scale" data-delay="600">
                 <div class="value-icon">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">Innovation with Purpose</h3>
-                <p class="text-gray-600 leading-relaxed">Technology serves communities—we develop solutions that address real needs and create lasting impact.</p>
-                
-                <div class="mt-6 pt-6 border-t border-gray-100">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Startups incubated</span>
-                        <span class="text-green-600 font-bold">20</span>
-                    </div>
-                    <div class="w-full bg-gray-200 h-1 mt-2 rounded-full">
-                        <div class="bg-green-600 h-1 rounded-full" style="width: 75%"></div>
-                    </div>
+                <h3 class="value-title">Innovation with Purpose</h3>
+                <p class="value-description">
+                    Technology serves communities—we develop solutions that address real needs and create lasting impact.
+                </p>
+                <div class="value-stats-premium">
+                    <span class="value-stat-label">Startups incubated</span>
+                    <span class="value-stat-number">20</span>
                 </div>
             </div>
             
             <!-- Value 5: Climate Justice -->
-            <div class="value-card fade-up" data-delay="400">
+            <div class="value-card-premium reveal-scale" data-delay="700">
                 <div class="value-icon">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">Climate Justice</h3>
-                <p class="text-gray-600 leading-relaxed">Those most affected by climate change must be first in line for solutions—we prioritize vulnerable communities.</p>
-                
-                <div class="mt-6 pt-6 border-t border-gray-100">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Communities reached</span>
-                        <span class="text-green-600 font-bold">150+</span>
-                    </div>
-                    <div class="w-full bg-gray-200 h-1 mt-2 rounded-full">
-                        <div class="bg-green-600 h-1 rounded-full" style="width: 80%"></div>
-                    </div>
+                <h3 class="value-title">Climate Justice</h3>
+                <p class="value-description">
+                    Those most affected by climate change must be first in line for solutions—we prioritize vulnerable communities.
+                </p>
+                <div class="value-stats-premium">
+                    <span class="value-stat-label">Communities reached</span>
+                    <span class="value-stat-number">150+</span>
                 </div>
             </div>
             
             <!-- Value 6: Collaboration -->
-            <div class="value-card fade-up" data-delay="450">
+            <div class="value-card-premium reveal-scale" data-delay="800">
                 <div class="value-icon">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-1 .05 1.16.84 2 1.87 2 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-3">Collaboration</h3>
-                <p class="text-gray-600 leading-relaxed">We partner with counties, communities, and organizations to amplify impact and share resources.</p>
-                
-                <div class="mt-6 pt-6 border-t border-gray-100">
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm text-gray-500">Partners</span>
-                        <span class="text-green-600 font-bold">30+</span>
-                    </div>
-                    <div class="w-full bg-gray-200 h-1 mt-2 rounded-full">
-                        <div class="bg-green-600 h-1 rounded-full" style="width: 95%"></div>
-                    </div>
+                <h3 class="value-title">Collaboration</h3>
+                <p class="value-description">
+                    We partner with counties, communities, and organizations to amplify impact and share resources.
+                </p>
+                <div class="value-stats-premium">
+                    <span class="value-stat-label">Partners</span>
+                    <span class="value-stat-number">30+</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== LEADERSHIP TEAM ===== -->
-<section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- ===== TEAM SECTION - PREMIUM CARDS WITH VISIBLE NAMES ===== -->
+<section class="py-32 bg-white relative overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 left-0 w-96 h-96 bg-green-50 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-green-50 rounded-full blur-3xl"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 relative">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold tracking-wider mb-4 fade-up">Our Leadership</span>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 fade-up" data-delay="100">Meet the Team</h2>
-            <p class="text-xl text-gray-600 fade-up" data-delay="150">Passionate youth leaders and experienced advisors driving climate action</p>
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <span class="text-green-600 font-semibold tracking-[0.3em] text-sm uppercase reveal-up">Our Leadership</span>
+            <h2 class="text-5xl md:text-6xl font-bold mt-4 mb-6 reveal-up" data-delay="100">
+                Meet the <span class="gradient-premium">Team</span>
+            </h2>
+            <p class="text-xl text-gray-600 reveal-up" data-delay="200">
+                Passionate youth leaders and experienced advisors driving climate action
+            </p>
         </div>
         
         <!-- Team Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Team Member 1 -->
-            <div class="team-card fade-up" data-delay="200">
-                <div class="team-image">
-                    <img src="{% static 'images/francis.png' %}" alt="Francis Okwatch" class="w-full h-full object-cover">
-                    <div class="team-overlay">
-                        <div class="team-social">
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg></a>
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            <div class="group reveal-scale" data-delay="300">
+                <div class="team-card-container">
+                    <div class="team-card-image">
+                        <img src="{% static 'images/francis.png' %}" alt="Okwatch Francis" class="w-full h-full object-cover">
+                             alt="Francis Okwatch">
+                        
+                        <!-- Social Icons - Appear on hover -->
+                        <div class="team-card-social">
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025.8-.223 1.65-.334 2.5-.334.85 0 1.7.111 2.5.334 1.91-1.294 2.75-1.025 2.75-1.025.545 1.376.201 2.393.099 2.646.64.698 1.03 1.591 1.03 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        
+                        <!-- Hover Info -->
+                        <div class="team-card-overlay">
+                            <div class="team-card-info">
+                                <p class="team-card-bio">
+                                    Youth climate activist with 8+ years experience in community organizing. Led initiatives across 10 counties.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900">Francis Okwatch</h3>
-                    <p class="text-green-600 mb-2">Executive Director</p>
-                    <p class="text-sm text-gray-500">Youth climate activist with 8+ years experience in community organizing.</p>
+                
+                <!-- Always Visible Info -->
+                <div class="team-card-info-static">
+                    <h3>Francis Okwatch</h3>
+                    <p>Executive Director</p>
+                    <div class="bio">Youth climate activist with 8+ years experience in community organizing.</div>
                 </div>
             </div>
             
             <!-- Team Member 2 -->
-            <div class="team-card fade-up" data-delay="250">
-                <div class="team-image">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Grace Akinyi">
-                    <div class="team-overlay">
-                        <div class="team-social">
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg></a>
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            <div class="group reveal-scale" data-delay="400">
+                <div class="team-card-container">
+                    <div class="team-card-image">
+                        <img src="{% static 'images/grace.png' %}" alt="Grace Akinyi" class="w-full h-full object-cover">
+                             alt="Grace Akinyi">
+                        
+                        <!-- Social Icons -->
+                        <div class="team-card-social">
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        
+                        <!-- Hover Info -->
+                        <div class="team-card-overlay">
+                            <div class="team-card-info">
+                                <p class="team-card-bio">
+                                    Cultural heritage specialist working with elders across 10 counties. Preserved 50+ indigenous practices.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900">Grace Akinyi</h3>
-                    <p class="text-green-600 mb-2">Indigenous Knowledge Lead</p>
-                    <p class="text-sm text-gray-500">Cultural heritage specialist working with elders across 10 counties.</p>
+                
+                <div class="team-card-info-static">
+                    <h3>Grace Akinyi</h3>
+                    <p>Indigenous Knowledge Lead</p>
+                    <div class="bio">Cultural heritage specialist working with elders across 10 counties.</div>
                 </div>
             </div>
             
             <!-- Team Member 3 -->
-            <div class="team-card fade-up" data-delay="300">
-                <div class="team-image">
-                    <img src="{% static 'images/elisha.png' %}" alt="Francis Kidenge Elisha" class="w-full h-full object-cover">
-                    <div class="team-overlay">
-                        <div class="team-social">
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg></a>
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            <div class="group reveal-scale" data-delay="500">
+                <div class="team-card-container">
+                    <div class="team-card-image">
+                        <img src="{% static 'images/elisha.png' %}" alt="Kidenge Elisha">
+                        
+                        <!-- Social Icons -->
+                        <div class="team-card-social">
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        
+                        <!-- Hover Info -->
+                        <div class="team-card-overlay">
+                            <div class="team-card-info">
+                                <p class="team-card-bio">
+                                    Tech entrepreneur mentoring 20+ climate startups. Former founder of 2 successful green tech companies.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900">Kidenge Elisha</h3>
-                    <p class="text-green-600 mb-2">Chief Technology Officer</p>
-                    <p class="text-sm text-gray-500">Tech entrepreneur mentoring 20+ climate startups.</p>
+                
+                <div class="team-card-info-static">
+                    <h3>Kidenge Elisha</h3>
+                    <p>Innovation Lab Director</p>
+                    <div class="bio">Tech entrepreneur mentoring 20+ climate startups.</div>
                 </div>
             </div>
             
             <!-- Team Member 4 -->
-            <div class="team-card fade-up" data-delay="350">
-                <div class="team-image">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sarah Wanjiku">
-                    <div class="team-overlay">
-                        <div class="team-social">
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg></a>
-                            <a href="#"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            <div class="group reveal-scale" data-delay="600">
+                <div class="team-card-container">
+                    <div class="team-card-image">
+                        <img src="{% static 'images/sarah.png' %}" 
+                             alt="Sarah Wanjiku">
+                        
+                        <!-- Social Icons -->
+                        <div class="team-card-social">
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="team-social-link">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        
+                        <!-- Hover Info -->
+                        <div class="team-card-overlay">
+                            <div class="team-card-info">
+                                <p class="team-card-bio">
+                                    Grassroots organizer working with 50+ communities across Kenya. Led water harvesting projects in 5 counties.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-900">Sarah Wanjiku</h3>
-                    <p class="text-green-600 mb-2">Community Action Lead</p>
-                    <p class="text-sm text-gray-500">Grassroots organizer working with 50+ communities across Kenya.</p>
+                
+                <div class="team-card-info-static">
+                    <h3>Sarah Wanjiku</h3>
+                    <p>Community Action Lead</p>
+                    <div class="bio">Grassroots organizer working with 50+ communities across Kenya.</div>
                 </div>
             </div>
         </div>
         
-        <!-- View All Link -->
-        <div class="text-center mt-12 fade-up" data-delay="400">
-            <a href="/team/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold group">
-                Meet the Full Team
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- View Full Team Link -->
+        <div class="text-center mt-16 reveal-up">
+            <a href="/team/" class="inline-flex items-center text-green-600 hover:text-green-700 font-semibold text-lg group">
+                <span>Meet the Full Team</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                 </svg>
             </a>
@@ -1104,301 +1647,363 @@
     </div>
 </section>
 
-<!-- ===== ADVISORY BOARD ===== -->
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4 fade-up">Our Advisors</h2>
-            <p class="text-lg text-gray-600 fade-up" data-delay="100">Guided by wisdom from community elders and industry experts</p>
+<!-- ===== ADVISORS SECTION ===== -->
+<section class="py-20 bg-gray-50 relative overflow-hidden">
+    <!-- Decorative Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg width="100%" height="100%">
+            <pattern id="advisor-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M20 0 L20 40 M0 20 L40 20" stroke="#10b981" stroke-width="1"/>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#advisor-pattern)" />
+        </svg>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 relative">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 reveal-up">
+                Our <span class="gradient-premium">Advisors</span>
+            </h2>
+            <p class="text-xl text-gray-600 reveal-up" data-delay="100">
+                Guided by wisdom from community elders and industry experts
+            </p>
         </div>
         
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-3 gap-6">
             <!-- Advisor 1 -->
-            <div class="flex items-center space-x-4 bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 fade-up" data-delay="200">
-                <div class="w-16 h-16 bg-green-100 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Elder Samuel Kiprop" class="w-full h-full object-cover">
+            <div class="advisor-card reveal-scale" data-delay="200">
+                <div class="advisor-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Elder Samuel Kiprop">
                 </div>
-                <div>
-                    <h3 class="font-bold text-gray-900">Elder Samuel Kiprop</h3>
-                    <p class="text-green-600 text-sm">Indigenous Knowledge Council</p>
-                    <p class="text-gray-500 text-sm">40+ years preserving traditional ecological wisdom</p>
+                <div class="advisor-info">
+                    <h3>Elder Samuel Kiprop</h3>
+                    <p class="title">Indigenous Knowledge Council</p>
+                    <p class="expertise">40+ years preserving traditional wisdom</p>
                 </div>
             </div>
             
             <!-- Advisor 2 -->
-            <div class="flex items-center space-x-4 bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 fade-up" data-delay="250">
-                <div class="w-16 h-16 bg-green-100 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1494790108777-406d8bfd9d8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Dr. Elizabeth Muthoni" class="w-full h-full object-cover">
+            <div class="advisor-card reveal-scale" data-delay="300">
+                <div class="advisor-avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108777-406d8bfd9d8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Dr. Elizabeth Muthoni">
                 </div>
-                <div>
-                    <h3 class="font-bold text-gray-900">Dr. Elizabeth Muthoni</h3>
-                    <p class="text-green-600 text-sm">Climate Science Advisor</p>
-                    <p class="text-gray-500 text-sm">PhD in Environmental Science, University of Nairobi</p>
+                <div class="advisor-info">
+                    <h3>Dr. Elizabeth Muthoni</h3>
+                    <p class="title">Climate Science Advisor</p>
+                    <p class="expertise">PhD, University of Nairobi</p>
                 </div>
             </div>
             
             <!-- Advisor 3 -->
-            <div class="flex items-center space-x-4 bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 fade-up" data-delay="300">
-                <div class="w-16 h-16 bg-green-100 rounded-full overflow-hidden flex-shrink-0">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Peter Ndegwa" class="w-full h-full object-cover">
+            <div class="advisor-card reveal-scale" data-delay="400">
+                <div class="advisor-avatar">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Peter Ndegwa">
                 </div>
-                <div>
-                    <h3 class="font-bold text-gray-900">Peter Ndegwa</h3>
-                    <p class="text-green-600 text-sm">Innovation & Finance</p>
-                    <p class="text-gray-500 text-sm">Former CEO, Kenya Climate Ventures</p>
+                <div class="advisor-info">
+                    <h3>Peter Ndegwa</h3>
+                    <p class="title">Innovation & Finance</p>
+                    <p class="expertise">Former CEO, Kenya Climate Ventures</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== PARTNERS & SUPPORTERS ===== -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-            <span class="text-gray-400 text-sm font-semibold tracking-wider uppercase fade-up">Our Partners</span>
-            <h2 class="text-3xl font-bold text-gray-900 mt-2 fade-up" data-delay="100">Trusted by Leading Organizations</h2>
+<!-- ===== PARTNERS SECTION ===== -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 reveal-up">
+                Our <span class="gradient-premium">Partners</span>
+            </h2>
+            <p class="text-xl text-gray-600 reveal-up" data-delay="100">
+                Collaborating for greater impact
+            </p>
         </div>
         
-        <!-- Partner Logos Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 items-center">
-            <div class="partner-logo text-center">
-                <span class="text-gray-500 font-bold text-lg">UNDP</span>
+        <div class="partner-grid">
+            <div class="partner-item reveal-scale" data-delay="200">
+                <span>UNDP</span>
             </div>
-            <div class="partner-logo text-center">
-                <span class="text-gray-500 font-bold text-lg">GIZ</span>
+            <div class="partner-item reveal-scale" data-delay="250">
+                <span>UNEP</span>
             </div>
-            <div class="partner-logo text-center">
-                <span class="text-gray-500 font-bold text-lg">WWF</span>
+            <div class="partner-item reveal-scale" data-delay="300">
+                <span>GIZ</span>
             </div>
-            <div class="partner-logo text-center">
-                <span class="text-gray-500 font-bold text-lg">KENYA GOVT</span>
+            <div class="partner-item reveal-scale" data-delay="350">
+                <span>WWF</span>
             </div>
-            <div class="partner-logo text-center">
-                <span class="text-gray-500 font-bold text-lg">MASTERCARD</span>
+            <div class="partner-item reveal-scale" data-delay="400">
+                <span>GOK</span>
             </div>
-            <div class="partner-logo text-center">
-                <span class="text-gray-500 font-bold text-lg">ROCKEFELLER</span>
-            </div>
-            <div class="partner-logo text-center">
-                <span class="text-gray-500 font-bold text-lg">USAID</span>
-            </div>
-        </div>
-        
-        <!-- Media Mentions -->
-        <div class="mt-12 pt-8 border-t border-gray-200">
-            <p class="text-center text-sm text-gray-500 mb-6 fade-up">As featured in</p>
-            <div class="flex flex-wrap justify-center items-center gap-8 opacity-60">
-                <span class="text-gray-400 font-semibold">BBC News</span>
-                <span class="text-gray-400 font-semibold">The Standard</span>
-                <span class="text-gray-400 font-semibold">Nation Media</span>
-                <span class="text-gray-400 font-semibold">CNN Africa</span>
-                <span class="text-gray-400 font-semibold">Devex</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== CERTIFICATIONS & ACCREDITATIONS ===== -->
-<section class="py-12 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-wrap justify-center items-center gap-8">
-            <div class="flex items-center space-x-2">
-                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span class="text-sm text-gray-700">Registered NGO (Reg. No: KCIHH-2024-NGO/1234)</span>
-            </div>
-            <div class="w-px h-6 bg-gray-300"></div>
-            <div class="flex items-center space-x-2">
-                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-1.896.632L10 11.248l-5.056 2.255a1 1 0 01-1.896-.632l1.738-5.42-1.233-.616a1 1 0 01.894-1.79l1.599.8L9 4.323V3a1 1 0 011-1z"/>
-                </svg>
-                <span class="text-sm text-gray-700">UNEP Accredited (Accreditation #UNEP/2024/089)</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== CALL TO ACTION ===== -->
-<section class="relative py-24 overflow-hidden">
-    <!-- Background Image -->
-    <div class="absolute inset-0">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523803326055-52791c0e3cf6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-green-900/95 to-green-800/90"></div>
-    </div>
-    
-    <div class="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <!-- Award Badge -->
-        <div class="flex justify-center mb-6 fade-up">
-            <div class="award-badge">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <span>2024 Climate Action Award Winner</span>
+            <div class="partner-item reveal-scale" data-delay="450">
+                <span>IUCN</span>
             </div>
         </div>
         
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 fade-up" data-delay="100">Be Part of Kenya's Climate Future</h2>
-        <p class="text-xl text-green-50 mb-10 max-w-2xl mx-auto fade-up" data-delay="150">Join us in building a climate-resilient Kenya powered by youth innovation and indigenous wisdom.</p>
-        
-        <div class="flex flex-wrap justify-center gap-4 fade-up" data-delay="200">
-            <a href="/get-involved/" class="group bg-white text-green-700 hover:bg-green-50 px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center">
-                Get Involved
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Partner CTA -->
+        <div class="text-center mt-16 reveal-up">
+            <a href="/get-involved/#partner" class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/30 group">
+                <span>Become a Partner</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                 </svg>
             </a>
-            <a href="/get-involved/donate/" class="group bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center border-2 border-white/20">
-                Support Our Work
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        </div>
+    </div>
+</section>
+
+<!-- ===== FINAL CTA SECTION ===== -->
+<section class="cta-section relative py-32 overflow-hidden">
+    <div class="cta-background parallax" style="background-image: url('https://images.unsplash.com/photo-1523803326055-52791c0e3cf6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
+    <div class="cta-overlay"></div>
+    
+    <div class="cta-content text-center text-white max-w-4xl mx-auto px-4">
+        <h2 class="text-5xl md:text-6xl font-bold mb-6 reveal-up">
+            Be Part of Kenya's <span class="gradient-premium">Climate Future</span>
+        </h2>
+        <p class="text-xl mb-12 text-green-100 max-w-2xl mx-auto reveal-up" data-delay="100">
+            Join us in building a climate-resilient Kenya powered by youth innovation and indigenous wisdom.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4 reveal-up" data-delay="200">
+            <a href="/get-involved/" class="group bg-white text-green-700 hover:bg-green-50 px-10 py-5 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center">
+                <span>Get Involved</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+            <a href="/donate/" class="group bg-green-600 hover:bg-green-700 text-white px-10 py-5 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl flex items-center justify-center border-2 border-white/20">
+                <span>Support Our Work</span>
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                 </svg>
             </a>
         </div>
         
-        <!-- Trust Indicators -->
-        <div class="flex flex-wrap justify-center gap-8 mt-12 fade-up" data-delay="250">
-            <div class="flex items-center text-white/80">
-                <svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span>Certified NGO</span>
+        <!-- Trust Badges -->
+        <div class="flex flex-wrap justify-center gap-8 mt-16 reveal-up" data-delay="300">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                    </svg>
+                </div>
+                <span class="text-green-100">Certified NGO</span>
             </div>
-            <div class="flex items-center text-white/80">
-                <svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
-                </svg>
-                <span>Transparent Reporting</span>
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                    </svg>
+                </div>
+                <span class="text-green-100">Transparent Reporting</span>
             </div>
-            <div class="flex items-center text-white/80">
-                <svg class="w-5 h-5 mr-2 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M11 3a1 1 0 10-2 0v1.323L7.054 6.3A3 3 0 106 10.1V11a4 4 0 108 0v-.9a3 3 0 10-2-5.577L11 4.323V3zM8 8a1 1 0 100 2 1 1 0 000-2zm6 1a1 1 0 11-2 0 1 1 0 012 0z"/>
-                </svg>
-                <span>Community-Led</span>
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                    </svg>
+                </div>
+                <span class="text-green-100">Community-Led</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== TRANSPARENCY SECTION ===== -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Financial Summary -->
-            <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow fade-up" data-delay="200">
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
-                        <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 mb-2">Financial Transparency</h3>
-                <p class="text-sm text-gray-600 mb-3">85% of funds go directly to programs</p>
-                <div class="w-full bg-gray-200 h-2 rounded-full">
-                    <div class="bg-green-600 h-2 rounded-full" style="width: 85%"></div>
-                </div>
-                <p class="text-xs text-gray-500 mt-3">View our annual financial summary</p>
-            </div>
-            
-            <!-- Annual Report -->
-            <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow fade-up" data-delay="250">
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 mb-2">Annual Reports</h3>
-                <p class="text-sm text-gray-600 mb-3">Download our detailed impact reports</p>
-                <a href="/impact/reports/" class="text-green-600 text-sm font-semibold hover:text-green-700">Download 2024 Report →</a>
-            </div>
-            
-            <!-- Registration Certificate -->
-            <div class="text-center p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow fade-up" data-delay="300">
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-gray-900 mb-2">Registered NGO</h3>
-                <p class="text-sm text-gray-600 mb-3">Certificate No: KCIHH-2024-NGO/1234</p>
-                <a href="#" class="text-green-600 text-sm font-semibold hover:text-green-700">View Certificate →</a>
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}
+<!-- Back to Top Button -->
+<button id="back-to-top" class="fixed bottom-8 right-8 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 opacity-0 invisible hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-500/50 z-50">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+</button>
 
-{% block extra_scripts %}
 <script>
-    // Fade-up animation on scroll
-    const fadeElements = document.querySelectorAll('.fade-up');
+    // ===== COMPLEX JAVASCRIPT INTERACTIONS =====
     
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('appear');
-                }, entry.target.dataset.delay || 0);
-                fadeObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
-    
-    fadeElements.forEach(el => fadeObserver.observe(el));
-
-    // Counter animation for stats
-    const counters = document.querySelectorAll('.counter');
-    
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const target = parseInt(counter.getAttribute('data-target'));
-                let count = 0;
-                const duration = 2000;
-                const stepTime = 20;
-                const steps = duration / stepTime;
-                const increment = target / steps;
-                
-                const timer = setInterval(() => {
-                    count += increment;
-                    if (count < target) {
-                        counter.innerText = Math.floor(count).toLocaleString();
-                    } else {
-                        counter.innerText = target.toLocaleString();
-                        clearInterval(timer);
-                    }
-                }, stepTime);
-                
-                counterObserver.unobserve(counter);
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    counters.forEach(counter => counterObserver.observe(counter));
-
-    // Parallax effect
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallax = document.querySelector('.parallax');
-        if (parallax) {
-            parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Custom Cursor
+        const cursor = document.getElementById('custom-cursor');
+        if (cursor && window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            
+            // Add active class on hoverable elements
+            document.querySelectorAll('a, button, .card-3d, .value-card-premium, .team-card-container').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+            });
         }
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+        
+        // Loading Progress
+        window.addEventListener('load', () => {
+            const progress = document.getElementById('loading-progress');
+            progress.style.width = '100%';
+            setTimeout(() => {
+                progress.style.opacity = '0';
+            }, 500);
+        });
+        
+        // Back to Top Button
+        const backToTop = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
             }
         });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Particle Generation for Hero
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = 10 + Math.random() * 20 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+        
+        // Reveal on Scroll with Intersection Observer
+        const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up, .reveal-scale');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, entry.target.dataset.delay || 0);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+        
+        // Timeline Animation
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, entry.target.dataset.delay || 0);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        timelineItems.forEach(item => timelineObserver.observe(item));
+        
+        // Parallax Effect
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                
+                // Hero video parallax
+                const heroVideo = document.querySelector('.hero-video');
+                if (heroVideo) {
+                    heroVideo.style.transform = `translateX(-50%) translateY(-50%) translateY(${scrolled * 0.2}px)`;
+                }
+                
+                // CTA background parallax
+                const ctaBackground = document.querySelector('.cta-background');
+                if (ctaBackground) {
+                    ctaBackground.style.transform = `translateY(${scrolled * 0.1}px)`;
+                }
+            });
+        }
+        
+        // 3D Card Effect
+        const cards3d = document.querySelectorAll('.card-3d-container');
+        
+        cards3d.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                const cardInner = card.querySelector('.card-3d');
+                if (cardInner) {
+                    cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                const cardInner = card.querySelector('.card-3d');
+                if (cardInner) {
+                    cardInner.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+                }
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Counter Animation
+        const statNumbers = document.querySelectorAll('.stat-number');
+        
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const target = parseInt(element.getAttribute('data-count') || element.innerText.replace(/[^0-9]/g, ''));
+                    let current = 0;
+                    const increment = target / 50;
+                    
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            element.innerText = Math.floor(current) + '+';
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            element.innerText = target + '+';
+                        }
+                    };
+                    
+                    updateCounter();
+                    counterObserver.unobserve(element);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        statNumbers.forEach(stat => counterObserver.observe(stat));
     });
 </script>
 {% endblock %}
