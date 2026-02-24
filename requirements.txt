@@ -9,6 +9,8 @@ Django==4.2.11
 # Database
 psycopg[binary]==3.3.3
 
+django-countries==11.0
+
 # Environment management
 python-decouple==3.8
 python-dotenv==1.0.0
