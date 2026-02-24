@@ -1,6 +1,6 @@
 # Ensure pkg_resources is available first
 setuptools==68.0.0
-wheel>=1.0.0
+wheel==0.46.2
 pip>=25.3
 
 # Django
