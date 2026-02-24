@@ -5,7 +5,7 @@ echo "Starting KCIHH Development Environment..."
 
 # Set environment variables
 export DJANGO_ENV=development
-export DJANGO_SETTINGS_MODULE=kcihh_core.settings
+export DJANGO_SETTINGS_MODULE=kcihh_website.settings
 
 # Activate virtual environment
 source venv/bin/activate

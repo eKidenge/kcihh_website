@@ -4,7 +4,7 @@ FROM python:3.11-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE=kcihh_core.settings
+ENV DJANGO_SETTINGS_MODULE=kcihh_website.settings
 ENV DJANGO_ENV=production
 
 # Install system dependencies
@@ -31,4 +31,4 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Run gunicorn
-CMD gunicorn kcihh_core.wsgi:application --bind 0.0.0.0:$PORT
+CMD gunicorn kcihh_website.wsgi:application --bind 0.0.0.0:$PORT

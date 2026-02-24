@@ -5,7 +5,7 @@ echo "Deploying KCIHH to Production..."
 
 # Set environment
 export DJANGO_ENV=production
-export DJANGO_SETTINGS_MODULE=kcihh_core.settings
+export DJANGO_SETTINGS_MODULE=kcihh_website.settings
 
 # Pull latest code
 git pull origin main

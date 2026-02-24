@@ -36,7 +36,7 @@ services:
 
   celery:
     build: .
-    command: celery -A kcihh_core worker -l info
+    command: celery -A kcihh_website worker -l info
     volumes:
       - .:/app
     environment:
@@ -50,7 +50,7 @@ services:
 
   celery-beat:
     build: .
-    command: celery -A kcihh_core beat -l info
+    command: celery -A kcihh_website beat -l info
     volumes:
       - .:/app
     environment:

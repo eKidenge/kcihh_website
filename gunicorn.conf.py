@@ -13,7 +13,7 @@ timeout = 30
 keepalive = 2
 
 # Process naming
-proc_name = "kcihh_core"
+proc_name = "kcihh_website"
 
 # Logging
 accesslog = "/var/log/gunicorn/access.log"
@@ -38,7 +38,7 @@ group = "www-data"
 
 # Django settings
 raw_env = [
-    "DJANGO_SETTINGS_MODULE=kcihh_core.settings",
+    "DJANGO_SETTINGS_MODULE=kcihh_website.settings",
     "DJANGO_ENV=production",
 ]
 
