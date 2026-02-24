@@ -9,7 +9,7 @@ gunicorn==21.2.0
 # Storage & Media
 django-storages==1.14.2
 boto3==1.34.7
-pillow==10.1.0
+#pillow==10.1.0
 
 # Forms & UI
 django-crispy-forms==2.1
