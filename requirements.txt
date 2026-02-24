@@ -8,7 +8,7 @@ pytz==2023.3
 gunicorn==21.2.0
 
 # Database & GIS
-django-contrib-postgres==0.1.0
+#django-contrib-postgres==0.1.0
 django-leaflet==0.30.1
 django-map-widgets==0.4.2
 GDAL==3.4.3
