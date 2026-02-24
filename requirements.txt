@@ -7,7 +7,7 @@ pip>=25.3
 Django==4.2.11
 
 # Database
-psycopg2-binary==2.9.9
+psycopg[binary]==3.1.9
 
 # Environment management
 python-decouple==3.8
