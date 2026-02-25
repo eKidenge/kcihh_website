@@ -72,4 +72,4 @@ mixpanel==4.10.0
 python-dateutil==2.8.2
 django-cleanup==8.0.0
 django-js-asset==2.1.0
-django-widget-tweaks==1.5.0  fv
+django-widget-tweaks==1.5.0 
