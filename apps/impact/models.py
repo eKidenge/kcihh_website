@@ -73,7 +73,8 @@ class Testimonial(models.Model):
         return f"{self.person_name} - {self.location}"
     
     # apps/impact/models.py (continued)
-from django.contrib.gis.db import models as gis_models
+#from django.contrib.gis.db import models as gis_models
+from django.db import models
 
 class ProjectLocation(models.Model):
     PROJECT_TYPES = [

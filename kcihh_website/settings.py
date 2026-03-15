@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'taggit',
     'import_export',
-    'leaflet',
+    #'leaflet',
     'rest_framework',
     'corsheaders',
     'django_cleanup.apps.CleanupConfig',
@@ -188,12 +188,12 @@ REST_FRAMEWORK = {
 }
 
 # Leaflet
-LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (-1.286389, 36.817223),
-    'DEFAULT_ZOOM': 6,
-    'MIN_ZOOM': 5,
-    'MAX_ZOOM': 18,
-}
+#LEAFLET_CONFIG = {
+#    'DEFAULT_CENTER': (-1.286389, 36.817223),
+#    'DEFAULT_ZOOM': 6,
+#    'MIN_ZOOM': 5,
+#    'MAX_ZOOM': 18,
+#}
 
 # Email - Console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
