@@ -19,8 +19,6 @@ KCIHH is a national youth-led platform advancing grassroots climate solutions ac
 - **Volunteer** management system
 - **Resource library** with toolkits and publications
 
-## Project Structure
-
 ## kcihh_website/
 
 # KCIHH Website Project Structure
