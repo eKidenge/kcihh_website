@@ -23,6 +23,9 @@ KCIHH is a national youth-led platform advancing grassroots climate solutions ac
 
 ## kcihh_website/
 
+# KCIHH Website Project Structure
+kcihh_website/
+│
 ├── apps/
 │ ├── home/ # Homepage and landing
 │ ├── about/ # About Us page
@@ -50,16 +53,19 @@ KCIHH is a national youth-led platform advancing grassroots climate solutions ac
 │ ├── models.py # ContactMessage
 │ ├── views.py # contact
 │ └── templates/
+│
 ├── static/ # Static files (CSS, JS, images)
 ├── media/ # User-uploaded media
 ├── templates/ # Base templates
 │ └── includes/
 │ ├── navigation.html # Main navigation bar
 │ └── footer.html # Site footer
+│
 ├── kcihh_website/ # Project configuration
 │ ├── settings.py # Django settings
 │ ├── urls.py # Main URL configuration
 │ └── wsgi.py # WSGI configuration
+│
 ├── manage.py
 └── requirements.txt
 
